@@ -1,0 +1,20 @@
+{
+  "name": "php_oe28_ecommerce",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Thanh Nam <nam.uetn@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/namuetn/php_oe28_ecommerce",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bower_fashi_shop": "git@github.com:namuetn/bower_fashi_shop.git"
+  }
+}
