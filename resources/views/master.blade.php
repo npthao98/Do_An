@@ -45,6 +45,7 @@
     <script src="{{ asset('bower_components/bower_fashi_shop/js/jquery.slicknav.js') }}"></script>
     <script src="{{ asset('bower_components/bower_fashi_shop/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('bower_components/bower_fashi_shop/js/main.js') }}"></script>
+    <script src="{{ asset('js/logout.js') }}"></script>
 </body>
 
 </html>
