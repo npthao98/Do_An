@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'login'=> 'Login',
+    'password'=> 'Password',
+    'register'=> 'Register',
+    'username_or_mail'=> 'Email address',
+    'save_password'=> 'Save Password',
+    'forget_your_password'=> 'Forget your Password',
+    'sign_in'=> 'Sign In',
+    'create_an_account'=> 'Or Create An Account',
+    'confirm_password'=> 'Confirm Password',
+    'or_login'=> 'Or Login',
+    'name' => 'Name',
+    'logout'=> 'logout',
+    'confirm_password'=> 'Confirm Password',
+    'please_confirm_your_password_before_continuing'=> 'Please confirm your password before continuing.',
+    'forgot_your_password'=> 'Forgot Your Password?',
+    'reset_password'=> 'Reset Password',
+    'send_password_reset_link'=> 'Send Password Reset Link',
+    'verify_your_email_address'=> 'Verify Your Email Address',
+    'a_fresh_verification_link_has_been_sent_to_your_email_address.'=> 'A fresh verification link has been sent to your email address.',
+    'before_proceeding_please_check_your_email_for_a_verification_link.'=> 'Before proceeding, please check your email for a verification link.',
+    'if_you_did_not_receive_the_mail'=> 'If you did not receive the email',
+    'click_here_to_request_another'=> 'click here to request another',
+];

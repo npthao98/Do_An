@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'login'=> 'Đăng nhập',
+    'password'=> 'Mật khẩu',
+    'register'=> 'Đăng ký',
+    'username_or_mail'=> 'Email',
+    'save_password'=> 'Nhớ mật khẩu',
+    'forget_your_password'=> 'Quên mật khẩu',
+    'sign_in'=> 'Đăng nhập',
+    'create_an_account'=> 'Hoặc Tạo Tài Khoản Mới',
+    'confirm_password'=> 'Nhập Lại Mật Khẩu',
+    'or_login'=> 'Hoặc Đăng Nhập',
+    'name'=> 'Họ Tên',
+    'logout'=> 'Đăng xuất',
+    'confirm_password'=> 'Xác nhận mật khẩu',
+    'please_confirm_your_password_before_continuing'=>  'Vui lòng xác nhận mật khẩu của bạn trước khi tiếp tục.',
+    'forgot_your_password'=> 'Quên mật khẩu?',
+    'reset_password'=> 'Đặt lại mật kh',
+    'send_password_reset_link'=> 'Gửi liên kết đặt lại mật khẩu',
+    'verify_your_email_address'=> 'Xác minh địa chỉ email của bạn',
+    'a_fresh_verification_link_has_been_sent_to_your_email_address.'=> 'Một liên kết xác minh mới đã được gửi đến địa chỉ email của bạn.',
+    'before_proceeding_please_check_your_email_for_a_verification_link.'=> 'Trước khi tiếp tục, vui lòng kiểm tra email của bạn để biết liên kết xác minh.',
+    'if_you_did_not_receive_the_mail'=> 'Nếu bạn không nhận được email',
+    'click_here_to_request_another'=>  'nhấp vào đây để yêu cầu một cái khác',
+];
