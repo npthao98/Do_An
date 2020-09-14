@@ -28,11 +28,11 @@
 
 <body>
 
-    @include('includes.header')
+    @include('includes.user.header')
 
     @yield('content')
 
-    @include('includes.footer')
+    @include('includes.user.footer')
 
     <!-- Js Plugins -->
     <script src="{{ asset('bower_components/bower_fashi_shop/js/jquery-3.3.1.min.js') }}"></script>

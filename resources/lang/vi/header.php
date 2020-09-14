@@ -28,4 +28,9 @@ return [
     'blog_details'=> 'Chi tiết Blog',
     'shopping_cart'=> 'Giỏ hàng',
     'home'=> 'Trang chủ',
+    'admin' => 'Quản trị viên',
+    'dashboard' => 'Bảng điều khiển',
+    'tables'=> 'Bảng',
+    'datatables'=> 'Bảng dữ liệu',
+    'search'=> 'Tìm kiếm',
 ];

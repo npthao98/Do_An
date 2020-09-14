@@ -29,4 +29,9 @@ return [
     'blog_details'=> 'Blog Details',
     'shopping_cart'=> 'Shopping Cart',
     'home'=> 'Home',
+    'admin' => 'Admin',
+    'dashboard' => 'Dashboard',
+    'tables'=> 'Tables',
+    'datatables'=> 'DataTables',
+    'search'=> 'Search',
 ];
