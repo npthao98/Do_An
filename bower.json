@@ -15,6 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "bower_fashi_shop": "git@github.com:namuetn/bower_fashi_shop.git"
+    "bower_fashi_shop": "git@github.com:namuetn/bower_fashi_shop.git",
+    "bower_admin": "git@github.com:namuetn/bower_admin.git"
   }
 }

@@ -15,3 +15,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'ProductController@index')->name('product.index');
 
 Auth::routes();
+
+Route::get('/admin/products', 'Admin\ProductController@index')->name('admin.product.index');

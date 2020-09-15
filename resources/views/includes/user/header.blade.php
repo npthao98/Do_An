@@ -28,7 +28,7 @@
                 @else
                     <a href="{{ route('login') }}" class="login-panel button-logout"><i class="fa fa-user"></i>{{ trans('make_auth.logout') }}</a>
 
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="logout_form">
                         @csrf
                     </form>
                 @endguest
