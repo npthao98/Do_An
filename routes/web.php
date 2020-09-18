@@ -16,4 +16,8 @@ Route::get('/', 'ProductController@index')->name('product.index');
 
 Auth::routes();
 
-Route::get('/admin/products', 'Admin\ProductController@index')->name('admin.product.index');
+Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], function() {
+    Route::resource('categories', 'CategoryController');
+    Route::resource('products', 'ProductController');
+});
+
