@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProductRequest;
+use App\Product;
+use App\Category;
+use App\Image;
 
 class ProductController extends Controller
 {
@@ -14,7 +18,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('fashi.admin.product.index');
+        $products = Product::all();
+
+        return view('fashi.admin.product.index', compact('products'));
     }
 
     /**
@@ -24,7 +30,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+
+        return view('fashi.admin.product.create', compact('categories'));
     }
 
     /**
@@ -33,20 +41,28 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        //
-    }
+        try {
+            $product  = Product::create($request->all());
+            $product->categories()->attach($request->category);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+            foreach ($request->images as $image) {
+                $filename = uniqid() . '-' . $image->getClientOriginalName();
+                $image->move('storage/images/', $filename);
+
+                Image::create([
+                    'product_id' => $product->id,
+                    'link_to_image' => config('image.url') . $filename,
+                ]);
+            }
+        } catch (Exception $e) {
+            Log::error($e);
+
+            return back()->with('message', trans('message.product.create.error'));
+        }
+
+        return redirect()->route('admin.products.index')->with('message', trans('message.product.create.success'));
     }
 
     /**
@@ -57,7 +73,10 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $categories = Category::all();
+
+        return view('fashi.admin.product.edit', compact(['product', 'categories']));
     }
 
     /**
@@ -67,9 +86,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
-        //
+       //
     }
 
     /**
@@ -80,6 +99,21 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        try {
+            $product->delete();
+            $product->categories()->detach();
+
+            foreach ($product->images as $image) {
+                $image->delete();
+            }
+        } catch (Exception $e) {
+            Log::error($e);
+
+            return back()->with('message', trans('message.product.delete.error'));
+        }
+
+        return redirect()->route('admin.products.index')->with('message', trans('message.product.delete.success'));
     }
 }

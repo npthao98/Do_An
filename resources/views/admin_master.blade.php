@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="{{ asset('bower_components/bower_admin/plugins/fontawesome-free/css/all.min.css') }}">
         <link rel="stylesheet" href="{{ asset('bower_components/bower_admin/dist/css/adminlte.min.css') }}">
         <link rel="stylesheet" href="{{ asset('bower_components/bower_admin/dist/css/dataTables.bootstrap4.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
     </head>
 
     <body class="hold-transition sidebar-mini">

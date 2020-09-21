@@ -46,7 +46,7 @@
                             <select class="form-control" name="parent_id" id="parent_id" value="{{ old('parent_id') }}">
                                 <option value="">{{ trans('text.select_parent') }}</option>
                                 @foreach ($categories as $category)
-                                    @if($category->parent_id == null)
+                                    @if ($category->parent_id == null)
                                         <option
                                           value="{{ $category->id }}">
                                             {{ $category->name }}
