@@ -27,9 +27,9 @@
                     <select class="form-control" name="category" id="category" value="{{ old('category') ?? $product->category }}">
                         <option value="">{{ trans('text.category') }}</option>
                         @foreach ($categories as $category)
-                            @if($category->parent_id != null)
+                            @if ($category->parent_id != null)
                                 <option
-                                  value="{{ $category->id }} {{ ($category->id == old('category')) ? 'selected' : '' }}">
+                                  value="{{ $category->id }}" {{ ($category->id == $product->categories->first()->id) ? 'selected' : '' }}>
                                     {{ $category->name }}
                                 </option>
                             @endif

@@ -11,17 +11,6 @@
             <a href="#" class="nav-link">{{ trans('header.home') }}</a>
         </li>
     </ul>
-    <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
-        <div class="input-group input-group-sm">
-            <input class="form-control form-control-navbar" type="search" placeholder="{{ trans('header.search') }}" aria-label="Search">
-            <div class="input-group-append">
-                <button class="btn btn-navbar" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-        </div>
-    </form>
 </nav>
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -64,9 +53,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link active">
+                            <a href="{{ route('admin.categories.index') }}" class="nav-link active">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>{{ trans('header.datatables') }}</p>
+                                <p>{{ trans('text.category') }}</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.products.index') }}" class="nav-link active">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{ trans('text.product') }}</p>
                             </a>
                         </li>
                     </ul>
