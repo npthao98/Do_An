@@ -49,7 +49,7 @@ class ProductController extends Controller
 
             foreach ($request->images as $image) {
                 $filename = uniqid() . '-' . $image->getClientOriginalName();
-                $image->move('storage/images/', $filename);
+                $image->move(config('image.move_url'), $filename);
 
                 Image::create([
                     'product_id' => $product->id,
@@ -88,7 +88,28 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, $id)
     {
-       //
+        $product = Product::findOrFail($id);
+
+        try {
+            $product->update($request->all());
+            $productImage = Image::where('product_id', $product->id)->delete();
+
+            foreach ($request->images as $image) {
+                $filename = uniqid() . '-' . $image->getClientOriginalName();
+                $image->move(config('image.move_url'), $filename);
+
+                Image::create([
+                    'product_id' => $product->id,
+                    'link_to_image' => config('image.url') . $filename,
+                ]);
+            }
+        } catch (Exception $e) {
+            Log::error($e);
+
+            return back()->with('message', trans('message.product.edit.error'));
+        }
+
+        return redirect()->route('admin.products.index')->with('message', trans('message.product.edit.success'));
     }
 
     /**
