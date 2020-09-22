@@ -38,7 +38,7 @@
                     <td>{{ $product->description ?? '' }}</td>
                     <td>{{ $product->price ?? '' }}</td>
                     <td>{{ $product->in_stock ?? '' }}</td>
-                    <td><img class="img-fluid image-size" src="{{ $product->images->first() ? $product->images->first()->link_to_image : '' }}"></td>
+                    <td><img class="img-fluid image-size-admin" src="{{ $product->images->first() ? $product->images->first()->link_to_image : '' }}"></td>
                     <td>
                         <a href="{{ route('admin.products.edit', $product->id) }}"><button type="button" class="btn btn-warning">{{ trans('text.edit') }}</button></a>
 

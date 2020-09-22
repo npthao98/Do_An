@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'ProductController@index')->name('product.index');
+Route::get('/', 'HomeController@index')->name('index');
 
 Auth::routes();
 
@@ -21,3 +21,5 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], fu
     Route::resource('products', 'ProductController');
 });
 
+Route::get('/categories/{category}', 'ProductController@showProductByCategory')->name('product.category.index');
+Route::get('/categories', 'ProductController@index')->name('product.index');
