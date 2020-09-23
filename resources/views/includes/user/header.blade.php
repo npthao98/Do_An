@@ -121,16 +121,12 @@
             <div class="nav-depart">
                 <div class="depart-btn">
                     <i class="ti-menu"></i>
-                    <span>{{ trans('header.all_departments') }}</span>
-                    <ul class="depart-hover">
-                        <li class="active"><a href="#">{{ trans('header.women_clothing') }}</a></li>
-                        <li><a href="#">{{ trans('header.men_clothing') }}</a></li>
-                        <li><a href="#">{{ trans('header.underware') }}</a></li>
-                        <li><a href="#">{{ trans('header.kid_clothing') }}</a></li>
-                        <li><a href="#">{{ trans('header.brand_fashion') }}</a></li>
-                        <li><a href="#">{{ trans('header.accessories_shoes') }}</a></li>
-                        <li><a href="#">{{ trans('header.luxury_brands') }}</a></li>
-                    </ul>
+                    <span>{{ trans('header.all_categories') }}</span>
+                    {{-- <ul class="depart-hover">
+                        @foreach ($categories as $category)
+                            <li><a href="{{ route('product.category.index', $category->id) }}">{{ $category->name }}</a></li>
+                        @endforeach
+                    </ul> --}}
                 </div>
             </div>
             <nav class="nav-menu mobile-menu">

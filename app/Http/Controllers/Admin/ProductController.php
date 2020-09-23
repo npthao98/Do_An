@@ -106,10 +106,10 @@ class ProductController extends Controller
         } catch (Exception $e) {
             Log::error($e);
 
-            return back()->with('message', trans('message.product.edit.error'));
+            return back()->with('message', trans('message.product.update.error'));
         }
 
-        return redirect()->route('admin.products.index')->with('message', trans('message.product.edit.success'));
+        return redirect()->route('admin.products.index')->with('message', trans('message.product.update.success'));
     }
 
     /**
