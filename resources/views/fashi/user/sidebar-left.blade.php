@@ -1,4 +1,3 @@
-<div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
     <div class="filter-widget">
         <a href="{{ route('product.index') }}"><h4 class="fw-title">{{ trans('text.category') }}</h4></a>
         <ul class="filter-catagories">
@@ -75,4 +74,3 @@
             </div>
         </div>
     </div>
-</div>

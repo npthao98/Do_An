@@ -37,4 +37,13 @@ return [
     'green'=> 'Green',
     'size'=> 'Size',
     'new_products'=> 'New products',
+    'details'=> 'Details',
+    'add_to_cart'=> 'Add To Cart',
+    'customer_reviews'=> 'Customer Reviews',
+    'comments'=> 'Comments',
+    'leave_comment'=> 'Leave A Comment',
+    'email'=> 'Email',
+    'messges'=> 'Messages',
+    'send_message'=> 'Send message',
+    'related_products'=> 'Related Products',
 ];

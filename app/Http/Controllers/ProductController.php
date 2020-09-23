@@ -29,4 +29,12 @@ class ProductController extends Controller
 
         return view('fashi.user.shop', compact(['products', 'categories']));
     }
+
+    public function productDetail($id)
+    {
+        $categories = Category::whereNotNull('parent_id')->get();
+        $product = Product::findOrFail($id);
+
+        return view('fashi.user.product', compact(['product', 'categories']));
+    }
 }
