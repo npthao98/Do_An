@@ -37,4 +37,13 @@ return [
     'green'=> 'Xanh lá',
     'size'=> 'Kích cỡ',
     'new_products'=> 'Mới nhất',
+    'details'=> 'Chi tiết',
+    'add_to_cart'=> 'Thêm vào giỏ',
+    'customer_reviews'=> 'Bình luận',
+    'comments'=> 'Bình luận',
+    'leave_comment'=> 'Leave A Comment',
+    'email'=> 'Email',
+    'messges'=> 'Nhập tin nhắn...',
+    'send_message'=> 'Gửi',
+    'related_products'=> 'Sản Phẩm Tương Tự',
 ];

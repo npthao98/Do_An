@@ -20,7 +20,9 @@
     <section class="product-shop spad">
         <div class="container">
             <div class="row">
-                @include('fashi.user.sidebar-left')
+                <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
+                    @include('fashi.user.sidebar-left')
+                </div>
                 <div class="col-lg-9 order-1 order-lg-2">
                     <div class="product-show-option">
                         <div class="row">
@@ -46,13 +48,13 @@
                                             </div>
                                             <ul>
                                                 <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                <li class="quick-view"><a href="#">+ {{ trans('text.quick_view') }}</a></li>
+                                                <li class="quick-view"><a href="{{ route('product_detail', $product->id) }}">+ {{ trans('text.quick_view') }}</a></li>
                                                 <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                             </ul>
                                         </div>
                                         <div class="pi-text">
                                             <div class="catagory-name">{{ $product->categories->first()->name ?? '' }}</div>
-                                            <a href="#">
+                                            <a href="{{ route('product_detail', $product->id) }}">
                                                 <h5>{{ $product->name ?? '' }}</h5>
                                             </a>
                                             <div class="product-price">
