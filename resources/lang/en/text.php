@@ -46,4 +46,7 @@ return [
     'messges'=> 'Messages',
     'send_message'=> 'Send message',
     'related_products'=> 'Related Products',
+    'add'=> 'Add',
+    'violet'=> 'Violet',
+    'blue'=> 'Blue',
 ];

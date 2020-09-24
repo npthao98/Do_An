@@ -32,6 +32,7 @@
         <script src="{{ asset('js/dataTable.js') }}"></script>
         <script src="{{ asset('bower_components/bower_admin/dist/js/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('bower_components/bower_admin/dist/js/dataTables.bootstrap4.min.js') }}"></script>
+        <script src="{{ asset('js/addInput.js') }}"></script>
     </body>
 
 </html>

@@ -46,4 +46,7 @@ return [
     'messges'=> 'Nhập tin nhắn...',
     'send_message'=> 'Gửi',
     'related_products'=> 'Sản Phẩm Tương Tự',
+    'add'=>'Thêm',
+    'violet'=> 'Tím',
+    'blue'=> 'Xanh dương',
 ];

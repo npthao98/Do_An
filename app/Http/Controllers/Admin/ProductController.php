@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
 use App\Product;
+use App\ProductDetail;
 use App\Category;
 use App\Image;
 
@@ -43,9 +44,22 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
+        $colors = $request->colors;
+        $quantities = $request->quantities;
+        $sizes = $request->sizes;
+
         try {
             $product  = Product::create($request->all());
             $product->categories()->attach($request->category);
+
+            for ($i = 0; $i < count($colors); $i++){
+                ProductDetail::create([
+                    'product_id' => $product->id,
+                    'size' => $sizes[$i],
+                    'color' => $colors[$i],
+                    'quantity' => $quantities[$i],
+                ]);
+            }
 
             foreach ($request->images as $image) {
                 $filename = uniqid() . '-' . $image->getClientOriginalName();
