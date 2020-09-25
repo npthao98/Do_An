@@ -8,6 +8,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Fashi</title>
 
     <!-- Google Font -->
@@ -27,6 +28,7 @@
 </head>
 
 <body>
+    @include('sweetalert::alert')
 
     @include('includes.user.header')
 
@@ -46,6 +48,8 @@
     <script src="{{ asset('bower_components/bower_fashi_shop/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('bower_components/bower_fashi_shop/js/main.js') }}"></script>
     <script src="{{ asset('js/logout.js') }}"></script>
+    <script src="{{ asset('js/addToCartOneProduct.js') }}"></script>
+    <script src="{{ asset('js/removeCartItem.js') }}"></script>
 </body>
 
 </html>

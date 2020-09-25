@@ -30,4 +30,11 @@ return [
             'error' => 'Update product failed!',
         ],
     ],
+
+    'cart'=> [
+        'update'=> [
+            'success' => 'Product has been updated successfully!',
+            'error' => 'Update product failed!',
+        ],
+    ],
 ];

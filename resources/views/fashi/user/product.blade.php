@@ -64,29 +64,32 @@
                                     <h4>${{ $product->price }}<span>${{ $product->price }}</span></h4>
                                 </div>
                                 <div class="pd-color">
-                                    <h6>Color</h6>
-                                    <div class="pd-color-choose">
-                                        @foreach ($product->productDetails as $productDetailColor)
-                                            <div class="cc-item">
-                                                <input type="radio" id="cc-{{ $productDetailColor->color }}">
-                                                <label for="cc-{{ $productDetailColor->color }}" class="cc-{{ $productDetailColor->color }}"></label>
-                                            </div>
-                                        @endforeach
+                                    <h6>{{ trans('text.color') }}</h6><br><br>
+                                    <div class="form-group form-product">
+                                        <select class="form-control" name="color" value="{{ old('parent_id') }}">
+                                            @foreach ($product->productDetails->unique('color') as $productDetailColor)
+                                                <option
+                                                  value="{{ $productDetailColor->color }}">
+                                                    {{ $productDetailColor->color }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="pd-size-choose">
                                     @foreach ($product->productDetails->unique('size') as $productDetailSize)
                                         <div class="sc-item">
-                                            <input type="radio" id="sm-size">
-                                            <label for="sm-size">{{ $productDetailSize->size }}</label>
+                                            <label for="sm-size-{{ $productDetailSize->size }}">
+                                                <input type="radio" class="size-input" value="{{ $productDetailSize->size }}" id="sm-size-{{ $productDetailSize->size }}">{{ $productDetailSize->size }}
+                                            </label>
                                         </div>
                                     @endforeach
                                 </div>
                                 <div class="quantity">
                                     <div class="pro-qty">
-                                        <input type="text" value="1">
+                                        <input type="text" value="1" name="quantity">
                                     </div>
-                                    <a href="#" class="primary-btn pd-cart">{{ trans('text.add_to_cart') }}</a>
+                                    <a href="#" class="primary-btn pd-cart" data-product-id="{{ $product->id }}">{{ trans('text.add_to_cart') }}</a>
                                 </div>
                                 <ul class="pd-tags">
                                     <a href="{{ route('product.category.index', $product->categories->first()->id) }}"><li><span class="text-uppercase">{{ trans('text.category') }}:</span> {{ $product->categories->first()->name }}</li></a>

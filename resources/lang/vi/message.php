@@ -30,4 +30,11 @@ return [
             'error' => 'Chỉnh sửa sản phẩm thất bại!',
         ],
     ],
+
+    'cart' => [
+        'update'=> [
+            'success' => 'Chỉnh sửa Sản phẩm thành công!',
+            'error' => 'Chỉnh sửa sản phẩm thất bại!',
+        ],
+    ],
 ];
