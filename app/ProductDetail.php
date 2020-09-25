@@ -10,7 +10,10 @@ class ProductDetail extends Model
         'product_id',
         'size',
         'color',
+        'quantity',
     ];
+
+    protected $table = 'product_detail';
 
     public function product()
     {

@@ -61,15 +61,37 @@
                     </span>
                 @enderror
 
-                <div class="form-group form-product">
-                    <label for="in_stock" class="col-form-label">{{ trans('text.in_stock') }}:</label>
-                    <input type="number" class="form-control  @error('in_stock') is-invalid @enderror" id="in_stock" name="in_stock" value="{{ old('in_stock') }}"y min="1" max="100">
+                <div class="form-group form-product wrapper">
+                    <div>
+                        <label for="color" class="col-form-label">{{ trans('text.color') }}:</label>
+                        <select class="form-control dis col-md-2 d-sm-inline mt-3 mr-4" name="colors[]" id="color" value="{{ old('parent_id') }}">
+                            <option value="red">{{ trans('text.red') }}</option>
+                            <option value="black">{{ trans('text.black') }}</option>
+                            <option value="yellow">{{ trans('text.yellow') }}</option>
+                            <option value="green">{{ trans('text.green') }}</option>
+                            <option value="blue">{{ trans('text.blue') }}</option>
+                            <option value="violet">{{ trans('text.violet') }}</option>
+                        </select>
+
+                        <label for="size" class="col-form-label">{{ trans('text.size') }}:</label>
+                        <select class="form-control col-md-2 d-sm-inline mt-3 mr-4" name="sizes[]" id="size" value="{{ old('parent_id') }}">
+                            <option value="s">S</option>
+                            <option value="m">M</option>
+                            <option value="l">L</option>
+                            <option value="xs">XS</option>
+                        </select>
+
+                        <label for="quantity" class="col-form-label">{{ trans('text.in_stock') }}:</label>
+                        <input type="text" class="form-control col-md-2 d-sm-inline mt-3 mr-4  @error('quantity') is-invalid @enderror" id="quantity" name="quantities[]">
+                        @error('quantity')
+                            <span>
+                                <strong class="error-color">{{ $message }}</strong>
+                            </span>
+                        @enderror
+                        <a href="javascript:void(0);" class="remove_field" hidden=""><button class="btn btn-danger">{{ trans('text.delete') }}</button></a>
+                    </div><br>
+                    <button class="btn btn-info add_fields">{{ trans('text.add') }}</button>
                 </div>
-                @error('in_stock')
-                    <span>
-                        <strong class="error-color">{{ $message }}</strong>
-                    </span>
-                @enderror
 
                 <div class="form-group form-product">
                     <label for="images">{{ trans('text.image') }}:</label>
