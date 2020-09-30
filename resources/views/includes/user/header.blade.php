@@ -73,13 +73,13 @@
                         <li class="heart-icon">
                             <a href="#">
                                 <i class="icon_heart_alt"></i>
-                                <span>1</span>
+                                <span>{{-- session('cart') --}}</span>
                             </a>
                         </li>
                         <li class="cart-icon">
-                            <a href="#">
+                            <a href="{{ route('show_cart') }}">
                                 <i class="icon_bag_alt"></i>
-                                <span>3</span>
+                                <span class="cart_num">{{ session()->get('totalQuantity') ?? '' }}</span>
                             </a>
                             <div class="cart-hover">
                                 <div class="select-items">
