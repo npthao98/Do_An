@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\Category;
 use App\ProductDetail;
+use App\Order;
+use App\OrderDetail;
+use App\Http\Requests\OrderRequest;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ProductController extends Controller
@@ -204,5 +207,54 @@ class ProductController extends Controller
         ];
 
         return response()->json($result);
+    }
+
+    public function checkOut()
+    {
+        $cart = session('cart');
+
+        return view('fashi.user.check-out', compact('cart'));
+    }
+
+    public function createOrder(OrderRequest $request)
+    {
+        $cart = session('cart');
+        $data = $request->only([
+            'name',
+            'email',
+            'phone',
+            'address',
+        ]);
+
+        $data['user_id'] = auth()->id();
+        $data['status'] = config('order.pending');
+
+        try {
+            if (isset($cart)) {
+                $order  = Order::create($data);
+
+                foreach ($cart as $productDetailId => $cartItem) {
+                    OrderDetail::create([
+                        'order_id' => $order->id,
+                        'product_detail_id' => $productDetailId,
+                        'quantity' => $cartItem['quantity'],
+                    ]);
+                }
+
+                session()->forget('cart');
+            } else {
+                alert()->error(trans('text.error'), trans('text.order_error'));
+
+                return back();
+            }
+        } catch (Exception $e) {
+            alert()->error(trans('text.error'), trans('text.order_error'));
+
+            return back();
+        }
+
+        alert()->success(trans('text.success'), trans('text.order_success'));
+
+        return back();
     }
 }
