@@ -62,15 +62,32 @@
                     </span>
                 @enderror
 
-                <div class="form-group form-product">
-                    <label for="in_stock" class="col-form-label">{{ trans('text.in_stock') }}:</label>
-                    <input type="number" class="form-control  @error('in_stock') is-invalid @enderror" id="in_stock" name="in_stock" value="{{ old('in_stock') ?? $product->in_stock }}" min="1" max="100">
+                <div class="form-group form-product wrapper">
+                    <div>
+                        <label for="color" class="col-form-label">{{ trans('text.color') }}:</label>
+                        <select class="form-control dis col-md-2 d-sm-inline mt-3 mr-4" name="colors[]" id="color" value="{{ old('parent_id') }}">
+                            <option value="{{ config('productDetail.red') }}">{{ trans('text.red') }}</option>
+                            <option value="{{ config('productDetail.black') }}">{{ trans('text.black') }}</option>
+                            <option value="{{ config('productDetail.yellow') }}">{{ trans('text.yellow') }}</option>
+                            <option value="{{ config('productDetail.green') }}">{{ trans('text.green') }}</option>
+                            <option value="{{ config('productDetail.blue') }}">{{ trans('text.blue') }}</option>
+                            <option value="{{ config('productDetail.violet') }}">{{ trans('text.violet') }}</option>
+                        </select>
+
+                        <label for="size" class="col-form-label">{{ trans('text.size') }}:</label>
+                        <select class="form-control col-md-2 d-sm-inline mt-3 mr-4" name="sizes[]" id="size" value="{{ old('parent_id') }}">
+                            <option value="{{ config('productDetail.s') }}">S</option>
+                            <option value="{{ config('productDetail.m') }}">M</option>
+                            <option value="{{ config('productDetail.l') }}">L</option>
+                            <option value="{{ config('productDetail.xs') }}">XS</option>
+                        </select>
+
+                        <label for="quantities" class="col-form-label">{{ trans('text.in_stock') }}:</label>
+                        <input type="text" class="form-control col-md-2 d-sm-inline mt-3 mr-4  @error('quantities[]') is-invalid @enderror" id="quantities" name="quantities[]" required="">
+                        <a href="javascript:void(0);" class="remove_field" hidden=""><button class="btn btn-danger">{{ trans('text.delete') }}</button></a>
+                    </div><br>
+                    <button class="btn btn-info add_fields">{{ trans('text.add') }}</button>
                 </div>
-                @error('in_stock')
-                    <span>
-                        <strong class="error-color">{{ $message }}</strong>
-                    </span>
-                @enderror
 
                 <div class="form-group form-product">
                     <label for="images">{{ trans('text.image') }}:</label>

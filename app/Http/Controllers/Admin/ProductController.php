@@ -143,6 +143,10 @@ class ProductController extends Controller
             foreach ($product->images as $image) {
                 $image->delete();
             }
+
+            foreach ($product->productDetails as $productDetail) {
+                $productDetail->delete();
+            }
         } catch (Exception $e) {
             Log::error($e);
 
