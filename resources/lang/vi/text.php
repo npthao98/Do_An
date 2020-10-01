@@ -61,4 +61,13 @@ return [
     'add_to_cart_error' => 'Thêm vào giỏ lỗi',
     'delete_success' => 'Xóa thành công',
     'delete_error' => 'Xóa thất bại',
+    'billing_details'=> 'Chi Tiết Đơn Hàng',
+    'street_address'=> 'Địa chỉ',
+    'phone'=> 'Số điện thoại',
+    'your_order'=> 'Đơn Hàng',
+    'place_order'=> 'Đặt Hàng',
+    'error' => 'Lỗi',
+    'success' => 'Thành công',
+    'order_error' => 'Đặt hàng lỗi',
+    'order_success' => 'Đặt hàng thành công',
 ];

@@ -7,9 +7,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text product-more">
-                        <a href="#"><i class="fa fa-home"></i>Home</a>
-                        <a href="#">Shop</a>
-                        <span>Check Out</span>
+                        <a href="#"><i class="fa fa-home"></i>{{ trans('header.home') }}</a>
+                        <a href="#">{{ trans('header.shop') }}</a>
+                        <span>{{ trans('text.check_out') }}</span>
                     </div>
                 </div>
             </div>
@@ -20,95 +20,70 @@
     <!-- Shopping Cart Section Begin -->
     <section class="checkout-section spad">
         <div class="container">
-            <form action="#" class="checkout-form">
+            <form method="POST" class="checkout-form" action="{{ route('create_order') }}" enctype="multipart/form-data">
+                @csrf
                 <div class="row">
                     <div class="col-lg-6">
-                        <div class="checkout-content">
-                            <a href="#" class="content-btn">Click Here To Login</a>
-                        </div>
-                        <h4>Biiling Details</h4>
+                        <h4>{{ trans('text.billing_details') }}</h4>
                         <div class="row">
+                            <div class="col-lg-12">
+                                <label for="name">{{ trans('text.name') }}<span>*</span></label>
+                                <input type="text" class="mb-3 @error ('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}">
+                                @error ('name')
+                                    <span>
+                                        <strong class="error-color">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="col-lg-12">
+                                <label for="address">{{ trans('text.street_address') }}<span>*</span></label>
+                                <input type="text" class="mb-3 @error ('address') is-invalid @enderror" id="address" name="address" value="{{ old('address') }}">
+                                @error ('address')
+                                    <span>
+                                        <strong class="error-color">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
                             <div class="col-lg-6">
-                                <label for="fir">First Name<span>*</span></label>
-                                <input type="text" id="fir">
+                                <label for="email">{{ trans('text.email') }}<span>*</span></label>
+                                <input type="text" class="mb-3 @error ('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}">
+                                @error ('email')
+                                    <span>
+                                        <strong class="error-color">{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
+
                             <div class="col-lg-6">
-                                <label for="last">Last Name<span>*</span></label>
-                                <input type="text" id="last">
-                            </div>
-                            <div class="col-lg-12">
-                                <label for="cun-name">Company Name</label>
-                                <input type="text" id="cun-name">
-                            </div>
-                            <div class="col-lg-12">
-                                <label for="cun">Country<span>*</span></label>
-                                <input type="text" id="cun">
-                            </div>
-                            <div class="col-lg-12">
-                                <label for="street">Street Address<span>*</span></label>
-                                <input type="text" id="street" class="street-first">
-                                <input type="text">
-                            </div>
-                            <div class="col-lg-12">
-                                <label for="zip">Postcode / ZIP (optional)</label>
-                                <input type="text" id="zip">
-                            </div>
-                            <div class="col-lg-12">
-                                <label for="town">Town / City<span>*</span></label>
-                                <input type="text" id="town">
-                            </div>
-                            <div class="col-lg-6">
-                                <label for="email">Email Address<span>*</span></label>
-                                <input type="text" id="email">
-                            </div>
-                            <div class="col-lg-6">
-                                <label for="phone">Phone<span>*</span></label>
-                                <input type="text" id="phone">
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="create-item">
-                                    <label for="acc-create">
-                                        Create an account?
-                                        <input type="checkbox" id="acc-create">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
+                                <label for="phone">{{ trans('text.phone') }}<span>*</span></label>
+                                <input type="text" class="mb-3 @error ('phone') is-invalid @enderror" id="phone" name="phone" value="{{ old('phone') }}">
+                                @error ('phone')
+                                    <span>
+                                        <strong class="error-color">{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <div class="checkout-content">
-                            <input type="text" placeholder="Enter Your Coupon Code">
-                        </div>
                         <div class="place-order">
-                            <h4>Your Order</h4>
+                            <h4>{{ trans('text.your_order') }}</h4>
                             <div class="order-total">
                                 <ul class="order-table">
-                                    <li>Product <span>Total</span></li>
-                                    <li class="fw-normal">Combination x 1 <span>$60.00</span></li>
-                                    <li class="fw-normal">Combination x 1 <span>$60.00</span></li>
-                                    <li class="fw-normal">Combination x 1 <span>$120.00</span></li>
-                                    <li class="fw-normal">Subtotal <span>$240.00</span></li>
-                                    <li class="total-price">Total <span>$240.00</span></li>
+                                    <li>{{ trans('text.product') }}<span>{{ trans('text.total') }}</span></li>
+                                    @php $totalPrice = 0; @endphp
+                                    @if (isset($cart))
+                                        @foreach ($cart as $productCart)
+                                            <li class="fw-normal">{{ $productCart['name'] }} x {{ $productCart['quantity'] }} ({{ $productCart['color'] }}) <span>${{ $subTotal = $productCart['price'] * $productCart['quantity'] }}</span></li>
+                                            @php $totalPrice += $subTotal; @endphp
+                                        @endforeach
+                                    @endif
+                                    <li class="total-price">{{ trans('text.total') }}<span>${{ $totalPrice }}</span></li>
                                 </ul>
-                                <div class="payment-check">
-                                    <div class="pc-item">
-                                        <label for="pc-check">
-                                            Cheque Payment
-                                            <input type="checkbox" id="pc-check">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                    <div class="pc-item">
-                                        <label for="pc-paypal">
-                                            Paypal
-                                            <input type="checkbox" id="pc-paypal">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </div>
                                 <div class="order-btn">
-                                    <button type="submit" class="site-btn place-btn">Place Order</button>
+                                    <button type="submit" @if (!isset($cart)) disabled="" @endif class="site-btn place-btn">{{ trans('text.place_order') }}</button>
                                 </div>
                             </div>
                         </div>

@@ -29,3 +29,5 @@ Route::post('carts/{product}','ProductController@addToCart')->name('add_to_cart'
 Route::post('/carts', 'ProductController@updateCart')->name('update_cart');
 Route::delete('/carts/{product_detail}', 'ProductController@removeCartItem')->name('remove_cart_item');
 Route::delete('/carts/', 'ProductController@removeAllCart')->name('remove_all_cart');
+Route::get('/checkouts', 'ProductController@checkOut')->name('check_out');
+Route::post('/checkouts', 'ProductController@createOrder')->name('create_order')->middleware('auth');

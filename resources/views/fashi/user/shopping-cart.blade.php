@@ -66,7 +66,7 @@
                             <div class="col-lg-4">
                                 <div class="cart-buttons">
                                     <a href="{{ route('product.index') }}" class="primary-btn continue-shop">{{ trans('text.continue_shopping') }}</a>
-                                    <input class="primary-btn up-cart" type="submit" name="" value="{{ trans('text.update_cart') }}">
+                                    <input class="primary-btn up-cart" @if (!isset($cart)) disabled="" @endif type="submit" name="" value="{{ trans('text.update_cart') }}">
                                 </div>
                             </div>
                             <div class="col-lg-4 offset-lg-4">
@@ -75,7 +75,7 @@
                                         {{-- <li class="subtotal">Subtotal <span>$240.00</span></li> --}}
                                         <li class="cart-total">{{ trans('text.total_price') }}<span>${{ $totalPrice }}</span></li>
                                     </ul>
-                                    <a href="#" class="proceed-btn">{{ trans('text.check_out') }}</a>
+                                    <a href="{{ route('check_out') }}" class="proceed-btn">{{ trans('text.check_out') }}</a>
                                 </div>
                             </div>
                         </div>

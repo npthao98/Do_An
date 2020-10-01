@@ -10,6 +10,10 @@ class Order extends Model
         'user_id',
         'status',
         'price',
+        'name',
+        'email',
+        'phone',
+        'address',
     ];
 
     public function user()

@@ -12,6 +12,8 @@ class OrderDetail extends Model
         'quantity',
     ];
 
+    protected $table = 'order_detail';
+
     public function order()
     {
         return $this->belongsTo(Order::class);
