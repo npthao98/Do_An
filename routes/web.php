@@ -13,12 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', 'HomeController@index')->name('index');
-
 Auth::routes();
 
 Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], function() {
     Route::resource('categories', 'CategoryController');
     Route::resource('products', 'ProductController');
+    Route::get('orders', 'ProductController@showOrder')->name('orders');
+    Route::post('orders/success/{order}', 'ProductController@orderSuccess')->name('orders.success');
+    Route::post('orders/cancel/{order}', 'ProductController@orderCancel')->name('orders.cancel');
+    Route::post('orders/pending/{order}', 'ProductController@orderPending')->name('orders.pending');
 });
 
 Route::get('/categories/{category}', 'ProductController@showProductByCategory')->name('product.category.index');
