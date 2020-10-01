@@ -76,4 +76,13 @@ return [
     'cancel' => 'Cancel',
     'sold_out' => 'Sold out',
     'order' => 'Order',
+    'update' => 'Update',
+    'update_user_success' => 'Update user success!.',
+    'update_user_error' => 'Update user error!.',
+    'profile' => 'Profile',
+    'profile_user' => 'Profile User',
+    'history_order' => 'History Order',
+    'change_password' => 'change password',
+    'old_password' => 'Old password',
+    'new_password' => 'New password',
 ];

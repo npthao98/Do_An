@@ -37,4 +37,14 @@ return [
             'error' => 'Chỉnh sửa sản phẩm thất bại!',
         ],
     ],
+
+    'password'=> [
+        'update'=> [
+            'success' => 'Mật khẩu được cập nhập thành công!',
+            'error' => [
+                'not_match' => 'Mật khẩu không khớp',
+                'incorrect' => 'Cập nhập mật khẩu lỗi',
+            ],
+        ],
+    ],
 ];
