@@ -9,7 +9,6 @@ $(document).ready(function() {
         var page = myurl.split('page=')[1];
         getData(page);
     });
-
 });
 
 function getData(page) {

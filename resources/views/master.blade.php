@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="{{ asset('bower_components/bower_fashi_shop/css/slicknav.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('bower_components/bower_fashi_shop/css/style.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css">
+
+
 </head>
 
 <body>
@@ -37,7 +39,9 @@
     @include('includes.user.footer')
 
     <!-- Js Plugins -->
+
     <script src="{{ asset('bower_components/bower_fashi_shop/js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bower_fashi_shop/js/popper.min.js') }}"></script>
     <script src="{{ asset('bower_components/bower_fashi_shop/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('bower_components/bower_fashi_shop/js/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('bower_components/bower_fashi_shop/js/jquery.countdown.min.js') }}"></script>

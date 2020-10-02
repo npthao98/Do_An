@@ -85,4 +85,5 @@ return [
     'change_password' => 'change password',
     'old_password' => 'Old password',
     'new_password' => 'New password',
+    'save_change' => 'Save change',
 ];

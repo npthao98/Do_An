@@ -43,3 +43,4 @@ Route::prefix('users')->group(function () {
 });
 
 Route::post('/comments/{product}', 'CommentController@createComment')->name('create.comment');
+Route::put('/comments/edit/{comment}', 'CommentController@editComment')->name('edit.comment');

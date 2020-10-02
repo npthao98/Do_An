@@ -85,4 +85,5 @@ return [
     'change_password' => 'thay đổi mật khẩu',
     'old_password' => 'Mật khẩu cũ',
     'new_password' => 'Mật khẩu mới',
+    'save_change' => 'Lưu thay đổi',
 ];
