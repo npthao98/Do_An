@@ -8,6 +8,7 @@ use App\Category;
 use App\ProductDetail;
 use App\Order;
 use App\OrderDetail;
+use App\Comment;
 use App\Http\Requests\OrderRequest;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -35,10 +36,17 @@ class ProductController extends Controller
         return view('fashi.user.shop', compact(['products', 'categories']));
     }
 
-    public function productDetail($id)
+    public function productDetail(Request $request, $id)
     {
         $categories = Category::whereNotNull('parent_id')->get();
         $product = Product::findOrFail($id);
+        $comments = Comment::where('product_id', $id)->orderBy('created_at', 'desc')->paginate(config('comment.paginate'));
+        if ($request->ajax()) {
+            if ($request->has('page')) {
+                return view('fashi.user.comment', compact('comments', 'products'));
+            }
+        }
+
         $cart = session('cart');
         $totalQuantity = 0;
         if (isset($cart)) {
@@ -49,7 +57,7 @@ class ProductController extends Controller
 
         session()->put('totalQuantity', $totalQuantity);
 
-        return view('fashi.user.product', compact(['product', 'categories']));
+        return view('fashi.user.product', compact(['product', 'categories', 'comments']));
     }
 
     public function showCart()

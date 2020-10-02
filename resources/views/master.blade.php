@@ -50,6 +50,8 @@
     <script src="{{ asset('js/logout.js') }}"></script>
     <script src="{{ asset('js/addToCartOneProduct.js') }}"></script>
     <script src="{{ asset('js/removeCartItem.js') }}"></script>
+
+    @yield('javascript')
 </body>
 
 </html>
