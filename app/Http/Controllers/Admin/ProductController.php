@@ -47,11 +47,19 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $colors = $request->colors;
-        $quantities = $request->quantities;
         $sizes = $request->sizes;
+        $quantities = $request->quantities;
+        $data = $request->all();
+        $totalQuantity = 0;
+
+        foreach ($quantities as $quantity) {
+            $totalQuantity += $quantity;
+        }
+
+        $data['in_stock'] = $totalQuantity;
 
         try {
-            $product  = Product::create($request->all());
+            $product  = Product::create($data);
             $product->categories()->attach($request->category);
 
             for ($i = 0; $i < count($colors); $i++){
@@ -170,7 +178,28 @@ class ProductController extends Controller
         $order = Order::findOrFail($id);
 
         try {
+            foreach ($order->orderDetails as $orderDetail) {
+                $productDetail = $orderDetail->productDetail;
+                $product = $productDetail->product;
+
+                $orderDetailQuantity = $orderDetail->quantity;
+                $productDetailQuantity = $productDetail->quantity;
+
+                $productDetailInStock = $productDetailQuantity - $orderDetailQuantity;
+                $productInStock = $product->in_stock - $orderDetailQuantity;
+
+                if ($productDetailInStock >= 0 || $productInStock >= 0) {
+                    $productDetail->update(['quantity' => $productDetailInStock]);
+                    $product->update(['in_stock' => $productInStock]);
+                } else {
+                    toast(trans('message.cart.update.error'), 'error');
+
+                    return back();
+                }
+            }
+
             $order->update(['status' => config('order.success')]);
+
         } catch (Exception $e) {
             Log::error($e);
             toast(trans('message.cart.update.error'), 'error');

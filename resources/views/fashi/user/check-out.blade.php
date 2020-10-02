@@ -76,7 +76,7 @@
                                     @php $totalPrice = 0; @endphp
                                     @if (isset($cart))
                                         @foreach ($cart as $productCart)
-                                            <li class="fw-normal">{{ $productCart['name'] }} x {{ $productCart['quantity'] }} ({{ $productCart['color'] }}) <span>${{ $subTotal = $productCart['price'] * $productCart['quantity'] }}</span></li>
+                                            <li class="fw-normal">{{ $productCart['name'] }} x {{ $productCart['quantity'] }} ({{ $productCart['color'] }} - {{ $productCart['size'] }}) <span>${{ $subTotal = $productCart['price'] * $productCart['quantity'] }}</span></li>
                                             @php $totalPrice += $subTotal; @endphp
                                         @endforeach
                                     @endif

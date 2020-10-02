@@ -42,7 +42,9 @@
                                     <div class="product-item">
                                         <div class="pi-pic">
                                             <img class="image-size-user" src="{{ $product->images->first() ? $product->images->first()->link_to_image : '' }}" alt="">
-                                            <div class="sale pp-sale">{{ trans('text.sale') }}</div>
+                                            @if ($product->in_stock <= 0)
+                                                <div class="sale pp-sale">{{ trans('text.sold_out') }}</div>
+                                            @endif
                                             <div class="icon">
                                                 <i class="icon_heart_alt"></i>
                                             </div>

@@ -89,7 +89,13 @@
                                     <div class="pro-qty">
                                         <input type="text" value="1" name="quantity">
                                     </div>
-                                    <a href="#" class="primary-btn pd-cart" data-product-id="{{ $product->id }}">{{ trans('text.add_to_cart') }}</a>
+                                    <a href="#" class="primary-btn
+                                        @if ($product->in_stock > 0)
+                                            pd-cart
+                                        @else
+                                            pd-sold-out-cart
+                                        @endif
+                                        " data-product-id="{{ $product->id }}">{{ trans('text.add_to_cart') }}</a>
                                 </div>
                                 <ul class="pd-tags">
                                     <a href="{{ route('product.category.index', $product->categories->first()->id) }}"><li><span class="text-uppercase">{{ trans('text.category') }}:</span> {{ $product->categories->first()->name }}</li></a>

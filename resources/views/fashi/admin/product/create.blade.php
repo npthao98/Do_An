@@ -13,7 +13,7 @@
             <div class="card-body">
                 <div class="form-group form-product">
                     <label for="name" class="col-form-label">{{ trans('text.name') }}:</label>
-                    <input type="text" class="form-control  @ error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" required="">
+                    <input type="text" class="form-control  @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" required="">
                 </div>
                 @error('name')
                     <span>
