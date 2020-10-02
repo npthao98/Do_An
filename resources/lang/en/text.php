@@ -70,4 +70,8 @@ return [
     'success' => 'Success',
     'order_error' => 'Order Error',
     'order_success' => 'Order Success',
+    'show' => 'Show',
+    'order_date' => 'Order date',
+    'pending' => 'Pending',
+    'cancel' => 'Cancel',
 ];

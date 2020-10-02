@@ -70,4 +70,8 @@ return [
     'success' => 'Thành công',
     'order_error' => 'Đặt hàng lỗi',
     'order_success' => 'Đặt hàng thành công',
+    'show' => 'Chi tiết',
+    'order_date' => 'Ngày tạo đơn',
+    'pending' => 'Chờ xử lý',
+    'cancel' => 'Hủy đơn',
 ];

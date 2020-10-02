@@ -9,6 +9,8 @@ use App\Product;
 use App\ProductDetail;
 use App\Category;
 use App\Image;
+use App\Order;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProductController extends Controller
 {
@@ -154,5 +156,65 @@ class ProductController extends Controller
         }
 
         return redirect()->route('admin.products.index')->with('message', trans('message.product.delete.success'));
+    }
+
+    public function showOrder()
+    {
+        $orders = Order::all();
+
+        return view('fashi.admin.order.index', compact('orders'));
+    }
+
+    public function orderSuccess($id)
+    {
+        $order = Order::findOrFail($id);
+
+        try {
+            $order->update(['status' => config('order.success')]);
+        } catch (Exception $e) {
+            Log::error($e);
+            toast(trans('message.cart.update.error'), 'error');
+
+            return back();
+        }
+
+        toast(trans('message.cart.update.success'), 'success');
+
+        return back();
+    }
+
+    public function orderCancel($id)
+    {
+        $order = Order::findOrFail($id);
+        try {
+            $order->update(['status' => config('order.cancel')]);
+        } catch (Exception $e) {
+            Log::error($e);
+            toast(trans('message.cart.update.error'), 'error');
+
+            return back();
+        }
+
+        toast(trans('message.cart.update.sucess'), 'success');
+
+        return back();
+    }
+
+    public function orderPending($id)
+    {
+        $order = Order::findOrFail($id);
+
+        try {
+            $order->update(['status' => config('order.pending')]);
+        } catch (Exception $e) {
+            Log::error($e);
+            toast(trans('message.cart.update.error'), 'error');
+
+            return back();
+        }
+
+        toast(trans('message.cart.update.success'), 'success');
+
+        return back();
     }
 }

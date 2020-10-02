@@ -14,10 +14,11 @@
     </head>
 
     <body class="hold-transition sidebar-mini">
+        @include('sweetalert::alert')
 
-            @include('includes.admin.header')
+        @include('includes.admin.header')
 
-            @yield('content')
+        @yield('content')
 
         <!-- ./wrapper -->
         <!-- jQuery -->
