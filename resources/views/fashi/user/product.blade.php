@@ -49,7 +49,6 @@
                                 <div class="pd-title">
                                     <span>{{ $product->categories->first()->name }}</span>
                                     <h3>{{ $product->name }}</h3>
-                                    <a href="#" class="heart-icon"><i class="icon_heart_alt"></i></a>
                                 </div>
                                 <div class="pd-rating">
                                     <i class="fa fa-star"></i>
@@ -102,9 +101,6 @@
                                 </ul>
                                 <div class="pd-share">
                                     <div class="pd-social">
-                                        <a href="#"><i class="ti-facebook"></i></a>
-                                        <a href="#"><i class="ti-twitter-alt"></i></a>
-                                        <a href="#"><i class="ti-linkedin"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -177,29 +173,29 @@
                 </div>
             </div>
             <div class="row">
-                @foreach ($product->images as $image)
+                @foreach ($products as $productRandom)
                     <div class="col-lg-3 col-sm-6">
                         <div class="product-item">
                             <div class="pi-pic">
-                                <img src="{{ $image->link_to_image }}" alt="">
+                                <img src="{{ $productRandom->images->first()->link_to_image }}" alt="">
                                 <div class="sale">{{ trans('text.sale') }}</div>
                                 <div class="icon">
                                     <i class="icon_heart_alt"></i>
                                 </div>
                                 <ul>
                                     <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view"><a href="#">+ {{ trans('text.quick_view') }}</a></li>
+                                    <li class="quick-view"><a href="{{ route('product_detail', $productRandom->id) }}">+ {{ trans('text.quick_view') }}</a></li>
                                     <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                 </ul>
                             </div>
                             <div class="pi-text">
-                                <div class="catagory-name">{{ $product->categories->first()->name }}</div>
-                                <a href="#">
-                                    <h5>{{ $product->name }}</h5>
+                                <div class="catagory-name">{{ $productRandom->categories->first()->name }}</div>
+                                <a href="{{ route('product_detail', $productRandom->id) }}">
+                                    <h5>{{ $productRandom->name }}</h5>
                                 </a>
                                 <div class="product-price">
-                                    {{ $product->price }}
-                                    <span>{{ $product->price }}</span>
+                                    ${{ $productRandom->price }}
+                                    <span>${{ $productRandom->price }}</span>
                                 </div>
                             </div>
                         </div>

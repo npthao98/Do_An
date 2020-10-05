@@ -41,7 +41,7 @@
                                     @if (isset($cart))
                                         @foreach ($cart as $productCart)
                                             <tr>
-                                                <td class="cart-pic first-row"><img src="{{ asset('bower_components/bower_fashi_shop/img/cart-page/product-1.jpg') }}" alt=""></td>
+                                                <td class="cart-pic first-row"><img class="w-75" src="{{ $productCart['image'] }}" alt=""></td>
                                                 <td class="cart-title first-row">
                                                     <h5>{{ $productCart['name'] }}</h5>
                                                 </td>

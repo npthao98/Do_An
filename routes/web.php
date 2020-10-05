@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomeController@index')->name('index');
 Auth::routes();
 
-Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], function() {
+Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function() {
     Route::resource('categories', 'CategoryController');
     Route::resource('products', 'ProductController');
     Route::get('orders', 'ProductController@showOrder')->name('orders');

@@ -33,4 +33,5 @@ return [
     'tables'=> 'Bảng',
     'datatables'=> 'Bảng dữ liệu',
     'search'=> 'Tìm kiếm',
+    'new_product'=> 'Sản phẩm mới',
 ];

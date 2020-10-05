@@ -8,12 +8,14 @@
     <div class="header-top">
         <div class="container">
             <div class="ht-left">
-                <div class="mail-service">
-                    @if (isset(Auth::user()->name))
-                        <i class=" fa fa-envelope"></i>
-                        {{ trans('header.hello') }} {{ Auth::user()->name }}
-                    @endif
-                </div>
+                <a href="{{ route('user') }}">
+                    <div class="mail-service">
+                        @if (isset(Auth::user()->name))
+                            <i class=" fa fa-envelope"></i>
+                            {{ trans('header.hello') }} {{ Auth::user()->name }}
+                        @endif
+                    </div>
+                </a>
                 <div class="phone-service">
                     <i class=" fa fa-phone"></i>
                     +65 11.188.888
@@ -40,12 +42,7 @@
                             data-title="Vietnamese">{{ trans('header.vietnamese') }} </option>
                     </select>
                 </div>
-                <div class="top-social">
-                    <a href="#"><i class="ti-facebook"></i></a>
-                    <a href="#"><i class="ti-twitter-alt"></i></a>
-                    <a href="#"><i class="ti-linkedin"></i></a>
-                    <a href="#"><i class="ti-pinterest"></i></a>
-                </div>
+                <div class="top-social"></div>
             </div>
         </div>
     </div>
@@ -118,11 +115,11 @@
                 <div class="depart-btn">
                     <i class="ti-menu"></i>
                     <span>{{ trans('header.all_categories') }}</span>
-                    {{-- <ul class="depart-hover">
+                    <ul class="depart-hover">
                         @foreach ($categories as $category)
                             <li><a href="{{ route('product.category.index', $category->id) }}">{{ $category->name }}</a></li>
                         @endforeach
-                    </ul> --}}
+                    </ul>
                 </div>
             </div>
             <nav class="nav-menu mobile-menu">
