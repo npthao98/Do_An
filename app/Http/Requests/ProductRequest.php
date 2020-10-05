@@ -33,7 +33,6 @@ class ProductRequest extends FormRequest
             ],
             'description' => 'required|string',
             'price' => 'required|numeric',
-            'quantities[]' => 'required',
             'images' => 'max:10240|required',
             'category' => 'required',
         ];

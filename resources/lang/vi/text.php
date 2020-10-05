@@ -74,4 +74,6 @@ return [
     'order_date' => 'Ngày tạo đơn',
     'pending' => 'Chờ xử lý',
     'cancel' => 'Hủy đơn',
+    'sold_out' => 'Hết hàng',
+    'order' => 'Đơn hàng',
 ];

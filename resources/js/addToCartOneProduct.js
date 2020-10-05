@@ -31,6 +31,14 @@ $(document).ready(function(){
             }
         });
     });
+
+    $('.pd-sold-out-cart').click(function(e) {
+        e.preventDefault();
+        Swal.fire({
+            icon: 'warning',
+            title: 'Sold Out',
+        })
+    });
 });
 
 function sweetDelete(icon, message) {
@@ -48,6 +56,6 @@ function sweetDelete(icon, message) {
 
     Toast.fire({
         icon: icon,
-        title: message
+        title: message,
     })
 }

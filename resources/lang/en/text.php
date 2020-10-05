@@ -74,4 +74,6 @@ return [
     'order_date' => 'Order date',
     'pending' => 'Pending',
     'cancel' => 'Cancel',
+    'sold_out' => 'Sold out',
+    'order' => 'Order',
 ];

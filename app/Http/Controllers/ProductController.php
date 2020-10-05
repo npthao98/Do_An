@@ -142,7 +142,7 @@ class ProductController extends Controller
                     $subTotal = $cart[$key]['quantity'] * $cart[$key]['price'];
                     $totalPrice += $subTotal;
                 } else {
-                    toast(trans('message.cart.update.sucess'),'success');
+                    toast(trans('message.cart.update.success'),'success');
 
                     return back();
                 }
@@ -155,7 +155,7 @@ class ProductController extends Controller
             return back();
         }
 
-        toast(trans('message.cart.update.sucess'),'success');
+        toast(trans('message.cart.update.success'),'success');
 
         return back();
     }

@@ -64,6 +64,12 @@
                                 <p>{{ trans('text.product') }}</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.orders') }}" class="nav-link active">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{ trans('text.order') }}</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>

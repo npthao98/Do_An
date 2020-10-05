@@ -81,7 +81,7 @@
                                                 @foreach ($order->orderDetails as $orderDetail)
                                                     <tr>
                                                         <th scope="row">{{ $count++ }}</th>
-                                                        <td>{{  $orderDetail->productDetail->product->name }} x {{ $orderDetail->quantity }} ({{ $orderDetail->productDetail->color }})</td>
+                                                        <td>{{  $orderDetail->productDetail->product->name }} x {{ $orderDetail->quantity }} ({{ $orderDetail->productDetail->color }} - {{ $orderDetail->productDetail->size }})</td>
                                                         <td>${{ $orderDetail->quantity * $orderDetail->productDetail->product->price }}</td>
                                                     </tr>
                                                 @endforeach
