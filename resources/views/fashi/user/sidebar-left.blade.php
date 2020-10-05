@@ -6,7 +6,7 @@
             @endforeach
         </ul>
     </div>
-    <div class="filter-widget">
+    {{-- <div class="filter-widget">
         <h4 class="fw-title">{{ trans('text.price') }}</h4>
         <div class="filter-range-wrap">
             <div class="range-slider">
@@ -73,4 +73,4 @@
                 <label for="xs-size">xs</label>
             </div>
         </div>
-    </div>
+    </div> --}}

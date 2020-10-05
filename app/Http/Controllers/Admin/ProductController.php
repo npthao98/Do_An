@@ -224,7 +224,7 @@ class ProductController extends Controller
             return back();
         }
 
-        toast(trans('message.cart.update.sucess'), 'success');
+        toast(trans('message.cart.update.success'), 'success');
 
         return back();
     }

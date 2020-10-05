@@ -27,6 +27,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], fu
 Route::get('/categories/{category}', 'ProductController@showProductByCategory')->name('product.category.index');
 Route::get('/categories', 'ProductController@index')->name('product.index');
 Route::get('/products/{product}', 'ProductController@productDetail')->name('product_detail');
+Route::get('/new-product', 'ProductController@newProduct')->name('new_product');
 Route::get('/carts', 'ProductController@showCart')->name('show_cart');
 Route::post('carts/{product}','ProductController@addToCart')->name('add_to_cart');
 Route::post('/carts', 'ProductController@updateCart')->name('update_cart');
