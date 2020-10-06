@@ -37,4 +37,14 @@ return [
             'error' => 'Update product failed!',
         ],
     ],
+
+    'password'=> [
+        'update'=> [
+            'success' => 'password has been updated successfully!',
+            'error' => [
+                'not_match' => 'The password doesn`t match',
+                'incorrect' => 'Password is not correct',
+            ],
+        ],
+    ],
 ];

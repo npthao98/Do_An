@@ -212,8 +212,11 @@ class ProductController extends Controller
     public function checkOut()
     {
         $cart = session('cart');
+        if (auth()->check()) {
+            $user = auth()->user();
+        }
 
-        return view('fashi.user.check-out', compact('cart'));
+        return view('fashi.user.check-out', compact(['cart', 'user']));
     }
 
     public function createOrder(OrderRequest $request)

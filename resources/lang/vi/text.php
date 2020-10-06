@@ -76,4 +76,13 @@ return [
     'cancel' => 'Hủy đơn',
     'sold_out' => 'Hết hàng',
     'order' => 'Đơn hàng',
+    'update' => 'Cập nhập',
+    'update_user_success' => 'Cập nhập tài khoản thành công!.',
+    'update_user_error' => 'Cập nhập tài khoản thất bại!.',
+    'profile' => 'Cá nhân',
+    'profile_user' => 'Thông tin cá nhân',
+    'history_order' => 'Lịch sử đơn hàng',
+    'change_password' => 'thay đổi mật khẩu',
+    'old_password' => 'Mật khẩu cũ',
+    'new_password' => 'Mật khẩu mới',
 ];
