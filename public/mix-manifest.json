@@ -1,0 +1,12 @@
+{
+    "/js/addInput.js": "/js/addInput.js",
+    "/js/addToCartOneProduct.js": "/js/addToCartOneProduct.js",
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/css/style.css": "/css/style.css",
+    "/js/comment.js": "/js/comment.js",
+    "/js/dataTable.js": "/js/dataTable.js",
+    "/js/loadComment.js": "/js/loadComment.js",
+    "/js/logout.js": "/js/logout.js",
+    "/js/removeCartItem.js": "/js/removeCartItem.js"
+}

@@ -123,50 +123,37 @@
                                 <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
                                     <div class="customer-review-option">
                                         <h4>{{ trans('text.comments') }}</h4>
-                                        <div class="comment-option">
-                                            <div class="co-item">
-                                                <div class="avatar-pic">
-                                                    <img src="{{ asset('bower_components/bower_fashi_shop/img/product-single/avatar-2.png') }}" alt="">
-                                                </div>
-                                                <div class="avatar-text">
-                                                    <div class="at-rating">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <h5>{{-- Roy Banks --}}<span>{{-- 27 Aug 2019 --}}</span></h5>
-                                                    <div class="at-reply">{{-- Nice ! --}}</div>
-                                                </div>
-                                            </div>
+                                        <div class="tag-container">
+                                            @include('fashi.user.comment')
                                         </div>
-                                        <div class="personal-rating">
-                                            <h6>{{-- Your Rating --}}</h6>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-o"></i>
-                                            </div>
-                                        </div>
+
                                         <div class="leave-comment">
                                             <h4>{{ trans('text.leave_comment') }}</h4>
-                                            <form action="#" class="comment-form">
+                                            <div class="comment-form">
                                                 <div class="row">
-                                                    <div class="col-lg-6">
-                                                        <input type="text" placeholder="{{ trans('text.name') }}">
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <input type="text" placeholder="{{ trans('text.email') }}">
+                                                    <div class="comment-option pl-4">
+                                                        <div class="co-item">
+                                                            <div class="avatar-pic">
+                                                                <img src="{{ asset('bower_components/bower_fashi_shop/img/product-single/avatar-2.png') }}" alt="">
+                                                            </div>
+                                                            <div class="avatar-text">
+                                                                <div class="at-rating">
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star-o"></i>
+                                                                </div>
+                                                                <h5>{{ auth()->user()->name ?? ''}}</h5>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="col-lg-12">
-                                                        <textarea placeholder="{{ trans('text.messges') }}"></textarea>
-                                                        <button type="submit" class="site-btn">{{ trans('text.send_message') }}</button>
+                                                        <textarea placeholder="{{ trans('text.messges') }}" name="content" required="">{{ old('content') }}</textarea>
+                                                        <button type="submit" class="site-btn" data-name="{{ auth()->user()->name ?? '' }}" data-product-id="{{ $product->id }}">{{ trans('text.send_message') }}</button>
                                                     </div>
                                                 </div>
-                                            </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -222,4 +209,10 @@
         </div>
     </div>
     <!-- Related Products Section End -->
+
+
+@endsection
+@section ('javascript')
+    <script src="{{ asset('js/comment.js') }}"></script>
+    <script src="{{ asset('js/loadComment.js') }}"></script>
 @endsection
