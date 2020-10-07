@@ -86,4 +86,7 @@ return [
     'old_password' => 'Mật khẩu cũ',
     'new_password' => 'Mật khẩu mới',
     'save_change' => 'Lưu thay đổi',
+    'role' => 'Vai trò',
+    'user' => 'Người dùng',
+    'change_role' => 'Đổi vai trò',
 ];

@@ -86,4 +86,7 @@ return [
     'old_password' => 'Old password',
     'new_password' => 'New password',
     'save_change' => 'Save change',
+    'role' => 'Role',
+    'user' => 'User',
+    'change_role' => 'Change role',
 ];

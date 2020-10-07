@@ -22,6 +22,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], fu
     Route::post('orders/success/{order}', 'ProductController@orderSuccess')->name('orders.success');
     Route::post('orders/cancel/{order}', 'ProductController@orderCancel')->name('orders.cancel');
     Route::post('orders/pending/{order}', 'ProductController@orderPending')->name('orders.pending');
+    Route::get('users', 'UserController@index')->name('user.index');
+    Route::post('users/{user}', 'UserController@changeRole')->name('change_role');
 });
 
 Route::get('/categories/{category}', 'ProductController@showProductByCategory')->name('product.category.index');

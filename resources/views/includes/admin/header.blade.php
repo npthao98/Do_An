@@ -70,6 +70,12 @@
                                 <p>{{ trans('text.order') }}</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.user.index') }}" class="nav-link active">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{ trans('text.user') }}</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>
