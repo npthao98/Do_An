@@ -47,4 +47,11 @@ return [
             ],
         ],
     ],
+
+    'comment'=> [
+        'update'=> [
+            'success' => 'Comment has been updated successfully!',
+            'error' => 'Update comment failed!',
+        ],
+    ],
 ];

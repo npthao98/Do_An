@@ -47,4 +47,11 @@ return [
             ],
         ],
     ],
+
+    'comment'=> [
+        'update'=> [
+            'success' => 'Bình luận được cập nhập thành công',
+            'error' => 'Cập nhập bình luận thất bại!',
+        ],
+    ],
 ];
