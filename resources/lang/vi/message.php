@@ -33,8 +33,8 @@ return [
 
     'cart' => [
         'update'=> [
-            'success' => 'Chỉnh sửa Sản phẩm thành công!',
-            'error' => 'Chỉnh sửa sản phẩm thất bại!',
+            'success' => 'Chỉnh sửa đơn hàng thành công!',
+            'error' => 'Chỉnh sửa đơn hàng thất bại!',
         ],
     ],
 

@@ -76,19 +76,19 @@
                     <div class="col-lg-6">
                         <div class="place-order">
                             <h4>{{ trans('text.history_order') }}</h4>
-                            <div class="order-total">
-                                <ul class="order-table">
-                                    <li>{{ trans('text.product') }}<span>{{ trans('text.total') }}</span></li>
-                                    @php $totalPrice = 0; @endphp
-                                    @if (isset($cart))
-                                        @foreach ($cart as $productCart)
-                                            <li class="fw-normal">{{ $productCart['name'] }} x {{ $productCart['quantity'] }} ({{ $productCart['color'] }}) <span>${{ $subTotal = $productCart['price'] * $productCart['quantity'] }}</span></li>
+                            @foreach ($orders as $order)
+                                <div class="order-total">
+                                    <ul class="order-table">
+                                        <li>{{ trans('text.order') }}<span>{{ trans('text.total') }}</span></li>
+                                        @php $totalPrice = 0; @endphp
+                                        @foreach ($order->orderDetails as $orderDetail)
+                                            <li class="fw-normal">{{ $orderDetail->productDetail->product->name }} x {{ $orderDetail->quantity }} ({{ $orderDetail->productDetail->color }}) <span>${{ $subTotal = $orderDetail->productDetail->product->price * $orderDetail->quantity }}</span></li>
                                             @php $totalPrice += $subTotal; @endphp
                                         @endforeach
-                                    @endif
-                                    <li class="total-price">{{ trans('text.total') }}<span>${{ $totalPrice }}</span></li>
-                                </ul>
-                            </div>
+                                        <li class="total-price">{{ trans('text.total') }}<span>${{ $totalPrice }}</span></li>
+                                    </ul>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
