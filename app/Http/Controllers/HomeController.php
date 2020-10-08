@@ -16,4 +16,11 @@ class HomeController extends Controller
         return view('fashi.user.index', compact(['categories', 'categoryFirst', 'categorySecond']));
 
     }
+
+    public function changeLanguage($language)
+    {
+        session()->put('website_language', $language);
+
+        return redirect()->back();
+    }
 }

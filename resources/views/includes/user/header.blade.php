@@ -35,12 +35,14 @@
                     </form>
                 @endguest
                 <div class="lan-selector">
-                    <select class="language_drop" name="countries" id="countries">
-                        <option value='yt' data-image="{{ asset('bower_components/bower_fashi_shop/img/flag-1.jpg') }}" data-imagecss="flag yt"
+                    {{-- <select onchange="location = this.value;" class="language_drop" name="countries" id="countries">
+                        <option value='{!! route('user.change-language', ['en']) !!}' data-image="{{ asset('bower_components/bower_fashi_shop/img/flag-1.jpg') }}" data-imagecss="flag yt"
                             data-title="English">{{ trans('header.english') }}</option>
-                        <option value='yu' data-image="{{ asset('bower_components/bower_fashi_shop/img/flag-2.jpg') }}" data-imagecss="flag yu"
+                        <option value='{!! route('user.change-language', ['vi']) !!}' data-image="{{ asset('bower_components/bower_fashi_shop/img/flag-2.jpg') }}" data-imagecss="flag yu"
                             data-title="Vietnamese">{{ trans('header.vietnamese') }} </option>
-                    </select>
+                    </select> --}}
+                    <a href="{!! route('user.change-language', ['en']) !!}">English</a>
+                    <a href="{!! route('user.change-language', ['vi']) !!}">Vietnam</a>
                 </div>
                 <div class="top-social"></div>
             </div>
