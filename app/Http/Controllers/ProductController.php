@@ -276,4 +276,17 @@ class ProductController extends Controller
 
         return back();
     }
+
+    public function search(Request $request)
+    {
+        $nameProduct = $request->name;
+        $products = Product::where('name', 'LIKE', "%{$nameProduct}%")->get();
+        $categories = Category::whereNotNull('parent_id')->get();
+
+        if ($products->count() === 0) {
+            return view('fashi.user.404', compact(['categories']));
+        }
+
+        return view('fashi.user.shop', compact(['products', 'categories']));
+    }
 }
