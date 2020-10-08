@@ -33,8 +33,8 @@ return [
 
     'cart'=> [
         'update'=> [
-            'success' => 'Product has been updated successfully!',
-            'error' => 'Update product failed!',
+            'success' => 'Order has been updated successfully!',
+            'error' => 'Update order failed!',
         ],
     ],
 

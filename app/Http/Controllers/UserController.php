@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
+use App\Order;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -17,7 +18,9 @@ class UserController extends Controller
             $user = auth()->user();
         }
 
-        return view('fashi.user.profile', compact('user'));
+        $orders = $user->orders->where('status', config('order.success'));
+
+        return view('fashi.user.profile', compact(['user', 'orders']));
     }
 
     public function update(Request $request)
