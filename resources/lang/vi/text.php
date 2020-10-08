@@ -89,4 +89,5 @@ return [
     'role' => 'Vai trò',
     'user' => 'Người dùng',
     'change_role' => 'Đổi vai trò',
+    '404' => 'Không tìm thấy kết quả',
 ];

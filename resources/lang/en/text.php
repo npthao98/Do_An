@@ -89,4 +89,5 @@ return [
     'role' => 'Role',
     'user' => 'User',
     'change_role' => 'Change role',
+    '404' => 'No results were found',
 ];

@@ -60,13 +60,16 @@
                     </div>
                 </div>
                 <div class="col-lg-7 col-md-7">
-                    <div class="advanced-search">
-                        <button type="button" class="category-btn">{{ trans('header.all_categories') }}</button>
-                        <div class="input-group">
-                            <input type="text" placeholder="{{ trans('header.what_do_you_need') }}">
-                            <button type="button"><i class="ti-search"></i></button>
+                    <form method="POST" action="{{ route('search') }}">
+                        @csrf
+                        <div class="advanced-search">
+                            <button type="button" class="category-btn">{{ trans('header.all_categories') }}</button>
+                            <div class="input-group">
+                                <input type="text" name="name" placeholder="{{ trans('header.what_do_you_need') }}">
+                                <button type="submit"><i class="ti-search"></i></button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="col-lg-3 text-right col-md-3">
                     <ul class="nav-right">
