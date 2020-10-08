@@ -54,4 +54,11 @@ return [
             'error' => 'Cập nhập bình luận thất bại!',
         ],
     ],
+
+    'user'=> [
+        'role'=> [
+            'success' => 'Cập nhập thành công!',
+            'error' => 'Cập nhập thất bại!',
+        ],
+    ],
 ];

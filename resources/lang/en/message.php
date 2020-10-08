@@ -54,4 +54,11 @@ return [
             'error' => 'Update comment failed!',
         ],
     ],
+
+    'user'=> [
+        'role'=> [
+            'success' => 'updated successfully!',
+            'error' => 'Update failed!',
+        ],
+    ],
 ];
