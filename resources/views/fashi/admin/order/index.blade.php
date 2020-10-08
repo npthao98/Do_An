@@ -5,12 +5,9 @@
 <div class="container">
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1>{{ trans('text.product') }}</h1>
+            <h1>{{ trans('text.order') }}</h1>
         </div>
     </div>
-
-    <a href="{{ route('admin.products.create') }}"><button class="btn btn-primary">{{ trans('text.create_product') }}</button></a>
-    <br><br>
 
     @if (session('message'))
         <div class="alert alert-success" role="alert">

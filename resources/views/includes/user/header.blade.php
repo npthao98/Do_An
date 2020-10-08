@@ -54,7 +54,7 @@
             <div class="row">
                 <div class="col-lg-2 col-md-2">
                     <div class="logo">
-                        <a href="#">
+                        <a href="{{ route('index') }}">
                             <img src="{{ asset('bower_components/bower_fashi_shop/img/logo.png') }}" alt="">
                         </a>
                     </div>
@@ -70,18 +70,12 @@
                 </div>
                 <div class="col-lg-3 text-right col-md-3">
                     <ul class="nav-right">
-                        <li class="heart-icon">
-                            <a href="#">
-                                <i class="icon_heart_alt"></i>
-                                <span>{{-- session('cart') --}}</span>
-                            </a>
-                        </li>
                         <li class="cart-icon">
                             <a href="{{ route('show_cart') }}">
                                 <i class="icon_bag_alt"></i>
                                 <span class="cart_num">{{ session()->get('totalQuantity') ?? '' }}</span>
                             </a>
-                            <div class="cart-hover">
+                            {{-- <div class="cart-hover">
                                 <div class="select-items">
                                     <table>
                                         <tbody>
@@ -89,8 +83,8 @@
                                                 <td class="si-pic"><img src="{{ asset('bower_components/bower_fashi_shop/img/select-product-2.jpg') }}" alt=""></td>
                                                 <td class="si-text">
                                                     <div class="product-selected">
-                                                        <p>{{-- $60.00 x 1 --}}</p>
-                                                        <h6>{{-- Kabino Bedside Table --}}</h6>
+                                                        <p> $60.00 x 1 </p>
+                                                        <h6>Kabino Bedside Table</h6>
                                                     </div>
                                                 </td>
                                                 <td class="si-close">
@@ -102,15 +96,14 @@
                                 </div>
                                 <div class="select-total">
                                     <span>{{ trans('header.total') }}:</span>
-                                    <h5>{{-- $120.00 --}}</h5>
+                                    <h5>$120.00</h5>
                                 </div>
                                 <div class="select-button">
                                     <a href="#" class="primary-btn view-card">{{ trans('header.view_card') }}</a>
                                     <a href="#" class="primary-btn checkout-btn">{{ trans('header.check_out') }}</a>
                                 </div>
-                            </div>
+                            </div> --}}
                         </li>
-                        <li class="cart-price">{{-- $150.00 --}}</li>
                     </ul>
                 </div>
             </div>
@@ -131,9 +124,9 @@
             </div>
             <nav class="nav-menu mobile-menu">
                 <ul>
-                    <li class="active"><a href="#">{{ trans('header.home') }}</a></li>
-                    <li><a href="#">{{ trans('header.shop') }}</a></li>
-                    <li><a href="#">{{ trans('header.collection') }}</a>
+                    <li class="active"><a href="{{ route('index') }}">{{ trans('header.home') }}</a></li>
+                    <li><a href="{{ route('new_product') }}">{{ trans('header.new_product') }}</a></li>
+                    <li><a href="{{ route('product.index') }}">{{ trans('header.collection') }}</a>
                         <ul class="dropdown">
                             <li><a href="#">{{ trans('header.men') }}</a></li>
                             <li><a href="#">{{ trans('header.women') }}</a></li>

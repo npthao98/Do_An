@@ -23,7 +23,7 @@
             <tr>
                 <th>{{ trans('text.name') }}</th>
                 <th>{{ trans('text.category') }}</th>
-                <th>{{ trans('text.description') }}</th>
+
                 <th>{{ trans('text.price') }}</th>
                 <th>{{ trans('text.in_stock') }}</th>
                 <th>{{ trans('text.image') }}</th>
@@ -35,11 +35,42 @@
                 <tr>
                     <td>{{ $product->name ?? '' }}</td>
                     <td>{{ $product->categories->first()->name ?? '' }}</td>
-                    <td>{{ $product->description ?? '' }}</td>
-                    <td>{{ $product->price ?? '' }}</td>
+                    <td>${{ $product->price ?? '' }}</td>
                     <td>{{ $product->in_stock ?? '' }}</td>
                     <td><img class="img-fluid image-size-admin" src="{{ $product->images->first() ? $product->images->first()->link_to_image : '' }}"></td>
                     <td>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalShow-{{ $product->id }}">
+                          {{ trans('text.show') }}
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalShow-{{ $product->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="exampleModalLabel"><b>{{ $product->name }}</b></h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    @foreach ($product->productDetails as $productDetail)
+                                        <div class="modal-body">
+                                            <div><b>{{ trans('text.color') }}: {{ $productDetail->color }}, {{ trans('text.size') }}: {{ $productDetail->size }}, {{ trans('text.quantity') }}: {{ $productDetail->quantity }}</b></div>
+                                        </div>
+                                    @endforeach
+
+                                    <div class="d-inline">
+                                        @foreach ($product->images as $image)
+                                                <img src="{{ $image->link_to_image }}" style="height: 245px;" class="img-thumbnail product-image-size">
+                                        @endforeach
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('text.close') }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <a href="{{ route('admin.products.edit', $product->id) }}"><button type="button" class="btn btn-warning">{{ trans('text.edit') }}</button></a>
 
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalDelete-{{ $product->id }}">{{ trans('text.delete') }}</button>
@@ -77,7 +108,6 @@
             <tr>
                 <th>{{ trans('text.name') }}</th>
                 <th>{{ trans('text.category') }}</th>
-                <th>{{ trans('text.description') }}</th>
                 <th>{{ trans('text.price') }}</th>
                 <th>{{ trans('text.in_stock') }}</th>
                 <th>{{ trans('text.image') }}</th>

@@ -27,6 +27,14 @@ class ProductController extends Controller
         return view('fashi.user.shop', compact(['products', 'categories']));
     }
 
+    public function newProduct()
+    {
+        $products = Product::orderBy('created_at', 'desc')->get();
+        $categories = Category::whereNotNull('parent_id')->get();
+
+        return view('fashi.user.shop', compact(['products', 'categories']));
+    }
+
     public function showProductByCategory($id)
     {
         $categories = Category::whereNotNull('parent_id')->get();
@@ -178,7 +186,7 @@ class ProductController extends Controller
         } catch (Exception $e) {
             $result = [
                 'status' => false,
-                'message' => trans('text.delele_error'),
+                'message' => trans('text.delete_error'),
                 'icon' => 'error',
             ];
 
@@ -187,7 +195,7 @@ class ProductController extends Controller
 
         $result = [
             'status' => true,
-            'message' => trans('text.delele_success'),
+            'message' => trans('text.delete_success'),
             'icon' => 'success',
         ];
 
@@ -201,7 +209,7 @@ class ProductController extends Controller
         } catch (Exception $e) {
             $result = [
                 'status' => false,
-                'message' => trans('text.delele_error'),
+                'message' => trans('text.delete_error'),
                 'icon' => 'error',
             ];
 
