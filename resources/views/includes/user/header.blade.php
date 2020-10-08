@@ -60,10 +60,10 @@
                     <form method="POST" action="{{ route('search') }}">
                         @csrf
                         <div class="advanced-search">
-                            <button type="button" class="category-btn">{{ trans('header.all_categories') }}</button>
+                            <button type="button" class="category-btn">{{ trans('header.search') }}</button>
                             <div class="input-group">
                                 <input type="text" name="name" placeholder="{{ trans('header.what_do_you_need') }}">
-                                <button type="submit"><i class="ti-search"></i></button>
+                                <button type="submit" class="margin-search"><i class="ti-search"></i></button>
                             </div>
                         </div>
                     </form>
@@ -126,13 +126,7 @@
                 <ul>
                     <li class="active"><a href="{{ route('index') }}">{{ trans('header.home') }}</a></li>
                     <li><a href="{{ route('new_product') }}">{{ trans('header.new_product') }}</a></li>
-                    <li><a href="{{ route('product.index') }}">{{ trans('header.collection') }}</a>
-                        <ul class="dropdown">
-                            <li><a href="#">{{ trans('header.men') }}</a></li>
-                            <li><a href="#">{{ trans('header.women') }}</a></li>
-                            <li><a href="#">{{ trans('header.kid') }}</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="{{ route('product.index') }}">{{ trans('header.collection') }}</a></li>
                     <li><a href="#">{{ trans('header.blog') }}</a></li>
                     <li><a href="#">{{ trans('header.contact') }}</a></li>
                 </ul>

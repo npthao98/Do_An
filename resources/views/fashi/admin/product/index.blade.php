@@ -21,6 +21,7 @@
     <table id="example" class="table table-striped table-bordered table-width">
         <thead>
             <tr>
+                <th>{{ trans('text.id') }}</th>
                 <th>{{ trans('text.name') }}</th>
                 <th>{{ trans('text.category') }}</th>
 
@@ -31,8 +32,9 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($products as $product)
+            @foreach ($products as $key => $product)
                 <tr>
+                    <td>{{ $key + 1 }}</td>
                     <td>{{ $product->name ?? '' }}</td>
                     <td>{{ $product->categories->first()->name ?? '' }}</td>
                     <td>${{ $product->price ?? '' }}</td>
@@ -106,6 +108,7 @@
         </tbody>
         <tfoot>
             <tr>
+                <th>{{ trans('text.id') }}</th>
                 <th>{{ trans('text.name') }}</th>
                 <th>{{ trans('text.category') }}</th>
                 <th>{{ trans('text.price') }}</th>
