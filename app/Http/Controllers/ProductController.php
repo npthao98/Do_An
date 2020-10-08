@@ -81,7 +81,31 @@ class ProductController extends Controller
         $productDetail = ProductDetail::where('product_id', $id)->where('color', $request->color)->where('size', $request->size)->first();
 
         if ($productDetail) {
+            if ($request->quantity > $productDetail->quantity) {
+                $result = [
+                    'status' => false,
+                    'message' => trans('text.quantity_product_not_enough'),
+                    'icon' => 'error',
+                ];
+
+                return response()->json($result);
+            } elseif (!is_numeric($request->quantity)) {
+                $result = [
+                    'message' => trans('text.quantity_must_be_numeric'),
+                    'icon' => 'error',
+                ];
+
+                return response()->json($result);
+            }
+
             $productDetailId = $productDetail->id;
+        } else {
+            $result = [
+                'message' => trans('text.no_product_details'),
+                'icon' => 'error',
+            ];
+
+            return response()->json($result);
         }
 
         $cart = session()->get('cart');
@@ -149,6 +173,7 @@ class ProductController extends Controller
     public function updateCart(Request $request)
     {
         $cart = session('cart');
+
         $quantity = $request->quantity;
 
         try {
@@ -206,7 +231,7 @@ class ProductController extends Controller
     public function removeAllCart(Request $request)
     {
         try {
-            session()->flush();
+            session()->forget('cart.');
         } catch (Exception $e) {
             $result = [
                 'status' => false,

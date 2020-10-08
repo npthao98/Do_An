@@ -94,4 +94,8 @@ return [
     'jean' => 'Quần jean',
     'long_skirt' => 'Váy dài',
     'discover_more' => 'Khám Phá Thêm',
+    'id' => '#',
+    'no_product_details' => 'Không có sản phẩm này',
+    'quantity_product_not_enough' => 'Số lượng sản phẩm không đủ',
+    'quantity_must_be_numeric' => 'Số lượng nhập vào phải là số',
 ];

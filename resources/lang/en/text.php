@@ -94,4 +94,8 @@ return [
     'jean' => 'Jean',
     'long_skirt' => 'Long skirt',
     'discover_more' => 'Discover More',
+    'id' => '#',
+    'no_product_details' => 'No product',
+    'quantity_product_not_enough' => 'Quantity product not enough',
+    'quantity_must_be_numeric' => 'Quantity must be numeric',
 ];
