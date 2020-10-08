@@ -34,4 +34,5 @@ return [
     'tables'=> 'Tables',
     'datatables'=> 'DataTables',
     'search'=> 'Search',
+    'new_product'=> 'New Product',
 ];

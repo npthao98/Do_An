@@ -90,4 +90,8 @@ return [
     'user' => 'User',
     'change_role' => 'Change role',
     '404' => 'No results were found',
+    'somi' => 'Somi',
+    'jean' => 'Jean',
+    'long_skirt' => 'Long skirt',
+    'discover_more' => 'Discover More',
 ];

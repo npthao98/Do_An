@@ -11,4 +11,5 @@ return [
     'm' => 'm',
     'l' => 'l',
     'xs' => 'xs',
+    'paginate' => 4,
 ];

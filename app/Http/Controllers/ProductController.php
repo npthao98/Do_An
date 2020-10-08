@@ -55,6 +55,7 @@ class ProductController extends Controller
             }
         }
 
+        $products = Product::inRandomOrder()->limit(config('product.random'))->get();;
         $cart = session('cart');
         $totalQuantity = 0;
         if (isset($cart)) {
@@ -65,7 +66,7 @@ class ProductController extends Controller
 
         session()->put('totalQuantity', $totalQuantity);
 
-        return view('fashi.user.product', compact(['product', 'categories', 'comments']));
+        return view('fashi.user.product', compact(['product', 'categories', 'comments', 'products']));
     }
 
     public function showCart()
