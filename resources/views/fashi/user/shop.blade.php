@@ -61,7 +61,7 @@
                                             </a>
                                             <div class="product-price">
                                                 ${{ $product->price ?? '' }}
-                                                <span>${{ $product->price ?? '' }}</span>
+                                                {{-- <span>${{ $product->price ?? '' }}</span> --}}
                                             </div>
                                         </div>
                                     </div>

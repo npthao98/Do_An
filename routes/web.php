@@ -49,6 +49,6 @@ Route::group(['middleware' => 'locale'], function() {
     Route::post('/comments/{product}', 'CommentController@createComment')->name('create.comment');
     Route::put('/comments/edit/{comment}', 'CommentController@editComment')->name('edit.comment');
     Route::post('/products/search', 'ProductController@search')->name('search');
-Route::get('change-language/{language}', 'HomeController@changeLanguage')->name('user.change-language');
+    Route::get('change-language/{language}', 'HomeController@changeLanguage')->name('user.change-language');
 });
 

@@ -60,7 +60,8 @@
                                 </div>
                                 <div class="pd-desc">
                                     <p>{{ $product->description }}</p>
-                                    <h4>${{ $product->price }}<span>${{ $product->price }}</span></h4>
+                                    <p><b>{{ trans('text.in_stock') }}: {{ $product->in_stock }}</b></p>
+                                    <h4>${{ $product->price }}{{-- <span>${{ $product->price }}</span> --}}</h4>
                                 </div>
                                 <div class="pd-color">
                                     <h6>{{ trans('text.color') }}</h6><br><br>
@@ -178,7 +179,9 @@
                         <div class="product-item">
                             <div class="pi-pic">
                                 <img src="{{ $productRandom->images->first()->link_to_image }}" alt="">
-                                <div class="sale">{{ trans('text.sale') }}</div>
+                                @if ($productRandom->in_stock <= 0)
+                                    <div class="sale">{{ trans('text.sold_out') }}</div>
+                                @endif
                                 <div class="icon">
                                     <i class="icon_heart_alt"></i>
                                 </div>
@@ -195,7 +198,7 @@
                                 </a>
                                 <div class="product-price">
                                     ${{ $productRandom->price }}
-                                    <span>${{ $productRandom->price }}</span>
+                                    {{-- <span>${{ $productRandom->price }}</span> --}}
                                 </div>
                             </div>
                         </div>

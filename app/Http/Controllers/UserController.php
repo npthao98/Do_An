@@ -18,7 +18,7 @@ class UserController extends Controller
             $user = auth()->user();
         }
 
-        $orders = $user->orders->where('status', config('order.success'));
+        $orders = $user->orders;
 
         return view('fashi.user.profile', compact(['user', 'orders']));
     }
