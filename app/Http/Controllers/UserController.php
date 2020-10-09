@@ -16,11 +16,13 @@ class UserController extends Controller
     {
         if (auth()->check()) {
             $user = auth()->user();
+            $orders = $user->orders;
         }
 
-        $orders = $user->orders;
+        $ordersSuccess = $orders->where('status', config('order.success'));
+        $ordersPending = $orders->where('status', config('order.pending'));
 
-        return view('fashi.user.profile', compact(['user', 'orders']));
+        return view('fashi.user.profile', compact(['user', 'ordersSuccess', 'ordersPending']));
     }
 
     public function update(Request $request)

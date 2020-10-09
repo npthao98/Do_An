@@ -50,5 +50,6 @@ Route::group(['middleware' => 'locale'], function() {
     Route::put('/comments/edit/{comment}', 'CommentController@editComment')->name('edit.comment');
     Route::post('/products/search', 'ProductController@search')->name('search');
     Route::get('change-language/{language}', 'HomeController@changeLanguage')->name('user.change-language');
+    Route::post('orders/cancel/{order}', 'ProductController@orderCancel')->name('orders.cancel');
 });
 

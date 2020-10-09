@@ -265,8 +265,11 @@ class ProductController extends Controller
     {
         if (auth()->check()) {
             $user = auth()->user();
+            $orders = $user->orders;
         }
-        $orders = $user->orders;
+
+        $ordersSuccess = $orders->where('status', config('order.success'));
+        $ordersPending = $orders->where('status', config('order.pending'));
 
         $cart = session('cart');
         $data = $request->only([
@@ -305,7 +308,7 @@ class ProductController extends Controller
 
         alert()->success(trans('text.success'), trans('text.order_success'));
 
-        return view('fashi.user.profile', compact(['user', 'orders']));
+        return view('fashi.user.profile', compact(['user', 'ordersSuccess', 'ordersPending']));
     }
 
     public function search(Request $request)
@@ -319,5 +322,24 @@ class ProductController extends Controller
         }
 
         return view('fashi.user.shop', compact(['products', 'categories']));
+    }
+
+    public function orderCancel($id)
+    {
+        $order = Order::findOrFail($id);
+
+        try {
+            $order->update(['status' => config('order.cancel')]);
+            $order->delete();
+        } catch (Exception $e) {
+            Log::error($e);
+            toast(trans('message.cart.update.error'), 'error');
+
+            return back();
+        }
+
+        toast(trans('message.cart.update.success'), 'success');
+
+        return back();
     }
 }

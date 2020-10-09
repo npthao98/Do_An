@@ -36,6 +36,11 @@ return [
             'success' => 'Chỉnh sửa đơn hàng thành công!',
             'error' => 'Chỉnh sửa đơn hàng thất bại!',
         ],
+
+        'cancel' => [
+            'success' => 'Hủy đơn thành công',
+            'error' => 'Hủy đơn thất bại',
+        ],
     ],
 
     'password'=> [

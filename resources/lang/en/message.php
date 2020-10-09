@@ -36,6 +36,11 @@ return [
             'success' => 'Order has been updated successfully!',
             'error' => 'Update order failed!',
         ],
+
+        'cancel' => [
+            'success' => 'Order has been canceled successfully!',
+            'error' => 'Cancel order failed!',
+        ],
     ],
 
     'password'=> [
