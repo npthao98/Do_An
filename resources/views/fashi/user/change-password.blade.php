@@ -59,11 +59,6 @@
 
                             <button type="submit" class="site-btn login-btn">{{ trans('text.update') }}</button>
                         </form>
-                        <div class="switch-login">
-                            @if (Route::has('password.request'))
-                                <a href="{{ route('password.request') }}" class="or-login">{{ trans('text.create_an_account') }}</a>
-                            @endif
-                        </div>
                     </div>
                 </div>
             </div>

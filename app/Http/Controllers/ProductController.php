@@ -263,6 +263,11 @@ class ProductController extends Controller
 
     public function createOrder(OrderRequest $request)
     {
+        if (auth()->check()) {
+            $user = auth()->user();
+        }
+        $orders = $user->orders;
+
         $cart = session('cart');
         $data = $request->only([
             'name',
@@ -300,7 +305,7 @@ class ProductController extends Controller
 
         alert()->success(trans('text.success'), trans('text.order_success'));
 
-        return back();
+        return view('fashi.user.profile', compact(['user', 'orders']));
     }
 
     public function search(Request $request)
