@@ -10,15 +10,17 @@ use App\ProductDetail;
 use App\Category;
 use App\Image;
 use App\Order;
-use RealRashid\SweetAlert\Facades\Alert;
+use App\Repositories\Order\OrderRepositoryInterface;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    protected $orderRepo;
+
+    public function __construct(OrderRepositoryInterface $orderRepo)
+    {
+        $this->orderRepo = $orderRepo;
+    }
+
     public function index()
     {
         $products = Product::all();
@@ -175,74 +177,48 @@ class ProductController extends Controller
 
     public function orderSuccess($id)
     {
-        $order = Order::findOrFail($id);
-
         try {
-            foreach ($order->orderDetails as $orderDetail) {
-                $productDetail = $orderDetail->productDetail;
-                $product = $productDetail->product;
-
-                $orderDetailQuantity = $orderDetail->quantity;
-                $productDetailQuantity = $productDetail->quantity;
-
-                $productDetailInStock = $productDetailQuantity - $orderDetailQuantity;
-                $productInStock = $product->in_stock - $orderDetailQuantity;
-
-                if ($productDetailInStock >= 0 || $productInStock >= 0) {
-                    $productDetail->update(['quantity' => $productDetailInStock]);
-                    $product->update(['in_stock' => $productInStock]);
-                } else {
-                    toast(trans('message.cart.update.error'), 'error');
-
-                    return back();
-                }
-            }
-
-            $order->update(['status' => config('order.success')]);
-
+            $this->orderRepo->updateOrderSuccess($id);
         } catch (Exception $e) {
             Log::error($e);
-            toast(trans('message.cart.update.error'), 'error');
+            $this->orderRepo->sweetToast(trans('message.cart.update.error'), 'error');
 
             return back();
         }
 
-        toast(trans('message.cart.update.success'), 'success');
+        $this->orderRepo->sweetToast(trans('message.cart.update.success'), 'success');
 
         return back();
     }
 
     public function orderCancel($id)
     {
-        $order = Order::findOrFail($id);
         try {
-            $order->update(['status' => config('order.cancel')]);
+            $this->orderRepo->updateOrderCancel($id);
         } catch (Exception $e) {
             Log::error($e);
-            toast(trans('message.cart.update.error'), 'error');
+            $this->orderRepo->sweetToast(trans('message.cart.update.error'), 'error');
 
             return back();
         }
 
-        toast(trans('message.cart.update.success'), 'success');
+        $this->orderRepo->sweetToast(trans('message.cart.update.success'), 'success');
 
         return back();
     }
 
     public function orderPending($id)
     {
-        $order = Order::findOrFail($id);
-
         try {
-            $order->update(['status' => config('order.pending')]);
+            $this->orderRepo->updateOrderPending($id);
         } catch (Exception $e) {
             Log::error($e);
-            toast(trans('message.cart.update.error'), 'error');
+            $this->orderRepo->sweetToast(trans('message.cart.update.error'), 'error');
 
             return back();
         }
 
-        toast(trans('message.cart.update.success'), 'success');
+        $this->orderRepo->sweetToast(trans('message.cart.update.success'), 'success');
 
         return back();
     }

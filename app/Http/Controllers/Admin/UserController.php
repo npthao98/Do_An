@@ -3,10 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Repositories\User\UserRepositoryInterface;
 
 class UserController extends Controller
 {
+    protected $userRepo;
+
+    public function __construct(UserRepositoryInterface $userRepo)
+    {
+        $this->userRepo = $userRepo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,21 +21,15 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = $this->userRepo->getAll();
 
         return view('fashi.admin.profile.index', compact('users'));
     }
 
     public function changeRole($id)
     {
-        $user = User::findOrFail($id);
-
         try {
-            if ($user->role == config('user.customer')) {
-                $user->update(['role' => config('user.admin')]);
-            } else {
-                $user->update(['role' => config('user.customer')]);
-            }
+            $this->userRepo->updateRole($id);
         } catch (Exception $e) {
             Log::error($e);
             toast(trans('message.user.role.error'), 'error');

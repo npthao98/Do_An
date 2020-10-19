@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Product;
-use App\Comment;
-use RealRashid\SweetAlert\Facades\Alert;
-
+use App\Repositories\Comment\CommentRepositoryInterface;
 
 class CommentController extends Controller
 {
+    protected $commentRepo;
+
+    public function __construct(CommentRepositoryInterface $commentRepo)
+    {
+        $this->commentRepo = $commentRepo;
+    }
+
     public function createComment(Request $request, $id)
     {
         $data = $request->all();
@@ -21,7 +25,7 @@ class CommentController extends Controller
         }
 
         try {
-            $comment = Comment::create($data);
+            $comment = $this->commentRepo->create($data);
         } catch (Exception $e) {
             return response()->json();
         }
@@ -49,9 +53,9 @@ class CommentController extends Controller
         ]);
 
         $data['user_id'] = auth()->id();
-        $comment = Comment::findOrFail($request->comment_id);
+
         try {
-            $comment->update($data);
+            $this->commentRepo->update($request->comment_id, $data);
         } catch (Exception $e) {
             $result = [
                 'status' => false,

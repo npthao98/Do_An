@@ -47,7 +47,6 @@ $(document).ready(function(){
             'comment_id': comment_id,
             'content' : content,
         };
-        console.log(data)
 
         $.ajax({
             url: url,
