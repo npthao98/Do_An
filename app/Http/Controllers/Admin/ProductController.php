@@ -5,25 +5,39 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
-use App\Product;
-use App\ProductDetail;
-use App\Category;
-use App\Image;
-use App\Order;
 use App\Repositories\Order\OrderRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\ProductDetail\ProductDetailRepositoryInterface;
+use App\Repositories\Image\ImageRepositoryInterface;
 
 class ProductController extends Controller
 {
     protected $orderRepo;
+    protected $productRepo;
+    protected $categoryRepo;
+    protected $productDetailRepo;
+    protected $imageRepo;
 
-    public function __construct(OrderRepositoryInterface $orderRepo)
+    public function __construct
+    (
+        OrderRepositoryInterface $orderRepo,
+        ProductRepositoryInterface $productRepo,
+        ProductDetailRepositoryInterface $productDetailRepo,
+        ImageRepositoryInterface $imageRepo,
+        CategoryRepositoryInterface $categoryRepo
+    )
     {
         $this->orderRepo = $orderRepo;
+        $this->productRepo = $productRepo;
+        $this->productDetailRepo = $productDetailRepo;
+        $this->imageRepo = $imageRepo;
+        $this->categoryRepo = $categoryRepo;
     }
 
     public function index()
     {
-        $products = Product::all();
+        $products = $this->productRepo->getAll();
 
         return view('fashi.admin.product.index', compact('products'));
     }
@@ -35,7 +49,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $categories = $this->categoryRepo->getAll();
 
         return view('fashi.admin.product.create', compact('categories'));
     }
@@ -61,11 +75,11 @@ class ProductController extends Controller
         $data['in_stock'] = $totalQuantity;
 
         try {
-            $product  = Product::create($data);
+            $product  = $this->productRepo->create($data);
             $product->categories()->attach($request->category);
 
             for ($i = 0; $i < count($colors); $i++){
-                ProductDetail::create([
+                $this->productDetailRepo->create([
                     'product_id' => $product->id,
                     'size' => $sizes[$i],
                     'color' => $colors[$i],
@@ -77,7 +91,7 @@ class ProductController extends Controller
                 $filename = uniqid() . '-' . $image->getClientOriginalName();
                 $image->move(config('image.move_url'), $filename);
 
-                Image::create([
+                $this->imageRepo->create([
                     'product_id' => $product->id,
                     'link_to_image' => config('image.url') . $filename,
                 ]);
@@ -99,8 +113,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::findOrFail($id);
-        $categories = Category::all();
+        $product = $this->productRepo->find($id);
+        $categories = $this->categoryRepo->getAll();
 
         return view('fashi.admin.product.edit', compact(['product', 'categories']));
     }
@@ -114,17 +128,17 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, $id)
     {
-        $product = Product::findOrFail($id);
+        $product = $this->productRepo->find($id);
 
         try {
-            $product->update($request->all());
-            $productImage = Image::where('product_id', $product->id)->delete();
+            $this->productRepo->update($id, $request->all());
+            $productImage = $this->imageRepo->findImageByProduct($product->id)->delete();
 
             foreach ($request->images as $image) {
                 $filename = uniqid() . '-' . $image->getClientOriginalName();
                 $image->move(config('image.move_url'), $filename);
 
-                Image::create([
+                $this->imageRepo->create([
                     'product_id' => $product->id,
                     'link_to_image' => config('image.url') . $filename,
                 ]);
@@ -146,18 +160,18 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::findOrFail($id);
+        $product = $this->productRepo->find($id);
 
         try {
-            $product->delete();
+            $this->productRepo->delete($id);
             $product->categories()->detach();
 
             foreach ($product->images as $image) {
-                $image->delete();
+                $this->imageRepo->delete($image->id);
             }
 
             foreach ($product->productDetails as $productDetail) {
-                $productDetail->delete();
+                $this->productDetailRepo->delete($productDetail->id);
             }
         } catch (Exception $e) {
             Log::error($e);
@@ -170,7 +184,7 @@ class ProductController extends Controller
 
     public function showOrder()
     {
-        $orders = Order::all();
+        $orders = $this->orderRepo->getAll();
 
         return view('fashi.admin.order.index', compact('orders'));
     }
