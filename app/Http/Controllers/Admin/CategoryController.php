@@ -5,10 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use Illuminate\Http\Request;
-use App\Category;
+use App\Repositories\Category\CategoryRepositoryInterface;
 
 class CategoryController extends Controller
 {
+    /**
+    * @var PostRepositoryInterface|\App\Repositories\Repository
+    */
+    protected $categoryRepo;
+
+    public function __construct(CategoryRepositoryInterface $categoryRepo)
+    {
+        $this->categoryRepo = $categoryRepo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +26,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = $this->categoryRepo->getAll();
 
         return view('fashi.admin.category.index', compact('categories'));
     }
@@ -30,7 +40,7 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
         try {
-            Category::create($request->all());
+            $this->categoryRepo->create($request->all());
         } catch (Exception $e) {
             Log::error($e);
 
@@ -49,10 +59,8 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, $id)
     {
-        $category = Category::findOrFail($id);
-
         try {
-            $category->update($request->all());
+            $this->categoryRepo->update($id, $request->all());
         } catch (Exception $e) {
             Log::error($e);
 
@@ -70,19 +78,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::findOrFail($id);
-        $categories = $category->children;
-
         try {
-            if ($category->parent_id != null) {
-                $category->delete();
-            } else {
-                $category->delete();
-
-                foreach ($categories as $parent) {
-                    $parent->update(['parent_id' => null]);
-                }
-            }
+            $this->categoryRepo->deleteCategory($id);
         } catch (Exception $e) {
             Log::error($e);
 
