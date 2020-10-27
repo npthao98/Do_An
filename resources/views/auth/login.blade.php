@@ -55,13 +55,8 @@
                                     <a href="#" class="forget-pass">{{ trans('make_auth.forget_your_password') }}</a>
                                 </div>
                             </div>
-                            <button type="submit" class="site-btn login-btn">{{ trans('make_auth.sign_in') }}</button>
+                            <button type="submit" id="button-login" class="site-btn login-btn">{{ trans('make_auth.sign_in') }}</button>
                         </form>
-                        <div class="switch-login">
-                            @if (Route::has('password.request'))
-                                <a href="{{ route('password.request') }}" class="or-login">{{ trans('make_auth.create_an_account') }}</a>
-                            @endif
-                        </div>
                     </div>
                 </div>
             </div>
