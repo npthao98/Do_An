@@ -98,4 +98,5 @@ return [
     'no_product_details' => 'No product',
     'quantity_product_not_enough' => 'Quantity product not enough',
     'quantity_must_be_numeric' => 'Quantity must be numeric',
+    'negative' => 'the number entered must be greater than 0',
 ];

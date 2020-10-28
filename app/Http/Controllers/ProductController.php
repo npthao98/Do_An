@@ -121,6 +121,14 @@ class ProductController extends Controller
                 ];
 
                 return response()->json($result);
+            } elseif ($request->quantity <= 0) {
+                $result = [
+                    'status' => false,
+                    'message' => trans('text.negative'),
+                    'icon' => 'error',
+                ];
+
+                return response()->json($result);
             }
 
             $productDetailId = $productDetail->id;
@@ -209,7 +217,7 @@ class ProductController extends Controller
                     $subTotal = $cart[$key]['quantity'] * $cart[$key]['price'];
                     $totalPrice += $subTotal;
                 } else {
-                    toast(trans('message.cart.update.success'),'success');
+                    toast(trans('message.cart.update.error'),'error');
 
                     return back();
                 }
@@ -319,6 +327,8 @@ class ProductController extends Controller
                     ]);
                 }
 
+                $this->orderRepo->recalculateProductAfterOrder($order->id);
+
                 session()->forget('cart');
             } else {
                 alert()->error(trans('text.error'), trans('text.order_error'));
@@ -351,11 +361,8 @@ class ProductController extends Controller
 
     public function orderCancel($id)
     {
-        $order = $this->orderRepo->find($id);
-
         try {
-            $order->update(['status' => config('order.cancel')]);
-            $order->delete();
+            $this->orderRepo->updateOrderCancel($id);
         } catch (Exception $e) {
             Log::error($e);
             toast(trans('message.cart.update.error'), 'error');

@@ -49,7 +49,7 @@
                                                 <td class="qua-col first-row">
                                                     <div class="quantity">
                                                         <div class="pro-qty">
-                                                            <input type="text" name="quantity[{{ $productCart['product_detail_id'] }}]" value="{{ $productCart['quantity'] }}">
+                                                            <input type="number" name="quantity[{{ $productCart['product_detail_id'] }}]" value="{{ $productCart['quantity'] }}">
                                                         </div>
                                                     </div>
                                                 </td>
@@ -73,7 +73,7 @@
                                 <div class="proceed-checkout">
                                     <ul>
                                         {{-- <li class="subtotal">Subtotal <span>$240.00</span></li> --}}
-                                        <li class="cart-total">{{ trans('text.total_price') }}<span>${{ $totalPrice }}</span></li>
+                                        <li class="cart-total">{{ trans('text.total_price') }}<span class="all-price">${{ $totalPrice }}</span></li>
                                     </ul>
                                     <a href="{{ route('check_out') }}" class="proceed-btn">{{ trans('text.check_out') }}</a>
                                 </div>
