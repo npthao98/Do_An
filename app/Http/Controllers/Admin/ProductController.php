@@ -195,12 +195,12 @@ class ProductController extends Controller
             $this->orderRepo->updateOrderSuccess($id);
         } catch (Exception $e) {
             Log::error($e);
-            $this->orderRepo->sweetToast(trans('message.cart.update.error'), 'error');
+            toast(trans('message.cart.update.error'), 'error');
 
             return back();
         }
 
-        $this->orderRepo->sweetToast(trans('message.cart.update.success'), 'success');
+        toast(trans('message.cart.update.success'), 'success');
 
         return back();
     }
@@ -211,12 +211,12 @@ class ProductController extends Controller
             $this->orderRepo->updateOrderCancel($id);
         } catch (Exception $e) {
             Log::error($e);
-            $this->orderRepo->sweetToast(trans('message.cart.update.error'), 'error');
+            $toast(trans('message.cart.update.error'), 'error');
 
             return back();
         }
 
-        $this->orderRepo->sweetToast(trans('message.cart.update.success'), 'success');
+        toast(trans('message.cart.update.success'), 'success');
 
         return back();
     }
@@ -227,12 +227,12 @@ class ProductController extends Controller
             $this->orderRepo->updateOrderPending($id);
         } catch (Exception $e) {
             Log::error($e);
-            $this->orderRepo->sweetToast(trans('message.cart.update.error'), 'error');
+            toast(trans('message.cart.update.error'), 'error');
 
             return back();
         }
 
-        $this->orderRepo->sweetToast(trans('message.cart.update.success'), 'success');
+        toast(trans('message.cart.update.success'), 'success');
 
         return back();
     }

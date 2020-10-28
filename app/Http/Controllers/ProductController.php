@@ -3,17 +3,42 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Product;
-use App\Category;
-use App\ProductDetail;
-use App\Order;
-use App\OrderDetail;
-use App\Comment;
 use App\Http\Requests\OrderRequest;
-use RealRashid\SweetAlert\Facades\Alert;
+use App\ProductDetail;
+use App\Repositories\BaseRepository;
+use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\ProductDetail\ProductDetailRepositoryInterface;
+use App\Repositories\Order\OrderRepositoryInterface;
+use App\Repositories\OrderDetail\OrderDetailRepositoryInterface;
+use App\Repositories\Comment\CommentRepositoryInterface;
 
 class ProductController extends Controller
 {
+    protected $orderRepo;
+    protected $productRepo;
+    protected $categoryRepo;
+    protected $productDetailRepo;
+    protected $orderDetailRepo;
+    protected $commentRepo;
+
+    public function __construct
+    (
+        OrderRepositoryInterface $orderRepo,
+        ProductRepositoryInterface $productRepo,
+        ProductDetailRepositoryInterface $productDetailRepo,
+        CategoryRepositoryInterface $categoryRepo,
+        OrderDetailRepositoryInterface $orderDetailRepo,
+        CommentRepositoryInterface $commentRepo
+    ) {
+        $this->orderRepo = $orderRepo;
+        $this->productRepo = $productRepo;
+        $this->productDetailRepo = $productDetailRepo;
+        $this->categoryRepo = $categoryRepo;
+        $this->orderDetailRepo = $orderDetailRepo;
+        $this->commentRepo = $commentRepo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,24 +46,24 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        $categories = Category::whereNotNull('parent_id')->get();
+        $products = $this->productRepo->getAll();
+        $categories = $this->categoryRepo->findChildrenCategory()->get();
 
         return view('fashi.user.shop', compact(['products', 'categories']));
     }
 
     public function newProduct()
     {
-        $products = Product::orderBy('created_at', 'desc')->get();
-        $categories = Category::whereNotNull('parent_id')->get();
+        $products = $this->productRepo->orderByCreatedAt();
+        $categories = $this->categoryRepo->findChildrenCategory()->get();
 
         return view('fashi.user.shop', compact(['products', 'categories']));
     }
 
     public function showProductByCategory($id)
     {
-        $categories = Category::whereNotNull('parent_id')->get();
-        $category = Category::with('products.images')->whereNotNull('parent_id')->findOrFail($id);
+        $categories = $this->categoryRepo->findChildrenCategory()->get();
+        $category = $this->categoryRepo->findOneChildrenCategory($id);
         $products = $category->products;
 
         return view('fashi.user.shop', compact(['products', 'categories']));
@@ -46,16 +71,16 @@ class ProductController extends Controller
 
     public function productDetail(Request $request, $id)
     {
-        $categories = Category::whereNotNull('parent_id')->get();
-        $product = Product::findOrFail($id);
-        $comments = Comment::where('product_id', $id)->orderBy('created_at', 'desc')->paginate(config('comment.paginate'));
+        $categories = $this->categoryRepo->findChildrenCategory()->get();
+        $product = $this->productRepo->find($id);
+        $comments = $this->commentRepo->showComment($id);
         if ($request->ajax()) {
             if ($request->has('page')) {
                 return view('fashi.user.comment', compact('comments', 'products'));
             }
         }
 
-        $products = Product::inRandomOrder()->limit(config('product.random'))->get();;
+        $products = $this->productRepo->getRandomProduct();
         $cart = session('cart');
         $totalQuantity = 0;
         if (isset($cart)) {
@@ -78,7 +103,7 @@ class ProductController extends Controller
 
     public function addToCart(Request $request, $id)
     {
-        $productDetail = ProductDetail::where('product_id', $id)->where('color', $request->color)->where('size', $request->size)->first();
+        $productDetail = $this->productDetailRepo->getProductDetail($id)->where('color', $request->color)->where('size', $request->size)->first();
 
         if ($productDetail) {
             if ($request->quantity > $productDetail->quantity) {
@@ -205,7 +230,7 @@ class ProductController extends Controller
     public function removeCartItem(Request $request, $id)
     {
         $cart = session()->get('cart');
-        $productDetailId = ProductDetail::findOrFail($id)->id;
+        $productDetailId = $this->productDetailRepo->find($id)->id;
 
         try {
             session()->forget('cart.' . $productDetailId);
@@ -231,7 +256,7 @@ class ProductController extends Controller
     public function removeAllCart(Request $request)
     {
         try {
-            session()->forget('cart.');
+            session()->forget('cart');
         } catch (Exception $e) {
             $result = [
                 'status' => false,
@@ -284,10 +309,10 @@ class ProductController extends Controller
 
         try {
             if (isset($cart)) {
-                $order  = Order::create($data);
+                $order  = $this->orderRepo->create($data);
 
                 foreach ($cart as $productDetailId => $cartItem) {
-                    OrderDetail::create([
+                    $this->orderDetailRepo->create([
                         'order_id' => $order->id,
                         'product_detail_id' => $productDetailId,
                         'quantity' => $cartItem['quantity'],
@@ -314,8 +339,8 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         $nameProduct = $request->name;
-        $products = Product::where('name', 'LIKE', "%{$nameProduct}%")->get();
-        $categories = Category::whereNotNull('parent_id')->get();
+        $products = $this->productRepo->searchProduct($nameProduct);
+        $categories = $this->categoryRepo->findChildrenCategory()->get();
 
         if ($products->count() === 0) {
             return view('fashi.user.404', compact(['categories']));
@@ -326,7 +351,7 @@ class ProductController extends Controller
 
     public function orderCancel($id)
     {
-        $order = Order::findOrFail($id);
+        $order = $this->orderRepo->find($id);
 
         try {
             $order->update(['status' => config('order.cancel')]);

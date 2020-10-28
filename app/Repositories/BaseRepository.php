@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Repositories\RepositoryInterface;
-use RealRashid\SweetAlert\Facades\Alert;
 
 abstract class BaseRepository implements RepositoryInterface
 {
@@ -69,8 +68,10 @@ abstract class BaseRepository implements RepositoryInterface
         return false;
     }
 
-    public function sweetToast($message, $icon)
+    public function orderByCreatedAt()
     {
-        return toast($message, $icon);
+        $result = $this->model->orderBy('created_at', 'desc')->get();;
+
+        return $result;
     }
 }

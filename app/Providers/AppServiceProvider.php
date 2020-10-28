@@ -13,6 +13,8 @@ use App\Repositories\Image\ImageRepository;
 use App\Repositories\Image\ImageRepositoryInterface;
 use App\Repositories\Order\OrderRepository;
 use App\Repositories\Order\OrderRepositoryInterface;
+use App\Repositories\OrderDetail\OrderDetailRepository;
+use App\Repositories\OrderDetail\OrderDetailRepositoryInterface;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\ProductDetail\ProductDetailRepository;
@@ -48,6 +50,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             OrderRepositoryInterface::class,
             OrderRepository::class
+        );
+
+        $this->app->singleton(
+            OrderDetailRepositoryInterface::class,
+            OrderDetailRepository::class
         );
 
         $this->app->singleton(

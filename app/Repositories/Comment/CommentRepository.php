@@ -11,4 +11,11 @@ class CommentRepository extends BaseRepository implements CommentRepositoryInter
     {
         return Comment::class;
     }
+
+    public function showComment($id)
+    {
+        $result = $this->model->where('product_id', $id)->orderBy('created_at', 'desc')->paginate(config('comment.paginate'));
+
+        return $result;
+    }
 }

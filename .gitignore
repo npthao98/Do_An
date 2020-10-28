@@ -15,3 +15,5 @@ yarn-error.log
 /public/js/*
 /public/mix-manifest.json
 /coverage
+/tests/Browser/console
+/tests/Browser/screenshots

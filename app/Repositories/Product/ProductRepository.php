@@ -11,4 +11,18 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     {
         return Product::class;
     }
+
+    public function getRandomProduct()
+    {
+        $result = $this->model->inRandomOrder()->limit(config('product.random'))->get();
+
+        return $result;
+    }
+
+    public function searchProduct($request)
+    {
+        $result = $this->model->where('name', 'LIKE', "%{$request}%")->get();
+
+        return $result;
+    }
 }
