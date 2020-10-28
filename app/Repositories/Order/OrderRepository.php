@@ -78,4 +78,20 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
 
         return true;
     }
+
+    public function countOrderByMonth($month)
+    {
+        $result = $this->model->whereMonth('created_at', $month)
+            ->count('id');
+
+        return $result;
+    }
+
+    public function countCancelOrderByMonth($month)
+    {
+        $result = $this->model->onlyTrashed()->whereMonth('deleted_at', $month)
+            ->count('id');
+
+        return $result;
+    }
 }

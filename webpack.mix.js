@@ -19,5 +19,7 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/dataTable.js', 'public/js')
     .js('resources/js/comment.js', 'public/js')
     .js('resources/js/loadComment.js', 'public/js')
+    .js('resources/js/lineChart.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
-    .sass('resources/sass/style.scss', 'public/css');
+    .sass('resources/sass/style.scss', 'public/css')
+    mix.copy('node_modules/chart.js/dist/Chart.js', 'public/js');
