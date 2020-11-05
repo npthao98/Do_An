@@ -11,4 +11,11 @@ class ProductDetailRepository extends BaseRepository implements ProductDetailRep
     {
         return ProductDetail::class;
     }
+
+    public function getProductDetail($id)
+    {
+        $result = $this->model->where('product_id', $id);
+
+        return $result;
+    }
 }

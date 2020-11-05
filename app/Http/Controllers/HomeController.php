@@ -3,13 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Category;
+use App\Http\Requests\CategoryRequest;
+use App\Repositories\Category\CategoryRepositoryInterface;
 
 class HomeController extends Controller
 {
+    protected $categoryRepo;
+
+    public function __construct(CategoryRepositoryInterface $categoryRepo)
+    {
+        $this->categoryRepo = $categoryRepo;
+    }
+
     public function index()
     {
-        $categories = Category::whereNotNull('parent_id')->orderBy('created_at')->limit(config('category.limit'))->get();
+        $categories = $this->categoryRepo->findChildrenCategory()->orderBy('created_at')->limit(config('category.limit'))->get();
         $categoryFirst = $categories->first();
         $categorySecond = $categories->skip(config('category.skip'))->first();
 

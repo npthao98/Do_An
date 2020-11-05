@@ -33,4 +33,18 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
 
         return false;
     }
+
+    public function findChildrenCategory()
+    {
+        $result = $this->model->whereNotNull('parent_id');
+
+        return $result;
+    }
+
+    public function findOneChildrenCategory($id)
+    {
+        $result = Category::with('products.images')->whereNotNull('parent_id')->findOrFail($id);
+
+        return $result;
+    }
 }
