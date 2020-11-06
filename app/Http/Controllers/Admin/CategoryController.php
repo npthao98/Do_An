@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use Illuminate\Http\Request;
+use Exception;
+use Illuminate\Support\Facades\Log;
 use App\Repositories\Category\CategoryRepositoryInterface;
 
 class CategoryController extends Controller
@@ -57,7 +59,7 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryRequest $request, $id)
+    public function update($id, CategoryRequest $request)
     {
         try {
             $this->categoryRepo->update($id, $request->all());
