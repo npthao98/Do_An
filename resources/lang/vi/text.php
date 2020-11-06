@@ -98,4 +98,5 @@ return [
     'no_product_details' => 'Không có sản phẩm này',
     'quantity_product_not_enough' => 'Số lượng sản phẩm không đủ',
     'quantity_must_be_numeric' => 'Số lượng nhập vào phải là số',
+    'negative' => 'Số nhập vào phải lớn hơn 0',
 ];

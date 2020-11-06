@@ -89,17 +89,17 @@
                                     <div class="modal-footer">
                                         <form method="POST" action="{{ route('admin.orders.pending', $order->id) }}">
                                             @csrf
-                                            <button type="submit" @if ($order->status === config('order.pending')) disabled="" @endif class="btn btn-info">{{ trans('text.pending') }}</button>
+                                            <button type="submit" @if ($order->status === config('order.pending') || $order->status === config('order.success')) hidden="" @endif class="btn btn-info">{{ trans('text.pending') }}</button>
                                         </form>
 
                                         <form method="POST" action="{{ route('admin.orders.success', $order->id) }}">
                                             @csrf
-                                            <button type="submit" @if ($order->status === config('order.success')) disabled="" @endif class="btn btn-success">{{ trans('text.success') }}</button>
+                                            <button type="submit" @if ($order->status === config('order.success')) hidden="" @endif class="btn btn-success">{{ trans('text.success') }}</button>
                                         </form>
 
                                         <form method="POST" action="{{ route('admin.orders.cancel', $order->id) }}">
                                             @csrf
-                                            <button type="submit" @if ($order->status === config('order.cancel')) disabled="" @endif class="btn btn-danger">{{ trans('text.cancel') }}</button>
+                                            <button type="submit" @if ($order->status === config('order.cancel') || $order->status === config('order.success')) hidden="" @endif class="btn btn-danger">{{ trans('text.cancel') }}</button>
                                         </form>
 
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('text.close') }}</button>

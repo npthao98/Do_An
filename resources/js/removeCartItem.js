@@ -39,6 +39,7 @@ $(document).ready(function(){
 
             success: function(result) {
                 $('#cart-body').remove();
+                $('.all-price').html(result.totalPrice);
                 sweetDelete(result.icon, result.message);
             },
 

@@ -8,4 +8,6 @@ interface OrderRepositoryInterface
     public function updateOrderPending($id);
 
     public function updateOrderCancel($id);
+
+    public function recalculateProductAfterOrder($id); 
 }
