@@ -66,4 +66,11 @@ return [
             'error' => 'Update failed!',
         ],
     ],
+
+    'notification'=> [
+        'delete'=> [
+            'success' => 'Notification has been deleted successfully!',
+            'error' => 'Delete notification failed!',
+        ],
+    ],
 ];

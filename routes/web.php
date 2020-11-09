@@ -26,6 +26,9 @@ Route::group(['middleware' => 'locale'], function() {
         Route::get('users', 'UserController@index')->name('user.index');
         Route::post('users/{user}', 'UserController@changeRole')->name('change_role');
         Route::get('/', 'DashboardController@index')->name('dashboard');
+        Route::get('/notifications', 'DashboardController@listNotification')->name('list_notification');
+        Route::delete('/notifications/{notification}', 'DashboardController@deleteNotification')->name('delete_notification');
+        Route::delete('/notifications', 'DashboardController@deleteAllNotification')->name('delete_all_notification');
     });
 
     Route::get('/categories/{category}', 'ProductController@showProductByCategory')->name('product.category.index');
