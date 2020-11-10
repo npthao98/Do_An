@@ -25,6 +25,7 @@ Route::group(['middleware' => 'locale'], function() {
         Route::post('orders/pending/{order}', 'ProductController@orderPending')->name('orders.pending');
         Route::get('users', 'UserController@index')->name('user.index');
         Route::post('users/{user}', 'UserController@changeRole')->name('change_role');
+        Route::get('/', 'DashboardController@index')->name('dashboard');
     });
 
     Route::get('/categories/{category}', 'ProductController@showProductByCategory')->name('product.category.index');

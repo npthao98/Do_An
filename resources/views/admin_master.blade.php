@@ -34,6 +34,8 @@
         <script src="{{ asset('bower_components/bower_admin/dist/js/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('bower_components/bower_admin/dist/js/dataTables.bootstrap4.min.js') }}"></script>
         <script src="{{ asset('js/addInput.js') }}"></script>
+        <script src="{{ asset('js/Chart.js') }}"></script>
+        <script src="{{ asset('js/lineChart.js') }}"></script>
     </body>
 
 </html>

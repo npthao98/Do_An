@@ -10,4 +10,8 @@ interface OrderRepositoryInterface
     public function updateOrderCancel($id);
 
     public function recalculateProductAfterOrder($id); 
+
+    public function countOrderByMonth($month);
+
+    public function countCancelOrderByMonth($month);
 }
