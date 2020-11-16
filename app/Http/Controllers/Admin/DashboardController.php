@@ -4,17 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Order\OrderRepositoryInterface;
+use App\Repositories\Notification\NotificationRepositoryInterface;
 use Illuminate\Http\Request;
-use App\Order;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
-	protected $orderRepo;
+    protected $orderRepo;
+    protected $notificationRepo;
 
-    public function __construct(OrderRepositoryInterface $orderRepo) 
-    {
+    public function __construct
+    (
+        OrderRepositoryInterface $orderRepo, 
+        NotificationRepositoryInterface $notificationRepo
+    ) {
         $this->orderRepo = $orderRepo;
+        $this->notificationRepo = $notificationRepo;
     }
 
     public function index(Request $request)
@@ -62,5 +67,42 @@ class DashboardController extends Controller
         }
 
         return view('fashi.admin.dashboard');
+    }
+
+    public function listNotification()
+    {
+        $notifications = $this->notificationRepo->getAll();
+        
+        return view('fashi.admin.notification.index', compact('notifications'));
+    }
+
+    public function deleteNotification($id)
+    {   
+        try {
+            $this->notificationRepo->delete($id);
+        } catch (Exception $e) {
+            toast(trans('message.notification.delete.error'), 'error');
+
+            return back();
+        }
+
+        toast(trans('message.notification.delete.success'), 'success');
+
+        return redirect()->route('admin.list_notification');
+    }
+
+    public function deleteAllNotification()
+    {   
+        try {
+            $this->notificationRepo->destroyAllNotification();
+        } catch (Exception $e) {
+            toast(trans('message.notification.delete.error'), 'error');
+
+            return back();
+        }
+
+        toast(trans('message.notification.delete.success'), 'success');
+
+        return redirect()->route('admin.list_notification');
     }
 }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
-use App\ProductDetail;
 use App\Repositories\BaseRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
@@ -12,6 +11,7 @@ use App\Repositories\ProductDetail\ProductDetailRepositoryInterface;
 use App\Repositories\Order\OrderRepositoryInterface;
 use App\Repositories\OrderDetail\OrderDetailRepositoryInterface;
 use App\Repositories\Comment\CommentRepositoryInterface;
+use App\Notifications\OrderNotification;
 
 class ProductController extends Controller
 {
@@ -329,6 +329,21 @@ class ProductController extends Controller
 
                 $this->orderRepo->recalculateProductAfterOrder($order->id);
 
+                $productOrders = '';
+
+                foreach ($order->orderDetails as $key => $orderDetail) {
+                    $productName = $orderDetail->productDetail->product->name;
+                    $productSize = $orderDetail->productDetail->size;
+                    $productColor = $orderDetail->productDetail->color;
+                    $orderQuantity = $orderDetail->quantity;
+
+                    $productOrders .= $productName . '(' . $productSize . ', ' . $productColor . ', ' . $orderQuantity . ')' . ', ';
+                };
+
+                $notification = trans('text.customer') . ' ' . auth()->user()->name . ' ' . trans('text.has_ordered') . ' ' . $productOrders; 
+
+                auth()->user()->notify(new OrderNotification($notification));
+
                 session()->forget('cart');
             } else {
                 alert()->error(trans('text.error'), trans('text.order_error'));
@@ -363,8 +378,10 @@ class ProductController extends Controller
     {
         try {
             $this->orderRepo->updateOrderCancel($id);
+            $order = $this->orderRepo->getOneCancelOrder($id);
+            $notification = trans('text.customer') . ' ' . auth()->user()->name . ' ' . trans('text.has_deleted_order'); 
+            auth()->user()->notify(new OrderNotification($notification));
         } catch (Exception $e) {
-            Log::error($e);
             toast(trans('message.cart.update.error'), 'error');
 
             return back();

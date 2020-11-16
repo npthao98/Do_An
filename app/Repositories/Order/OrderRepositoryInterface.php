@@ -14,4 +14,6 @@ interface OrderRepositoryInterface
     public function countOrderByMonth($month);
 
     public function countCancelOrderByMonth($month);
+
+    public function getOneCancelOrder($id);
 }

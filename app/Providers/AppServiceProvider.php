@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use App\Category;
+use App\Notification;
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Comment\CommentRepository;
@@ -21,6 +22,8 @@ use App\Repositories\ProductDetail\ProductDetailRepository;
 use App\Repositories\ProductDetail\ProductDetailRepositoryInterface;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\Notification\NotificationRepository;
+use App\Repositories\Notification\NotificationRepositoryInterface;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -72,6 +75,11 @@ class AppServiceProvider extends ServiceProvider
             UserRepository::class
         );
 
+        $this->app->singleton(
+            NotificationRepositoryInterface::class,
+            NotificationRepository::class
+        );
+
     }
 
     /**
@@ -85,6 +93,11 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('includes.user.header', function($view) {
             $categories = Category::whereNotNull('parent_id')->get();
             $view->with('categories', $categories);
+        });
+
+        view()->composer('includes.admin.header', function($view) {
+            $notifications = Notification::orderBy('created_at', 'desc')->limit(config('order.notification_limit'))->get();
+            $view->with('notifications', $notifications);
         });
     }
 }

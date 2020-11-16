@@ -66,4 +66,11 @@ return [
             'error' => 'Cập nhập thất bại!',
         ],
     ],
+
+    'notification'=> [
+        'delete'=> [
+            'success' => 'Thông báo được xóa thành công',
+            'error' => 'Xóa thông báo bị lỗi',
+        ],
+    ],
 ];
