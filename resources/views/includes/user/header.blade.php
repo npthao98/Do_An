@@ -35,16 +35,17 @@
                     </form>
                 @endguest
                 <div class="lan-selector">
-                    {{-- <select onchange="location = this.value;" class="language_drop" name="countries" id="countries">
+                    <select onchange="location = this.value;" class="language_drop" name="countries" id="countries">
+                        <option selected>{{ trans('header.language') }}</option>
                         <option value='{!! route('user.change-language', ['en']) !!}' data-image="{{ asset('bower_components/bower_fashi_shop/img/flag-1.jpg') }}" data-imagecss="flag yt"
                             data-title="English">{{ trans('header.english') }}</option>
                         <option value='{!! route('user.change-language', ['vi']) !!}' data-image="{{ asset('bower_components/bower_fashi_shop/img/flag-2.jpg') }}" data-imagecss="flag yu"
                             data-title="Vietnamese">{{ trans('header.vietnamese') }} </option>
-                    </select> --}}
-                    <a href="{!! route('user.change-language', ['en']) !!}">English</a>
-                    <a href="{!! route('user.change-language', ['vi']) !!}">Vietnam</a>
+                    </select>
                 </div>
-                <div class="top-social"></div>
+                <div class="top-social">
+                    <div style="margin-top: 15px; margin-bottom: 23px;"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -73,38 +74,15 @@
                 <div class="col-lg-3 text-right col-md-3">
                     <ul class="nav-right">
                         <li class="cart-icon">
-                            <a href="{{ route('show_cart') }}">
+                            <a href="{{ route('user.orders') }}">
                                 <i class="icon_bag_alt"></i>
+                            </a>
+                        </li>
+                        <li class="cart-icon">
+                            <a href="{{ route('show_cart') }}">
+                                <i class="fa fa-shopping-cart"></i>
                                 <span class="cart_num">{{ session()->get('totalQuantity') ?? '' }}</span>
                             </a>
-                            {{-- <div class="cart-hover">
-                                <div class="select-items">
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td class="si-pic"><img src="{{ asset('bower_components/bower_fashi_shop/img/select-product-2.jpg') }}" alt=""></td>
-                                                <td class="si-text">
-                                                    <div class="product-selected">
-                                                        <p> $60.00 x 1 </p>
-                                                        <h6>Kabino Bedside Table</h6>
-                                                    </div>
-                                                </td>
-                                                <td class="si-close">
-                                                    <i class="ti-close"></i>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="select-total">
-                                    <span>{{ trans('header.total') }}:</span>
-                                    <h5>$120.00</h5>
-                                </div>
-                                <div class="select-button">
-                                    <a href="#" class="primary-btn view-card">{{ trans('header.view_card') }}</a>
-                                    <a href="#" class="primary-btn checkout-btn">{{ trans('header.check_out') }}</a>
-                                </div>
-                            </div> --}}
                         </li>
                     </ul>
                 </div>

@@ -18,7 +18,11 @@
 
         @include('includes.admin.header')
 
-        @yield('content')
+        <div class="ml-5">
+            <div class="ml-5">
+                @yield('content')
+            </div>
+        </div>
 
         <!-- ./wrapper -->
         <!-- jQuery -->

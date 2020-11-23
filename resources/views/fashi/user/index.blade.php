@@ -73,7 +73,9 @@
                         @foreach ($categoryFirst->products as $product)
                             <div class="product-item">
                                 <div class="pi-pic">
-                                    <img src="{{ $product->images->first()->link_to_image }}" alt="">
+                                    <div style="height: 300px">
+                                        <img src="{{ $product->images->first()->link_to_image }}"  alt="">
+                                    </div>
                                     @if ($product->in_stock <= 0)
                                         <div class="sale pp-sale">{{ trans('text.sold_out') }}</div>
                                     @endif
@@ -115,7 +117,9 @@
                         @foreach ($categorySecond->products as $product)
                             <div class="product-item">
                                 <div class="pi-pic">
-                                    <img src="{{ $product->images->first()->link_to_image }}" alt="">
+                                    <div style="height: 300px">
+                                        <img src="{{ $product->images->first()->link_to_image }}"  alt="">
+                                    </div>
                                     @if ($product->in_stock <= 0)
                                         <div class="sale pp-sale">{{ trans('text.sold_out') }}</div>
                                     @endif

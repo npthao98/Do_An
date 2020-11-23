@@ -34,4 +34,5 @@ return [
     'datatables'=> 'Bảng dữ liệu',
     'search'=> 'Tìm kiếm',
     'new_product'=> 'Sản phẩm mới',
+    'language' => 'Ngôn ngữ',
 ];

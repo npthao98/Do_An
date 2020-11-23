@@ -35,4 +35,5 @@ return [
     'datatables'=> 'DataTables',
     'search'=> 'Search',
     'new_product'=> 'New Product',
+    'language' => 'Language',
 ];

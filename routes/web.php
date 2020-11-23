@@ -43,11 +43,12 @@ Route::group(['middleware' => 'locale'], function() {
     Route::get('/checkouts', 'ProductController@checkOut')->name('check_out');
     Route::post('/checkouts', 'ProductController@createOrder')->name('create_order')->middleware('auth');
 
-    Route::prefix('users')->group(function () {
-        Route::get('/', 'UserController@index')->name('user')->middleware('auth');
-        Route::put('update', 'UserController@update')->name('user.update')->middleware('auth');
-        Route::get('change-password', 'UserController@viewChangePassword')->name('user.view.change.password')->middleware('auth');
-        Route::put('change-password', 'UserController@changePassword')->name('user.change.password')->middleware('auth');
+    Route::prefix('users')->middleware('auth')->group(function () {
+        Route::get('/', 'UserController@index')->name('user');
+        Route::put('update', 'UserController@update')->name('user.update');
+        Route::get('change-password', 'UserController@viewChangePassword')->name('user.view.change.password');
+        Route::put('change-password', 'UserController@changePassword')->name('user.change.password');
+        Route::get('/orders', 'OrderController@index')->name('user.orders');
     });
 
     Route::post('/comments/{product}', 'CommentController@createComment')->name('create.comment');
