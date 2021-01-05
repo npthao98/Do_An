@@ -131,4 +131,5 @@ return [
     'thank_you_for_using_our_application' => 'Cảm ơn bạn đã sử dụng ứng dụng của chúng tôi!',
     'price_import' => 'Price import',
     'price_sale' => 'Price Sale',
+    'street' => 'Đường',
 ];

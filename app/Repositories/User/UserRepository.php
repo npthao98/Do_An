@@ -3,13 +3,13 @@ namespace App\Repositories\User;
 
 use App\Repositories\BaseRepository;
 use App\Repositories\User\UserRepositoryInterface;
-use App\User;
+use App\Models\Person;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
     public function getModel()
     {
-        return User::class;
+        return Person::class;
     }
 
     public function updateRole($id)

@@ -20,15 +20,14 @@ class Person extends Authenticatable
         'first_name',
         'midd_name',
         'last_name',
+        'apartment_number',
+        'street',
+        'district',
+        'city',
         'status',
     ];
 
     public $timestamps = true;
-
-    public function address()
-    {
-        return $this->hasOne(Address::class);
-    }
 
     public function customer()
     {

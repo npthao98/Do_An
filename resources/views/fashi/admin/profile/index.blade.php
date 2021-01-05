@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1>{{ trans('text.product') }}</h1>
+            <h1>{{ trans('text.user') }}</h1>
         </div>
     </div>
 
@@ -13,9 +13,8 @@
         <thead>
             <tr>
                 <th>{{ trans('text.name') }}</th>
-                <th>{{ trans('text.phone') }}</th>
                 <th>{{ trans('text.email') }}</th>
-                <th>{{ trans('text.street_address') }}</th>
+                <th>{{ trans('text.address') }}</th>
                 <th>{{ trans('text.role') }}</th>
                 <th>{{ trans('text.options') }}</th>
             </tr>
@@ -23,19 +22,24 @@
         <tbody>
             @foreach ($users as $user)
                 <tr>
-                    <td>{{ $user->name ?? '' }}</td>
-                    <td>{{ $user->phone ?? '' }}</td>
-                    <td>{{ $user->email ?? '' }}</td>
-                    <td>{{ $user->address ?? '' }}</td>
+                    <td>{{ $user->first_name . ' ' . $user->midd_name . ' ' . $user->last_name }}</td>
                     <td>
-                        @if ($user->role == config('user.admin'))
+                        @if (isset($user->employee))
+                            {{ $user->employee->internal_mail }}
+                        @else
+                            {{ $user->customer->email }}
+                        @endif
+                    </td>
+                    <td>{{ $user->apartment_number . ' - ' . $user->street . ' - ' . $user->district . ' - ' . $user->city }}</td>
+                    <td>
+                        @if (isset($user->employee))
                             {{ trans('header.admin') }}
                         @else
                             {{ trans('text.user') }}
                         @endif
                     </td>
                     <td>
-                        <form method="POST" action="{{ route('admin.change_role', $user->id) }}">
+                        <form method="POST" action="">
                             @csrf
                             <button type="submit" class="btn btn-success">{{ trans('text.change_role') }}</button>
                         </form>
@@ -46,9 +50,8 @@
         <tfoot>
             <tr>
                 <th>{{ trans('text.name') }}</th>
-                <th>{{ trans('text.phone') }}</th>
                 <th>{{ trans('text.email') }}</th>
-                <th>{{ trans('text.street_address') }}</th>
+                <th>{{ trans('text.address') }}</th>
                 <th>{{ trans('text.role') }}</th>
                 <th>{{ trans('text.options') }}</th>
             </tr>
