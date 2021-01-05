@@ -3,7 +3,7 @@ namespace App\Repositories\Product;
 
 use App\Repositories\BaseRepository;
 use App\Repositories\Product\ProductRepositoryInterface;
-use App\Product;
+use App\Models\Product;
 
 class ProductRepository extends BaseRepository implements ProductRepositoryInterface
 {

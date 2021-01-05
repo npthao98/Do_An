@@ -25,7 +25,8 @@
                 <th>{{ trans('text.name') }}</th>
                 <th>{{ trans('text.category') }}</th>
 
-                <th>{{ trans('text.price') }}</th>
+                <th>{{ trans('text.price_sale') }}</th>
+                <th>{{ trans('text.price_import') }}</th>
                 <th>{{ trans('text.in_stock') }}</th>
                 <th>{{ trans('text.image') }}</th>
                 <th>{{ trans('text.options') }}</th>
@@ -36,10 +37,17 @@
                 <tr>
                     <td>{{ $key + 1 }}</td>
                     <td>{{ $product->name ?? '' }}</td>
-                    <td>{{ $product->categories->first()->name ?? '' }}</td>
-                    <td>${{ $product->price ?? '' }}</td>
-                    <td>{{ $product->in_stock ?? '' }}</td>
-                    <td><img class="img-fluid image-size-admin" src="{{ $product->images->first() ? $product->images->first()->link_to_image : '' }}"></td>
+                    <td>{{ $product->category->name ?? '' }}</td>
+                    <td>${{ number_format($product->price_sale) ?? '' }}</td>
+                    <td>${{ number_format($product->price_import) ?? '' }}</td>
+                    @php
+                        $total = 0;
+                        foreach ($product->productInfors as $productInfor) {
+                            $total+=$productInfor->quantity;
+                        }
+                    @endphp
+                    <td>{{ $total ?? '' }}</td>
+                    <td><img class="img-fluid image-size-admin" src="{{ asset(config('view.images') . $product->link_to_image_base) }}"></td>
                     <td>
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalShow-{{ $product->id }}">
                           {{ trans('text.show') }}
@@ -55,15 +63,15 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    @foreach ($product->productDetails as $productDetail)
+                                    @foreach ($product->productInfors as $productInfor)
                                         <div class="modal-body">
-                                            <div><b>{{ trans('text.color') }}: {{ $productDetail->color }}, {{ trans('text.size') }}: {{ $productDetail->size }}, {{ trans('text.quantity') }}: {{ $productDetail->quantity }}</b></div>
+                                            <div><b>{{ trans('text.color') }}: {{ $productInfor->color }}, {{ trans('text.size') }}: {{ $productInfor->size }}, {{ trans('text.quantity') }}: {{ $productInfor->quantity }}</b></div>
                                         </div>
                                     @endforeach
 
                                     <div class="d-inline">
                                         @foreach ($product->images as $image)
-                                                <img src="{{ $image->link_to_image }}" style="height: 245px;" class="img-thumbnail product-image-size">
+                                                <img src="{{ asset(config('view.images') . $image->link_to_image) }}" style="height: 245px;" class="img-thumbnail product-image-size">
                                         @endforeach
                                     </div>
                                     <div class="modal-footer">

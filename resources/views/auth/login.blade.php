@@ -26,10 +26,11 @@
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="group-input">
-                                <label for="email">{{ trans('make_auth.username_or_mail') }} *</label>
-                                <input id="email" type="email" class="@error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                <label for="username">Username *</label>
+                                <input id="username" class="@error('username') is-invalid @enderror"
+                                    name="username" value="{{ old('username') }}" required>
 
-                                @error('email')
+                                @error('username')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

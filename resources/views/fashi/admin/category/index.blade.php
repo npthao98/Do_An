@@ -42,11 +42,11 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="parent_id" class="col-form-label">{{ trans('text.parent') }}:</label>
-                            <select class="form-control" name="parent_id" id="parent_id" value="{{ old('parent_id') }}">
-                                <option value="">{{ trans('text.select_parent') }}</option>
+                            <label for="fullpath" class="col-form-label">{{ trans('text.parent') }}:</label>
+                            <select class="form-control" name="fullpath" id="fullpath" value="{{ old('fullpath') }}">
+                                <option disabled selected value="">{{ trans('text.select_parent') }}</option>
                                 @foreach ($categories as $category)
-                                    @if ($category->parent_id == null)
+                                    @if ($category->fullpath == null)
                                         <option
                                           value="{{ $category->id }}">
                                             {{ $category->name }}
@@ -68,14 +68,16 @@
     <table id="example" class="table table-striped table-bordered table-width">
         <thead>
             <tr>
+                <th>{{ trans('text.id') }}</th>
                 <th>{{ trans('text.name') }}</th>
                 <th>{{ trans('text.parent') }}</th>
                 <th>{{ trans('text.options') }}</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($categories as $category)
+            @foreach($categories as $key => $category)
                 <tr>
+                    <td>{{ ++$key }}</td>
                     <td>{{ $category->name ?? ''}}</td>
                     <td><b>{{ $category->parent->name ?? ''}}</b></td>
                     <td>
@@ -100,11 +102,11 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="parent_id" class="col-form-label">{{ trans('text.parent') }}:</label>
-                                                <select class="form-control" name="parent_id" id="parent_id">
-                                                    <option value="">{{ trans('text.select_parent') }}</option>
+                                                <label for="fullpath" class="col-form-label">{{ trans('text.parent') }}:</label>
+                                                <select class="form-control" name="fullpath" id="fullpath">
+                                                    <option disabled selected value="">{{ trans('text.select_parent') }}</option>
                                                     @foreach ($categories as $cate)
-                                                        @if($cate->parent_id == null)
+                                                        @if($cate->fullpath == null && $cate->id != $category->id)
                                                             <option
                                                             value="{{ $cate->id }}" {{ (isset($category->parent) && $cate->id == $category->parent->id) || ($cate->id == old('parent_id')) ? 'selected' : '' }}>
                                                             {{ $cate->name }}

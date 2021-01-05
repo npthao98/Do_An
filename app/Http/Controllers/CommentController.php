@@ -17,7 +17,7 @@ class CommentController extends Controller
     public function createComment(Request $request, $id)
     {
         $data = $request->all();
-        $image = asset('bower_components/bower_fashi_shop/img/product-single/avatar-2.png');
+        $image = asset('bower_components/bower_fashi_shop/img/product-single/avatar.jpg');
 
         if (auth()->check()) {
             $data['user_id'] = auth()->id();

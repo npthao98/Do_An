@@ -15,7 +15,8 @@ class IsAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->user() && auth()->user()->role == config('user.admin')) {
+        $admin = auth()->user()->employee;
+        if (auth()->user() && $admin) {
             return $next($request);
         }
 

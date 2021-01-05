@@ -40,8 +40,8 @@ Route::group(['middleware' => 'locale'], function() {
     Route::post('/carts', 'ProductController@updateCart')->name('update_cart');
     Route::delete('/carts/{product_detail}', 'ProductController@removeCartItem')->name('remove_cart_item');
     Route::delete('/carts/', 'ProductController@removeAllCart')->name('remove_all_cart');
-    Route::get('/checkouts', 'ProductController@checkOut')->name('check_out');
-    Route::post('/checkouts', 'ProductController@createOrder')->name('create_order')->middleware('auth');
+    Route::get('/checkouts', 'OrderController@create')->name('check_out');
+    Route::post('/checkouts', 'OrderController@store')->name('create_order')->middleware('auth');
 
     Route::prefix('users')->middleware('auth')->group(function () {
         Route::get('/', 'UserController@index')->name('user');
@@ -57,4 +57,6 @@ Route::group(['middleware' => 'locale'], function() {
     Route::get('change-language/{language}', 'HomeController@changeLanguage')->name('user.change-language');
     Route::post('orders/cancel/{order}', 'ProductController@orderCancel')->name('orders.cancel');
 });
+
+Route::get('/districts/{city}', 'CityController@getDistrictByCity');
 

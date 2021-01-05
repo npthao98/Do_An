@@ -3,7 +3,7 @@ namespace App\Repositories\Category;
 
 use App\Repositories\BaseRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
-use App\Category;
+use App\Models\Category;
 
 class CategoryRepository extends BaseRepository implements CategoryRepositoryInterface
 {
@@ -36,14 +36,14 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
 
     public function findChildrenCategory()
     {
-        $result = $this->model->whereNotNull('parent_id');
+        $result = $this->model->whereNotNull('fullpath');
 
         return $result;
     }
 
     public function findOneChildrenCategory($id)
     {
-        $result = Category::with('products.images')->whereNotNull('parent_id')->findOrFail($id);
+        $result = Category::with('products.images')->whereNotNull('fullpath')->findOrFail($id);
 
         return $result;
     }

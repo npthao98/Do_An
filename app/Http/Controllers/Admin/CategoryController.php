@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -29,6 +30,12 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = $this->categoryRepo->getAll();
+
+        foreach ($categories as $category) {
+            $parents = explode(',', $category->fullpath);
+            $parent = $parents[sizeof($parents)-1];
+            $category->parent = Category::find($parent);
+        }
 
         return view('fashi.admin.category.index', compact('categories'));
     }

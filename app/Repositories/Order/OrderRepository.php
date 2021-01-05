@@ -3,7 +3,7 @@ namespace App\Repositories\Order;
 
 use App\Repositories\BaseRepository;
 use App\Repositories\Order\OrderRepositoryInterface;
-use App\Order;
+use App\Models\Order;
 
 class OrderRepository extends BaseRepository implements OrderRepositoryInterface
 {
@@ -22,19 +22,16 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     {
         $order = $this->model->find($id);
 
-        foreach ($order->orderDetails->load('productDetail') as $orderDetail) {
-            $productDetail = $orderDetail->productDetail;
-            $product = $productDetail->product;
+        foreach ($order->items->load('productInfor') as $item) {
+            $productInfor = $item->productInfor;
 
-            $orderDetailQuantity = $orderDetail->quantity;
-            $productDetailQuantity = $productDetail->quantity;
+            $itemQuantity = $item->quantity;
+            $productInforQuantity = $productInfor->quantity;
 
-            $productDetailInStock = $productDetailQuantity + $orderDetailQuantity;
-            $productInStock = $product->in_stock + $orderDetailQuantity;
+            $productInforInStock = $productInforQuantity + $itemQuantity;
 
-            if ($productDetailInStock >= 0 || $productInStock >= 0) {
-                $productDetail->update(['quantity' => $productDetailInStock]);
-                $product->update(['in_stock' => $productInStock]);
+            if ($productInforInStock >= 0) {
+                $productInfor->update(['quantity' => $productInforInStock]);
             } else {
                 toast(trans('message.cart.update.error'), 'error');
 
@@ -42,7 +39,7 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
             }
         }
 
-        $order->update(['status' => config('order.cancel')]);
+        $order->update(['status' => config('status.order.canceled')]);
         $order->delete();
     }
 
@@ -52,23 +49,20 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
         $order->update(['status' => config('order.pending')]);
     }
 
-    public function recalculateProductAfterOrder($id) 
+    public function recalculateProductAfterOrder($id)
     {
         $order = $this->model->find($id);
 
-        foreach ($order->orderDetails->load('productDetail') as $orderDetail) {
-            $productDetail = $orderDetail->productDetail;
-            $product = $productDetail->product;
+        foreach ($order->items->load('productInfor') as $item) {
+            $productInfor = $item->productInfor;
 
-            $orderDetailQuantity = $orderDetail->quantity;
-            $productDetailQuantity = $productDetail->quantity;
+            $orderDetailQuantity = $item->quantity;
+            $productDetailQuantity = $productInfor->quantity;
 
-            $productDetailInStock = $productDetailQuantity - $orderDetailQuantity;
-            $productInStock = $product->in_stock - $orderDetailQuantity;
+            $productInforInStock = $productDetailQuantity - $orderDetailQuantity;
 
-            if ($productDetailInStock >= 0 || $productInStock >= 0) {
-                $productDetail->update(['quantity' => $productDetailInStock]);
-                $product->update(['in_stock' => $productInStock]);
+            if ($productInforInStock >= 0) {
+                $productInfor->update(['quantity' => $productInforInStock]);
             } else {
                 toast(trans('message.cart.update.error'), 'error');
 

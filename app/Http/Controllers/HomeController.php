@@ -21,7 +21,11 @@ class HomeController extends Controller
         $categoryFirst = $categories->first();
         $categorySecond = $categories->skip(config('category.skip'))->first();
 
-        return view('fashi.user.index', compact(['categories', 'categoryFirst', 'categorySecond']));
+        return view('fashi.user.index', compact(
+            'categories',
+            'categoryFirst',
+            'categorySecond'
+        ));
 
     }
 

@@ -30,15 +30,16 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="product-pic-zoom">
-                                <img class="product-big-img" src="{{ $product->images->first() ? $product->images->first()->link_to_image : '' }}" alt="">
+                                <img class="product-big-img" src="{{ asset(config('view.images') . $product->link_to_image_base) }}" alt="">
                                 <div class="zoom-icon">
                                     <i class="fa fa-search-plus"></i>
                                 </div>
                             </div>
                             <div class="product-thumbs">
-                                <div class="product-thumbs-track ps-slider owl-carousel">
+                                <div class="ps-slider owl-carousel">
                                     @foreach ($product->images as $image)
-                                        <div class="pt active" data-imgbigurl="{{ $image->link_to_image }}"><img src="{{ $image->link_to_image }}" alt="">
+                                        <div class="pt active" data-imgbigurl="{{ asset(config('view.images') . $image->link_to_image) }}">
+                                            <img src="{{ asset(config('view.images') . $image->link_to_image) }}" alt="">
                                         </div>
                                     @endforeach
                                 </div>
@@ -47,7 +48,7 @@
                         <div class="col-lg-6">
                             <div class="product-details">
                                 <div class="pd-title">
-                                    <span>{{ $product->categories->first()->name }}</span>
+                                    <span>{{ $product->category->name }}</span>
                                     <h3>{{ $product->name }}</h3>
                                 </div>
                                 <div class="pd-rating">
@@ -61,23 +62,23 @@
                                 <div class="pd-desc">
                                     <p>{{ $product->description }}</p>
                                     <p><b>{{ trans('text.in_stock') }}: {{ $product->in_stock }}</b></p>
-                                    <h4>${{ $product->price }}{{-- <span>${{ $product->price }}</span> --}}</h4>
+                                    <h4>${{ number_format($product->price_sale) }}</h4>
                                 </div>
                                 <div class="pd-color">
                                     <h6>{{ trans('text.color') }}</h6><br><br>
                                     <div class="form-group form-product">
                                         <select class="form-control" name="color" value="{{ old('parent_id') }}">
-                                            @foreach ($product->productDetails->unique('color') as $productDetailColor)
+                                            @foreach ($product->productInfors->unique('color') as $productInforColor)
                                                 <option
-                                                  value="{{ $productDetailColor->color }}">
-                                                    {{ $productDetailColor->color }}
+                                                  value="{{ $productInforColor->color }}">
+                                                    {{ $productInforColor->color }}
                                                 </option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
                                 <div class="pd-size-choose">
-                                    @foreach ($product->productDetails->unique('size') as $productDetailSize)
+                                    @foreach ($product->productInfors->unique('size') as $productDetailSize)
                                         <div class="sc-item">
                                             <label for="sm-size-{{ $productDetailSize->size }}">
                                                 <input type="radio" class="size-input" value="{{ $productDetailSize->size }}" id="sm-size-{{ $productDetailSize->size }}">{{ $productDetailSize->size }}
@@ -90,7 +91,7 @@
                                         <input type="text" value="1" name="quantity">
                                     </div>
                                     <a href="#" class="primary-btn
-                                        @if ($product->in_stock > 0)
+                                        @if ($product->productInfors->sum('quantity') > 0)
                                             pd-cart
                                         @else
                                             pd-sold-out-cart
@@ -98,7 +99,7 @@
                                         " data-product-id="{{ $product->id }}">{{ trans('text.add_to_cart') }}</a>
                                 </div>
                                 <ul class="pd-tags">
-                                    <a href="{{ route('product.category.index', $product->categories->first()->id) }}"><li><span class="text-uppercase">{{ trans('text.category') }}:</span> {{ $product->categories->first()->name }}</li></a>
+                                    <a href="{{ route('product.category.index', $product->category->id) }}"><li><span class="text-uppercase">{{ trans('text.category') }}:</span> {{ $product->category->name }}</li></a>
                                 </ul>
                                 <div class="pd-share">
                                     <div class="pd-social">
@@ -131,7 +132,7 @@
                                                     <div class="comment-option pl-4">
                                                         <div class="co-item">
                                                             <div class="avatar-pic">
-                                                                <img src="{{ asset('bower_components/bower_fashi_shop/img/product-single/avatar-2.png') }}" alt="">
+                                                                <img src="{{ asset(config('view.images') . 'avatar.jpg') }}" alt="">
                                                             </div>
                                                             <div class="avatar-text">
                                                                 <div class="at-rating">
@@ -145,7 +146,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-12">
+                                                    <div class="col-lg-12 pt-2">
                                                         <textarea placeholder="{{ trans('text.messges') }}" name="content" required="">{{ old('content') }}</textarea>
                                                         <button type="submit" class="site-btn" data-name="{{ auth()->user()->name ?? '' }}" data-product-id="{{ $product->id }}">{{ trans('text.send_message') }}</button>
                                                     </div>
@@ -178,10 +179,7 @@
                     <div class="col-lg-3 col-sm-6">
                         <div class="product-item">
                             <div class="pi-pic">
-                                <img src="{{ $productRandom->images->first()->link_to_image }}" alt="">
-                                @if ($productRandom->in_stock <= 0)
-                                    <div class="sale">{{ trans('text.sold_out') }}</div>
-                                @endif
+                                <img class="relate_product" src="{{ asset(config('view.images') . $productRandom->link_to_image_base) }}" alt="">
                                 <div class="icon">
                                     <i class="icon_heart_alt"></i>
                                 </div>
@@ -192,13 +190,12 @@
                                 </ul>
                             </div>
                             <div class="pi-text">
-                                <div class="catagory-name">{{ $productRandom->categories->first()->name }}</div>
+                                <div class="catagory-name">{{ $productRandom->category->name }}</div>
                                 <a href="{{ route('product_detail', $productRandom->id) }}">
                                     <h5>{{ $productRandom->name }}</h5>
                                 </a>
                                 <div class="product-price">
-                                    ${{ $productRandom->price }}
-                                    {{-- <span>${{ $productRandom->price }}</span> --}}
+                                    ${{ number_format($productRandom->price_sale) }}
                                 </div>
                             </div>
                         </div>

@@ -30,6 +30,8 @@
                                     <tr>
                                         <th>{{ trans('text.image') }}</th>
                                         <th class="p-name">{{ trans('text.product_name') }}</th>
+                                        <th>{{ trans('text.product_color') }}</th>
+                                        <th>{{ trans('text.product_size') }}</th>
                                         <th>{{ trans('text.price') }}</th>
                                         <th>{{ trans('text.quantity') }}</th>
                                         <th>{{ trans('text.total') }}</th>
@@ -41,20 +43,26 @@
                                     @if (isset($cart))
                                         @foreach ($cart as $productCart)
                                             <tr>
-                                                <td class="cart-pic first-row"><img class="w-75" src="{{ $productCart['image'] }}" alt=""></td>
+                                                <td class="cart-pic first-row"><img class="w-75 image-product-of-cart" src="{{ asset(config('view.images') . $productCart['image']) }}" alt=""></td>
                                                 <td class="cart-title first-row">
                                                     <h5>{{ $productCart['name'] }}</h5>
                                                 </td>
-                                                <td class="p-price first-row">${{ $productCart['price'] }}</td>
+                                                <td class="p-price first-row">
+                                                    <h5>{{ $productCart['color'] }}</h5>
+                                                </td>
+                                                <td class="cart-title first-row">
+                                                    <h5>{{ $productCart['size'] }}</h5>
+                                                </td>
+                                                <td class="p-price first-row">${{ number_format($productCart['price']) }}</td>
                                                 <td class="qua-col first-row">
                                                     <div class="quantity">
                                                         <div class="pro-qty">
-                                                            <input type="number" name="quantity[{{ $productCart['product_detail_id'] }}]" value="{{ $productCart['quantity'] }}">
+                                                            <input type="number" name="quantity[{{ $productCart['product_infor_id'] }}]" value="{{ $productCart['quantity'] }}">
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class="total-price first-row">${{ $subTotal = $productCart['price'] * $productCart['quantity'] }}</td>
-                                                <td class="close-td first-row"><i class="ti-close remove-one-item" data-product-detail-id="{{ $productCart['product_detail_id'] }}"></i></td>
+                                                <td class="total-price first-row">${{ number_format($subTotal = $productCart['price'] * $productCart['quantity']) }}</td>
+                                                <td class="close-td first-row"><i class="ti-close remove-one-item" data-product-detail-id="{{ $productCart['product_infor_id'] }}"></i></td>
                                             </tr>
                                             @php $totalPrice += $subTotal; @endphp
                                         @endforeach
@@ -73,7 +81,7 @@
                                 <div class="proceed-checkout">
                                     <ul>
                                         {{-- <li class="subtotal">Subtotal <span>$240.00</span></li> --}}
-                                        <li class="cart-total">{{ trans('text.total_price') }}<span class="all-price">${{ $totalPrice }}</span></li>
+                                        <li class="cart-total">{{ trans('text.total_price') }}<span class="all-price">${{ number_format($totalPrice) }}</span></li>
                                     </ul>
                                     <a href="{{ route('check_out') }}" class="proceed-btn">{{ trans('text.check_out') }}</a>
                                 </div>

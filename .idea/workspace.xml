@@ -2,8 +2,74 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0bb9c56f-4819-4d5d-b98d-6d14ad84899a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/config/status.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/seeds/ImportSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CategoryController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/DashboardController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CommentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CommentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProductController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/IsAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/IsAdmin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/CategoryRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/CategoryRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/OrderRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/OrderRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/Category/CategoryRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Category/CategoryRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/Order/OrderRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Order/OrderRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/Product/ProductRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Product/ProductRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/auth.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/order.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/productDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/productDetail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/user.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/user.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_persons_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_08_074010_create_comments_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_08_074948_create_rates_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_08_075205_create_orders_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_08_075711_create_order_detail_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_08_075850_create_product_detail_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_08_080232_create_products_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_08_081133_create_images_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_08_082031_create_category_product_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_08_082135_create_categories_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_18_062322_alter_categories_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_18_092139_add_timestamps_in_products_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_18_094310_add_timestamps_in_category_product_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_20_144216_add_timestamps_in_images_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_23_031616_drop_username_column_in_users_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_24_091310_add_price_on_detail_product.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_24_094131_add_quantity_on_detail_product.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_24_103000_add_timestamps_on_detail_product.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_30_081318_add_name_address_phone_email_in_orders_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_30_095502_add_timestamp_in_order_detail_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_10_05_145505_add_soft_delete_in_orders_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_04_080009_add_soft_delete_in_products_table.php.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_09_070237_create_notifications_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/make_auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/make_auth.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/text.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/text.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/vi/make_auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/vi/make_auth.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/vi/text.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/vi/text.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/register.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/fashi/admin/category/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/fashi/admin/category/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/fashi/admin/order/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/fashi/admin/order/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/fashi/admin/product/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/fashi/admin/product/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/fashi/admin/product/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/fashi/admin/product/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/fashi/user/check-out.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/fashi/user/check-out.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/fashi/user/comment.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/fashi/user/comment.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/fashi/user/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/fashi/user/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/fashi/user/list-orders.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/fashi/user/list-orders.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/fashi/user/product.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/fashi/user/product.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/fashi/user/shop.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/fashi/user/shop.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/fashi/user/shopping-cart.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/fashi/user/shopping-cart.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/includes/admin/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/includes/admin/header.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/includes/user/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/includes/user/header.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,6 +208,11 @@
     <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/images" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
@@ -166,6 +237,20 @@
       <workItem from="1606150278434" duration="399000" />
       <workItem from="1606272698658" duration="629000" />
       <workItem from="1606838740310" duration="838000" />
+      <workItem from="1606903088880" duration="24000" />
+      <workItem from="1607321822697" duration="124000" />
+      <workItem from="1607877693352" duration="7270000" />
+      <workItem from="1608046584511" duration="19678000" />
+      <workItem from="1608455746373" duration="11998000" />
+      <workItem from="1608545108051" duration="14583000" />
+      <workItem from="1608681744854" duration="4758000" />
+      <workItem from="1609036472940" duration="14596000" />
+      <workItem from="1609087036136" duration="1885000" />
+      <workItem from="1609292803580" duration="1420000" />
+      <workItem from="1609574189418" duration="354000" />
+      <workItem from="1609809363406" duration="1543000" />
+      <workItem from="1609812805235" duration="141000" />
+      <workItem from="1609814137196" duration="1344000" />
     </task>
     <servers />
   </component>
@@ -177,5 +262,14 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="419" y="259" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.900@0.0.1440.900" timestamp="1606147923418" />
+    <state x="458" y="212" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1609812034029">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="458" y="212" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1440.900@0.0.1440.900" timestamp="1609812034029" />
+    <state x="458" y="217" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.23.1440.822@0.23.1440.822" timestamp="1609042173762" />
+    <state x="421" y="205" width="750" height="490" key="find.popup" timestamp="1609065778666">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="421" y="205" width="750" height="490" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1609065778666" />
   </component>
 </project>

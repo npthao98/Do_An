@@ -18,6 +18,7 @@
     <table id="example" class="table table-striped table-bordered table-width">
         <thead>
             <tr>
+                <th scope="col">#</th>
                 <th>{{ trans('text.name') }}</th>
                 <th>{{ trans('text.phone') }}</th>
                 <th>{{ trans('text.quantity') }}</th>
@@ -27,30 +28,31 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($orders as $order)
+            @foreach ($orders as $index => $order)
                 <tr>
-                    <td>{{ $order->name ?? '' }}</td>
+                    <td>{{ ++$index }}</td>
+                    <td>{{ $order->receiver ?? '' }}</td>
                     <td>{{ $order->phone ?? '' }}</td>
                     <td>
                         @php $totalQuantity = 0; @endphp
-                        @foreach ($order->orderDetails as $orderDetail)
-                            @php $totalQuantity += $orderDetail->quantity; @endphp
+                        @foreach ($order->items as $item)
+                            @php $totalQuantity += $item->quantity; @endphp
                         @endforeach
                         {{ $totalQuantity ?? ''}}
                     </td>
                     <td>
                         @php $totalPrice = 0; @endphp
-                        @foreach ($order->orderDetails as $orderDetail)
+                        @foreach ($order->items as $item)
                             @php
-                                $quantity = $orderDetail->quantity;
-                                $price = $orderDetail->productDetail->product->price;
+                                $quantity = $item->quantity;
+                                $price = $item->productInfor->product->price_sale;
                                 $subTotal = $quantity * $price;
                                 $totalPrice += $subTotal;
                             @endphp
                         @endforeach
-                        ${{ $totalPrice ?? ''}}
+                        ${{ number_format($totalPrice) ?? ''}}
                     </td>
-                    <td>{{ $order->created_at ?? '' }}</td>
+                    <td>{{ $order->created_at ?? $order->updated_at }}</td>
                     <td>
                         <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModalDelete-{{ $order->id }}">{{ trans('text.show') }}</button>
 
@@ -75,11 +77,11 @@
                                             </thead>
                                             <tbody>
                                                 @php $count = 1 @endphp
-                                                @foreach ($order->orderDetails as $orderDetail)
+                                                @foreach ($order->items as $item)
                                                     <tr>
                                                         <th scope="row">{{ $count++ }}</th>
-                                                        <td>{{  $orderDetail->productDetail->product->name }} x {{ $orderDetail->quantity }} ({{ $orderDetail->productDetail->color }} - {{ $orderDetail->productDetail->size }})</td>
-                                                        <td>${{ $orderDetail->quantity * $orderDetail->productDetail->product->price }}</td>
+                                                        <td>{{  $item->productInfor->product->name }} x {{ $item->quantity }} ({{ $item->productInfor->color }} - {{ $item->productInfor->size }})</td>
+                                                        <td>${{ number_format($item->quantity * $item->productInfor->product->price_sale ) }}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -89,17 +91,17 @@
                                     <div class="modal-footer">
                                         <form method="POST" action="{{ route('admin.orders.pending', $order->id) }}">
                                             @csrf
-                                            <button type="submit" @if ($order->status === config('order.pending') || $order->status === config('order.success')) hidden="" @endif class="btn btn-info">{{ trans('text.pending') }}</button>
+                                            <button type="submit" @if ($order->status === config('status.order.pending') || $order->status === config('status.order.success')) hidden="" @endif class="btn btn-info">{{ trans('text.pending') }}</button>
                                         </form>
 
                                         <form method="POST" action="{{ route('admin.orders.success', $order->id) }}">
                                             @csrf
-                                            <button type="submit" @if ($order->status === config('order.success')) hidden="" @endif class="btn btn-success">{{ trans('text.success') }}</button>
+                                            <button type="submit" @if ($order->status === config('status.order.success')) hidden="" @endif class="btn btn-success">{{ trans('text.success') }}</button>
                                         </form>
 
                                         <form method="POST" action="{{ route('admin.orders.cancel', $order->id) }}">
                                             @csrf
-                                            <button type="submit" @if ($order->status === config('order.cancel') || $order->status === config('order.success')) hidden="" @endif class="btn btn-danger">{{ trans('text.cancel') }}</button>
+                                            <button type="submit" @if ($order->status === config('status.order.canceled') || $order->status === config('status.order.success')) hidden="" @endif class="btn btn-danger">{{ trans('text.cancel') }}</button>
                                         </form>
 
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('text.close') }}</button>
@@ -108,9 +110,9 @@
                             </div>
                         </div>
 
-                        @if ($order->status === config('order.success'))
+                        @if ($order->status === config('status.order.success'))
                             <button type="button" disabled="" class="btn btn-success">{{ trans('text.success') }}</button>
-                        @elseif ($order->status === config('order.cancel'))
+                        @elseif ($order->status === config('status.order.canceled'))
                             <button type="button" disabled="" class="btn btn-danger">{{ trans('text.cancel') }}</button>
                         @else
                             <button type="button" disabled="" class="btn btn-info">{{ trans('text.pending') }}</button>
@@ -121,6 +123,7 @@
         </tbody>
         <tfoot>
             <tr>
+                <th>#</th>
                 <th>{{ trans('text.name') }}</th>
                 <th>{{ trans('text.phone') }}</th>
                 <th>{{ trans('text.quantity') }}</th>

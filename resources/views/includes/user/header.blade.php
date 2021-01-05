@@ -28,6 +28,9 @@
                         <a href="{{ route('register') }}" class="login-panel"><i class="fa fa-user"></i>{{ trans('make_auth.register') }}</a>
                     @endif
                 @else
+                    @if(auth()->user()->employee)
+                        <a href="{{ route('admin.dashboard') }}" class="btn login-panel">{{ trans('make_auth.admin_dashboard') }}</a>
+                    @endif
                     <a href="{{ route('login') }}" class="login-panel button-logout"><i class="fa fa-user"></i>{{ trans('make_auth.logout') }}</a>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="logout_form">

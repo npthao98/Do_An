@@ -91,13 +91,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         view()->composer('includes.user.header', function($view) {
-            $categories = Category::whereNotNull('parent_id')->get();
+            $categories = Category::whereNotNull('fullpath')->get();
             $view->with('categories', $categories);
-        });
-
-        view()->composer('includes.admin.header', function($view) {
-            $notifications = Notification::orderBy('created_at', 'desc')->limit(config('order.notification_limit'))->get();
-            $view->with('notifications', $notifications);
         });
     }
 }

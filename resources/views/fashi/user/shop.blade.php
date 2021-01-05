@@ -41,10 +41,7 @@
                                 <div class="col-lg-4 col-sm-6">
                                     <div class="product-item">
                                         <div class="pi-pic">
-                                            <img class="image-size-user" src="{{ $product->images->first() ? $product->images->first()->link_to_image : '' }}" alt="">
-                                            @if ($product->in_stock <= 0)
-                                                <div class="sale pp-sale">{{ trans('text.sold_out') }}</div>
-                                            @endif
+                                            <img class="image-size-user" src="{{ asset(config('view.images') . $product->link_to_image_base) }}" alt="">
                                             <div class="icon">
                                                 <i class="icon_heart_alt"></i>
                                             </div>
@@ -55,13 +52,12 @@
                                             </ul>
                                         </div>
                                         <div class="pi-text">
-                                            <div class="catagory-name">{{ $product->categories->first()->name ?? '' }}</div>
+                                            <div class="catagory-name">{{ $product->categorie->name ?? '' }}</div>
                                             <a href="{{ route('product_detail', $product->id) }}">
                                                 <h5>{{ $product->name ?? '' }}</h5>
                                             </a>
                                             <div class="product-price">
-                                                ${{ $product->price ?? '' }}
-                                                {{-- <span>${{ $product->price ?? '' }}</span> --}}
+                                                ${{ number_format($product->price_sale) ?? '' }}
                                             </div>
                                         </div>
                                     </div>

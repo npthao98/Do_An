@@ -7,4 +7,5 @@ return [
     'month_in_year' => 12,
     'order_chart_yearly' => 'yearly',
     'notification_limit' => 4,
+    'fee_shipment' => '15000',
 ];

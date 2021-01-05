@@ -11,30 +11,13 @@
             <a href="#" class="nav-link">{{ trans('header.home') }}</a>
         </li>
     </ul>
-
     <ul class="navbar-nav ml-auto">
-
-      <!-- Notifications Dropdown Menu -->
         <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-                <i class="far fa-bell"></i>
-
-                <span class="badge badge-warning navbar-badge">{{ $countNotification ?? '' }}</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <span class="dropdown-item dropdown-header">{{ $countNotification ?? '' }} {{ trans('text.notifications') }}</span>
-                <div class="dropdown-divider"></div>
-                @foreach ($notifications as $notification)
-                    <a href="{{ route('admin.orders') }}" class="dropdown-item">
-                        <i class="fas fa-envelope mr-2"></i><p style="display: inline;">{{ $notification->data }}</p>
-                        <span class="float-right text-muted text-sm">{{ $notification->created_at->diffForHumans() }}</span>
-                    </a>
-                @endforeach
-                <div class="dropdown-divider"></div>
-                <a href="{{ route('admin.list_notification') }}" class="dropdown-item dropdown-footer">{{ trans('text.see_all_notifications') }}</a>
-            </div>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-link btn-logout-admin login-panel button-logout"><i class="fa fa-user"></i>{{ trans('make_auth.logout') }}</button>
+            </form>
         </li>
-
     </ul>
 </nav>
 
@@ -93,47 +76,7 @@
                         <p>{{ trans('text.user') }}</p>
                     </a>
                 </li>
-{{--                <li class="nav-item menu-open">--}}
-{{--                    <a href="#" class="nav-link active">--}}
-{{--                        <i class="nav-icon fas fa-table"></i>--}}
-{{--                        <p>{{ trans('header.tables') }}<i class="fas fa-angle-left right"></i></p>--}}
-{{--                    </a>--}}
-{{--                    <ul class="nav nav-treeview">--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a href="{{ route('admin.categories.index') }}" class="nav-link active">--}}
-{{--                                <i class="far fa-circle nav-icon"></i>--}}
-{{--                                <p>{{ trans('text.category') }}</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a href="{{ route('admin.products.index') }}" class="nav-link active">--}}
-{{--                                <i class="far fa-circle nav-icon"></i>--}}
-{{--                                <p>{{ trans('text.product') }}</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a href="{{ route('admin.orders') }}" class="nav-link active">--}}
-{{--                                <i class="far fa-circle nav-icon"></i>--}}
-{{--                                <p>{{ trans('text.order') }}</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a href="{{ route('admin.user.index') }}" class="nav-link active">--}}
-{{--                                <i class="far fa-circle nav-icon"></i>--}}
-{{--                                <p>{{ trans('text.user') }}</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a href="{{ route('admin.list_notification') }}" class="nav-link active">--}}
-{{--                                <i class="far fa-circle nav-icon"></i>--}}
-{{--                                <p>{{ trans('text.notifications') }}</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    </ul>--}}
-{{--                </li>--}}
             </ul>
         </nav>
-                <!-- /.sidebar-menu -->
     </div>
-                <!-- /.sidebar -->
 </aside>

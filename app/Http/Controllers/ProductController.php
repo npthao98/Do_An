@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProductInfor;
+use App\Models\Rate;
 use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
 use App\Repositories\BaseRepository;
@@ -66,17 +68,19 @@ class ProductController extends Controller
         $category = $this->categoryRepo->findOneChildrenCategory($id);
         $products = $category->products;
 
-        return view('fashi.user.shop', compact(['products', 'categories']));
+        return view('fashi.user.shop', compact('products', 'categories'));
     }
 
     public function productDetail(Request $request, $id)
     {
         $categories = $this->categoryRepo->findChildrenCategory()->get();
         $product = $this->productRepo->find($id);
-        $comments = $this->commentRepo->showComment($id);
+        $rates = Rate::where('product_id', $product->id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(config('comment.paginate'));
         if ($request->ajax()) {
             if ($request->has('page')) {
-                return view('fashi.user.comment', compact('comments', 'products'));
+                return view('fashi.user.comment', compact('rates', 'products'));
             }
         }
 
@@ -91,7 +95,7 @@ class ProductController extends Controller
 
         session()->put('totalQuantity', $totalQuantity);
 
-        return view('fashi.user.product', compact(['product', 'categories', 'comments', 'products']));
+        return view('fashi.user.product', compact('product', 'categories', 'rates', 'products'));
     }
 
     public function showCart()
@@ -103,10 +107,15 @@ class ProductController extends Controller
 
     public function addToCart(Request $request, $id)
     {
-        $productDetail = $this->productDetailRepo->getProductDetail($id)->where('color', $request->color)->where('size', $request->size)->first();
+        $productInfor = ProductInfor::where([
+            'product_id' => $id,
+            'color' => $request->color,
+            'size' => $request->size,
+        ])->first();
+        $product = $productInfor->product;
 
-        if ($productDetail) {
-            if ($request->quantity > $productDetail->quantity) {
+        if ($productInfor) {
+            if ($request->quantity > $productInfor->quantity) {
                 $result = [
                     'status' => false,
                     'message' => trans('text.quantity_product_not_enough'),
@@ -131,7 +140,7 @@ class ProductController extends Controller
                 return response()->json($result);
             }
 
-            $productDetailId = $productDetail->id;
+            $productInforId = $productInfor->id;
         } else {
             $result = [
                 'message' => trans('text.no_product_details'),
@@ -146,33 +155,33 @@ class ProductController extends Controller
         try {
             if (!$cart) {
                 $cart = [
-                    $productDetailId => [
-                        "product_detail_id" => $productDetailId,
+                    $productInforId => [
+                        "product_infor_id" => $productInforId,
                         "product_id" => $request->product_id,
                         "quantity" => $request->quantity,
                         "color" => $request->color,
                         "size" => $request->size,
-                        "name" => $productDetail->product->name,
-                        "price" => $productDetail->product->price,
-                        "image" => $productDetail->product->images->first()->link_to_image,
+                        "name" => $product->name,
+                        "price" => $product->price_sale,
+                        "image" => $product->link_to_image_base,
                     ]
                 ];
 
                 session()->put('cart', $cart);
             } else {
-                if (isset($cart[$productDetailId])) {
-                    $cart[$productDetailId]['quantity'] += $request->quantity;
+                if (isset($cart[$productInforId])) {
+                    $cart[$productInforId]['quantity'] += $request->quantity;
                     session()->put('cart', $cart);
                 } else {
-                    $cart[$productDetailId] = [
-                        "product_detail_id" => $productDetailId,
+                    $cart[$productInforId] = [
+                        "product_infor_id" => $productInforId,
                         "product_id" => $request->product_id,
                         "quantity" => $request->quantity,
                         "color" => $request->color,
                         "size" => $request->size,
-                        "name" => $productDetail->product->name,
-                        "price" => $productDetail->product->price,
-                        "image" => $productDetail->product->images->first()->link_to_image,
+                        "name" => $product->name,
+                        "price" => $product->price_sale,
+                        "image" => $product->link_to_image_base,
                     ];
                     session()->put('cart', $cart);
                 }
@@ -182,6 +191,7 @@ class ProductController extends Controller
             foreach ($cart as $cartItem) {
                 $totalQuantity += $cartItem['quantity'];
             }
+            session()->put('totalQuantity', $totalQuantity);
         } catch (Exception $e) {
             $result = [
                 'status' => false,
@@ -229,6 +239,11 @@ class ProductController extends Controller
 
             return back();
         }
+        $totalQuantity = 0;
+        foreach ($cart as $cartItem) {
+            $totalQuantity += $cartItem['quantity'];
+        }
+        session()->put('totalQuantity', $totalQuantity);
 
         toast(trans('message.cart.update.success'),'success');
 
@@ -238,10 +253,10 @@ class ProductController extends Controller
     public function removeCartItem(Request $request, $id)
     {
         $cart = session()->get('cart');
-        $productDetailId = $this->productDetailRepo->find($id)->id;
+        $productInforId = ProductInfor::find($id)->id;
 
         try {
-            session()->forget('cart.' . $productDetailId);
+            session()->forget('cart.' . $productInforId);
         } catch (Exception $e) {
             $result = [
                 'status' => false,
@@ -284,83 +299,6 @@ class ProductController extends Controller
         return response()->json($result);
     }
 
-    public function checkOut()
-    {
-        $cart = session('cart');
-        if (auth()->check()) {
-            $user = auth()->user();
-        }
-
-        return view('fashi.user.check-out', compact(['cart', 'user']));
-    }
-
-    public function createOrder(OrderRequest $request)
-    {
-        if (auth()->check()) {
-            $user = auth()->user();
-            $orders = $user->orders;
-        }
-
-        $ordersSuccess = $orders->where('status', config('order.success'));
-        $ordersPending = $orders->where('status', config('order.pending'));
-
-        $cart = session('cart');
-        $data = $request->only([
-            'name',
-            'email',
-            'phone',
-            'address',
-        ]);
-
-        $data['user_id'] = auth()->id();
-        $data['status'] = config('order.pending');
-
-        try {
-            if (isset($cart)) {
-                $order  = $this->orderRepo->create($data);
-
-                foreach ($cart as $productDetailId => $cartItem) {
-                    $this->orderDetailRepo->create([
-                        'order_id' => $order->id,
-                        'product_detail_id' => $productDetailId,
-                        'quantity' => $cartItem['quantity'],
-                    ]);
-                }
-
-                $this->orderRepo->recalculateProductAfterOrder($order->id);
-
-                $productOrders = '';
-
-                foreach ($order->orderDetails as $key => $orderDetail) {
-                    $productName = $orderDetail->productDetail->product->name;
-                    $productSize = $orderDetail->productDetail->size;
-                    $productColor = $orderDetail->productDetail->color;
-                    $orderQuantity = $orderDetail->quantity;
-
-                    $productOrders .= $productName . '(' . $productSize . ', ' . $productColor . ', ' . $orderQuantity . ')' . ', ';
-                };
-
-                $notification = trans('text.customer') . ' ' . auth()->user()->name . ' ' . trans('text.has_ordered') . ' ' . $productOrders; 
-
-                auth()->user()->notify(new OrderNotification($notification));
-
-                session()->forget('cart');
-            } else {
-                alert()->error(trans('text.error'), trans('text.order_error'));
-
-                return back();
-            }
-        } catch (Exception $e) {
-            alert()->error(trans('text.error'), trans('text.order_error'));
-
-            return back();
-        }
-
-        alert()->success(trans('text.success'), trans('text.order_success'));
-
-        return view('fashi.user.profile', compact(['user', 'ordersSuccess', 'ordersPending']));
-    }
-
     public function search(Request $request)
     {
         $nameProduct = $request->name;
@@ -379,8 +317,6 @@ class ProductController extends Controller
         try {
             $this->orderRepo->updateOrderCancel($id);
             $order = $this->orderRepo->getOneCancelOrder($id);
-            $notification = trans('text.customer') . ' ' . auth()->user()->name . ' ' . trans('text.has_deleted_order'); 
-            auth()->user()->notify(new OrderNotification($notification));
         } catch (Exception $e) {
             toast(trans('message.cart.update.error'), 'error');
 

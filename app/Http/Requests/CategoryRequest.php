@@ -29,7 +29,7 @@ class CategoryRequest extends FormRequest
                 'required',
                 Rule::unique('categories')->ignore($this->category),
                 'max:255',
-            ],
+           ],
         ];
     }
 }

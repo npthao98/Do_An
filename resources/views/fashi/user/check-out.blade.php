@@ -27,9 +27,9 @@
                         <h4>{{ trans('text.billing_details') }}</h4>
                         <div class="row">
                             <div class="col-lg-12">
-                                <label for="name">{{ trans('text.name') }}<span>*</span></label>
-                                <input type="text" class="mb-3 @error ('name') is-invalid @enderror" id="name" name="name" value="@if (isset($user)) {{ $user->name }} @endif {{ old('name') }}">
-                                @error ('name')
+                                <label for="receiver">{{ trans('text.receiver') }}<span>*</span></label>
+                                <input type="text" class="mb-3 @error ('receiver') is-invalid @enderror" id="receiver" name="receiver" value="@if (isset($user)) {{ $user->first_name . ' ' . $user->midd_name . ' ' . $user->last_name }} @endif {{ old('receiver') }}">
+                                @error ('receiver')
                                     <span>
                                         <strong class="error-color">{{ $message }}</strong>
                                     </span>
@@ -37,29 +37,19 @@
                             </div>
 
                             <div class="col-lg-12">
-                                <label for="address">{{ trans('text.street_address') }}<span>*</span></label>
-                                <input type="text" class="mb-3 @error ('address') is-invalid @enderror" id="address" name="address" value="@if (isset($user)) {{ $user->address }} @endif {{ old('address') }}">
-                                @error ('address')
-                                    <span>
-                                        <strong class="error-color">{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="col-lg-6">
-                                <label for="email">{{ trans('text.email') }}<span>*</span></label>
-                                <input type="text" class="mb-3 @error ('email') is-invalid @enderror" id="email" name="email" value="@if (isset($user)) {{ $user->email }} @endif {{ old('email') }}">
-                                @error ('email')
-                                    <span>
-                                        <strong class="error-color">{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="col-lg-6">
                                 <label for="phone">{{ trans('text.phone') }}<span>*</span></label>
-                                <input type="text" class="mb-3 @error ('phone') is-invalid @enderror" id="phone" name="phone" value="@if (isset($user)) {{ $user->phone }} @endif {{ old('phone') }}">
+                                <input type="text" class="mb-3 @error ('phone') is-invalid @enderror" id="phone" name="phone" value="@if(isset($user)) {{ $user->customer->phone }} @endif {{ old('phone') }}">
                                 @error ('phone')
+                                <span>
+                                        <strong class="error-color">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="col-lg-12">
+                                <label for="address">{{ trans('text.address') }}<span>*</span></label>
+                                <input type="text" class="mb-3 @error ('address') is-invalid @enderror" id="address" name="address" value="@if(isset($user)) {{ $user->address->apartment_number . ' - ' . $user->address->street . ' - ' . $user->address->district . ' - ' . $user->address->city}} @endif {{ old('address') }}">
+                                @error ('address')
                                     <span>
                                         <strong class="error-color">{{ $message }}</strong>
                                     </span>
