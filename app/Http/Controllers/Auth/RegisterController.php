@@ -81,6 +81,10 @@ class RegisterController extends Controller
             'first_name' => $data['first_name'],
             'midd_name' => $data['midd_name'],
             'last_name' => $data['last_name'],
+            'apartment_number' => $data['apartment_number'],
+            'street' => $data['street'],
+            'district' => $data['district'],
+            'city' => $data['city'],
             'status' => config('status.person.active'),
         ]);
 

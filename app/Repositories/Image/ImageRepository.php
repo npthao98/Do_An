@@ -3,8 +3,8 @@ namespace App\Repositories\Image;
 
 use App\Repositories\BaseRepository;
 use App\Repositories\Image\ImageRepositoryInterface;
-use App\Image;
-use App\Product;
+use App\Models\Image;
+use App\Models\Product;
 
 class ImageRepository extends BaseRepository implements ImageRepositoryInterface
 {

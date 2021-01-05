@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\User\UserRepositoryInterface;
+use App\Models\Person;
 
 class UserController extends Controller
 {
@@ -21,24 +22,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->userRepo->getAll();
+        $users = Person::all();
 
         return view('fashi.admin.profile.index', compact('users'));
-    }
-
-    public function changeRole($id)
-    {
-        try {
-            $this->userRepo->updateRole($id);
-        } catch (Exception $e) {
-            Log::error($e);
-            toast(trans('message.user.role.error'), 'error');
-
-            return back();
-        }
-
-        toast(trans('message.user.role.success'), 'success');
-
-        return back();
     }
 }

@@ -20,7 +20,6 @@ class ProductController extends Controller
     protected $orderRepo;
     protected $productRepo;
     protected $categoryRepo;
-    protected $productDetailRepo;
     protected $orderDetailRepo;
     protected $commentRepo;
 
@@ -28,14 +27,12 @@ class ProductController extends Controller
     (
         OrderRepositoryInterface $orderRepo,
         ProductRepositoryInterface $productRepo,
-        ProductDetailRepositoryInterface $productDetailRepo,
         CategoryRepositoryInterface $categoryRepo,
         OrderDetailRepositoryInterface $orderDetailRepo,
         CommentRepositoryInterface $commentRepo
     ) {
         $this->orderRepo = $orderRepo;
         $this->productRepo = $productRepo;
-        $this->productDetailRepo = $productDetailRepo;
         $this->categoryRepo = $categoryRepo;
         $this->orderDetailRepo = $orderDetailRepo;
         $this->commentRepo = $commentRepo;

@@ -48,7 +48,7 @@
 
                             <div class="col-lg-12">
                                 <label for="address">{{ trans('text.address') }}<span>*</span></label>
-                                <input type="text" class="mb-3 @error ('address') is-invalid @enderror" id="address" name="address" value="@if(isset($user)) {{ $user->address->apartment_number . ' - ' . $user->address->street . ' - ' . $user->address->district . ' - ' . $user->address->city}} @endif {{ old('address') }}">
+                                <input type="text" class="mb-3 @error ('address') is-invalid @enderror" id="address" name="address" value="@if(isset($user)) {{ $user->apartment_number . ' - ' . $user->street . ' - ' . $user->district . ' - ' . $user->city}} @endif {{ old('address') }}">
                                 @error ('address')
                                     <span>
                                         <strong class="error-color">{{ $message }}</strong>

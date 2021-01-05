@@ -131,4 +131,5 @@ return [
     'thank_you_for_using_our_application' => 'Thank you for using our application!',
     'price_import' => 'Price import',
     'price_sale' => 'Price Sale',
+    'street' => 'Street',
 ];

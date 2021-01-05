@@ -16,21 +16,18 @@ class ProductController extends Controller
     protected $orderRepo;
     protected $productRepo;
     protected $categoryRepo;
-    protected $productDetailRepo;
     protected $imageRepo;
 
     public function __construct
     (
         OrderRepositoryInterface $orderRepo,
         ProductRepositoryInterface $productRepo,
-        ProductDetailRepositoryInterface $productDetailRepo,
         ImageRepositoryInterface $imageRepo,
         CategoryRepositoryInterface $categoryRepo
     )
     {
         $this->orderRepo = $orderRepo;
         $this->productRepo = $productRepo;
-        $this->productDetailRepo = $productDetailRepo;
         $this->imageRepo = $imageRepo;
         $this->categoryRepo = $categoryRepo;
     }

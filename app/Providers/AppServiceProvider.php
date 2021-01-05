@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use App\Category;
+use App\Models\Category;
 use App\Notification;
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
@@ -63,11 +63,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             ProductRepositoryInterface::class,
             ProductRepository::class
-        );
-
-        $this->app->singleton(
-            ProductDetailRepositoryInterface::class,
-            ProductDetailRepository::class
         );
 
         $this->app->singleton(

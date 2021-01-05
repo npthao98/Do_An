@@ -20,6 +20,10 @@ class CreatePersonsTable extends Migration
             $table->string('first_name');
             $table->string('midd_name');
             $table->string('last_name');
+            $table->integer('apartment_number');
+            $table->string('street');
+            $table->string('district');
+            $table->string('city');
             $table->integer('status');
             $table->rememberToken();
             $table->softDeletes();
