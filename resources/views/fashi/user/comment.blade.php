@@ -41,11 +41,12 @@
                 </div>
                 <div class="avatar-text">
                     <div class="at-rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-o"></i>
+                        @for ($i = 1; $i <= $rate->rate; $i++)
+                            <i class="fa fa-star"></i>
+                        @endfor
+                        @for ($i = $rate->rate + 1; $i <= 5; $i++)
+                                <i class="fa fa-star-o"></i>
+                        @endfor
                     </div>
                     <h5>{{ $rate->customer->person->username ?? '' }}<span>{{ $rate->created_at }}</span></h5>
                     <div class="at-reply-{{ $rate->id }}">{{ $rate->comment }}</div>

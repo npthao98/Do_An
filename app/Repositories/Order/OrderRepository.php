@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\Order;
 
+use App\Models\Rate;
 use App\Repositories\BaseRepository;
 use App\Repositories\Order\OrderRepositoryInterface;
 use App\Models\Order;
@@ -15,7 +16,16 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     public function updateOrderSuccess($id)
     {
         $order = $this->model->find($id);
-        $order->update(['status' => config('order.success')]);
+        $order->update(['status' => config('status.order.success')]);
+        foreach ($order->items as $item) {
+            $productId = $item->productInfor->product->id;
+            Rate::create([
+                'customer_id' => $order->customer_id,
+                'product_id' => $productId,
+                'rate' => 0,
+                'comment' => '',
+            ]);
+        }
     }
 
     public function updateOrderCancel($id)
@@ -40,13 +50,12 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
         }
 
         $order->update(['status' => config('status.order.canceled')]);
-        $order->delete();
     }
 
-    public function updateOrderPending($id)
+    public function updateOrderShipping($id)
     {
         $order = $this->model->find($id);
-        $order->update(['status' => config('order.pending')]);
+        $order->update(['status' => config('status.order.shipping')]);
     }
 
     public function recalculateProductAfterOrder($id)

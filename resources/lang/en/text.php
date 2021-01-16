@@ -20,6 +20,7 @@ return [
     'in_stock'=> 'In stock',
     'create_product'=> 'Create product',
     'image'=> 'Image',
+    'images'=> 'Images',
     'product'=> 'Product',
     'enter_description'=> 'Enter description...',
     'choose_image'=> 'Choose image',
@@ -132,4 +133,9 @@ return [
     'price_import' => 'Price import',
     'price_sale' => 'Price Sale',
     'street' => 'Street',
+    'recommend_products'=> 'Recommended Products',
+    'price_sale' => 'Price sale',
+    'image_main' => 'Image main',
+    'status' => 'Status',
+    'import' => 'Import',
 ];

@@ -23,15 +23,13 @@
 
                 <div class="form-group form-product">
                     <label for="category" class="col-form-label">{{ trans('text.category') }}:</label>
-                    <select class="form-control" name="category" id="category" value="{{ old('category') }}">
+                    <select class="form-control" name="category_id" id="category" value="{{ old('category') }}">
                         <option value="">{{ trans('text.category') }}</option>
                         @foreach ($categories as $category)
-                            @if (($category->parent_id != null) || ($category->id == old('category')))
-                                <option
-                                    value="{{ $category->id }}">
-                                    {{ $category->name }}
-                                </option>
-                            @endif
+                            <option
+                                value="{{ $category->id }}">
+                                {{ $category->name }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -52,8 +50,8 @@
                 @enderror
 
                 <div class="form-group form-product">
-                    <label for="price" class="col-form-label">{{ trans('text.price') }}:</label>
-                    <input type="number" class="form-control  @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price') }}" required="">
+                    <label for="price" class="col-form-label">{{ trans('text.price_sale') }}:</label>
+                    <input type="number" class="form-control  @error('price') is-invalid @enderror" id="price" name="price_sale" value="{{ old('price_sale') }}" required="">
                 </div>
                 @error('price')
                     <span>
@@ -80,16 +78,28 @@
                             <option value="{{ config('productDetail.l') }}">L</option>
                             <option value="{{ config('productDetail.xs') }}">XS</option>
                         </select>
-
-                        <label for="quantities" class="col-form-label">{{ trans('text.in_stock') }}:</label>
-                        <input type="text" class="form-control col-md-2 d-sm-inline mt-3 mr-4  @error('quantities[]') is-invalid @enderror" id="quantities" name="quantities[]" required="">
                         <a href="javascript:void(0);" class="remove_field" hidden=""><button class="btn btn-danger">{{ trans('text.delete') }}</button></a>
                     </div><br>
                     <button class="btn btn-info add_fields">{{ trans('text.add') }}</button>
                 </div>
-
+                <br>
                 <div class="form-group form-product">
-                    <label for="images">{{ trans('text.image') }}:</label>
+                    <label for="images">{{ trans('text.image_main') }}:</label>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="image" id="image" required>
+                            <label class="custom-file-label" for="image">{{ trans('text.choose_image') }}</label>
+                        </div>
+                    </div>
+                </div>
+                @error('image')
+                    <span>
+                        <strong class="error-color">{{ $message }}</strong>
+                    </span>
+                @enderror
+                <br>
+                <div class="form-group form-product">
+                    <label for="images">{{ trans('text.images') }}:</label>
                     <div class="input-group">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="images[]" id="images" multiple>
@@ -105,9 +115,23 @@
             </div>
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">{{ trans('text.submit') }}</button>
+                <button type="submit" id="bt-create" class="btn btn-primary">{{ trans('text.submit') }}</button>
             </div>
         </form>
     </div>
 </div>
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $('#bt-create').click(function (){
+                var fileUpload = $('#images');
+                if (parseInt(fileUpload.get(0).files.length)>4 || parseInt(fileUpload.get(0).files.length)<4){
+                    alert("You must to upload 4 files for images");
+                    return false
+                }
+            });
+        });
+    </script>
 @endsection

@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'url' => '/storage/images/',
-    'move_url' => 'storage/images/',
+    'url' => '/public/images/',
+    'move_url' => 'public/images/',
 ];

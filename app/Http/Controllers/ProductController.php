@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\ProductInfor;
 use App\Models\Rate;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ use App\Repositories\Order\OrderRepositoryInterface;
 use App\Repositories\OrderDetail\OrderDetailRepositoryInterface;
 use App\Repositories\Comment\CommentRepositoryInterface;
 use App\Notifications\OrderNotification;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -70,18 +72,38 @@ class ProductController extends Controller
 
     public function productDetail(Request $request, $id)
     {
+        $rating = false;
+        if (Auth::check() && !Auth::user()->employee) {
+            $client = new \GuzzleHttp\Client();
+
+            $request = $client->get('http://localhost:5000/recommendations', [
+                'query' => ['customer' => Auth::user()->customer->id]
+            ]);
+            $rate = Rate::where([
+                'customer_id' => Auth::user()->customer->id,
+                'product_id' => $id,
+                'rate' => 0,
+            ])->first();
+
+            if ($rate) {
+                $rating = true;
+            }
+
+            $response = $request->getBody();
+            $recommendations = json_decode($response)->data;
+        } else {
+            $recommendations = Product::take(7)->pluck('id')->toArray();
+        }
+        if (in_array($id, $recommendations)) {
+            unset($recommendations[array_search($id, $recommendations)]);
+        }
+        $products = Product::whereIn('id', $recommendations)->get();
         $categories = $this->categoryRepo->findChildrenCategory()->get();
         $product = $this->productRepo->find($id);
         $rates = Rate::where('product_id', $product->id)
+            ->where('rate' , '>', 0)
             ->orderBy('created_at', 'desc')
             ->paginate(config('comment.paginate'));
-        if ($request->ajax()) {
-            if ($request->has('page')) {
-                return view('fashi.user.comment', compact('rates', 'products'));
-            }
-        }
-
-        $products = $this->productRepo->getRandomProduct();
         $cart = session('cart');
         $totalQuantity = 0;
         if (isset($cart)) {
@@ -92,7 +114,13 @@ class ProductController extends Controller
 
         session()->put('totalQuantity', $totalQuantity);
 
-        return view('fashi.user.product', compact('product', 'categories', 'rates', 'products'));
+        return view('fashi.user.product', compact(
+            'product',
+            'categories',
+            'rates',
+            'products',
+            'rating'
+        ));
     }
 
     public function showCart()
