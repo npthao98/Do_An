@@ -19,10 +19,9 @@ Route::group(['middleware' => 'locale'], function() {
     Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin', 'locale']], function() {
         Route::resource('categories', 'CategoryController');
         Route::resource('products', 'ProductController');
+        Route::resource('imports', 'ImportController');
         Route::get('orders', 'ProductController@showOrder')->name('orders');
-        Route::post('orders/success/{order}', 'ProductController@orderSuccess')->name('orders.success');
-        Route::post('orders/cancel/{order}', 'ProductController@orderCancel')->name('orders.cancel');
-        Route::post('orders/pending/{order}', 'ProductController@orderPending')->name('orders.pending');
+        Route::resource('orders', 'OrderController')->only('update');
         Route::get('users', 'UserController@index')->name('user.index');
         Route::get('/', 'DashboardController@index')->name('dashboard');
         Route::get('/notifications', 'DashboardController@listNotification')->name('list_notification');

@@ -65,6 +65,12 @@
                     </a>
                 </li>
                 <li class="nav-item brand-link">
+                    <a href="{{ route('admin.imports.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-box"></i>
+                        <p>{{ trans('text.import') }}</p>
+                    </a>
+                </li>
+                <li class="nav-item brand-link">
                     <a href="{{ route('admin.orders') }}" class="nav-link">
                         <i class="nav-icon fas fa-clipboard"></i>
                         <p>{{ trans('text.order') }}</p>

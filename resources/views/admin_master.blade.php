@@ -40,6 +40,7 @@
         <script src="{{ asset('js/addInput.js') }}"></script>
         <script src="{{ asset('js/Chart.js') }}"></script>
         <script src="{{ asset('js/lineChart.js') }}"></script>
+        @yield('js')
     </body>
 
 </html>

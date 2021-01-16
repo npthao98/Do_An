@@ -20,6 +20,7 @@ return [
     'in_stock'=> 'số lượng',
     'create_product'=> 'Tạo sản phẩm',
     'image'=> 'Ảnh',
+    'images'=> 'Danh sách sảnh phụ',
     'product'=> 'Sản Phẩm',
     'enter_description'=> 'Thêm mô tả...',
     'choose_image'=> 'Chọn ảnh',
@@ -132,4 +133,9 @@ return [
     'price_import' => 'Price import',
     'price_sale' => 'Price Sale',
     'street' => 'Đường',
+    'recommend_products'=> 'Các sản phẩm được gợi ý',
+    'price_sale' => 'Giá bán',
+    'image_main' => 'Ảnh chính',
+    'status' => 'Trạng thái',
+    'import' => 'Đơn nhập',
 ];

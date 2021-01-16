@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Image;
+use App\Models\ProductInfor;
 use App\Http\Requests\ProductRequest;
 use App\Repositories\Order\OrderRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\ProductDetail\ProductDetailRepositoryInterface;
 use App\Repositories\Image\ImageRepositoryInterface;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -34,7 +37,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = $this->productRepo->getAll();
+        $products = $this->productRepo->getAll()->SortByDesc('id');
 
         return view('fashi.admin.product.index', compact('products'));
     }
@@ -46,7 +49,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = $this->categoryRepo->getAll();
+        $categories = Category::all();
 
         return view('fashi.admin.product.create', compact('categories'));
     }
@@ -61,36 +64,30 @@ class ProductController extends Controller
     {
         $colors = $request->colors;
         $sizes = $request->sizes;
-        $quantities = $request->quantities;
         $data = $request->all();
-        $totalQuantity = 0;
-
-        foreach ($quantities as $quantity) {
-            $totalQuantity += $quantity;
-        }
-
-        $data['in_stock'] = $totalQuantity;
+        $data['link_to_image_base'] = uniqid() . '-' . $request['image']->getClientOriginalName();
+        $request['image']->move('images', $data['link_to_image_base']);
+        $data['rate'] = 0;
+        $data['price_import'] = 0;
 
         try {
-            $product  = $this->productRepo->create($data);
-            $product->categories()->attach($request->category);
+            $product  = Product::create($data);
 
             for ($i = 0; $i < count($colors); $i++){
-                $this->productDetailRepo->create([
+                ProductInfor::create([
                     'product_id' => $product->id,
                     'size' => $sizes[$i],
                     'color' => $colors[$i],
-                    'quantity' => $quantities[$i],
+                    'quantity' => 0,
                 ]);
             }
 
             foreach ($request->images as $image) {
                 $filename = uniqid() . '-' . $image->getClientOriginalName();
-                $image->move(config('image.move_url'), $filename);
-
-                $this->imageRepo->create([
+                $image->move('images', $filename);
+                Image::create([
                     'product_id' => $product->id,
-                    'link_to_image' => config('image.url') . $filename,
+                    'link_to_image' => $filename,
                 ]);
             }
         } catch (Exception $e) {
@@ -184,53 +181,5 @@ class ProductController extends Controller
         $orders = $this->orderRepo->getAll();
 
         return view('fashi.admin.order.index', compact('orders'));
-    }
-
-    public function orderSuccess($id)
-    {
-        try {
-            $this->orderRepo->updateOrderSuccess($id);
-        } catch (Exception $e) {
-            Log::error($e);
-            toast(trans('message.cart.update.error'), 'error');
-
-            return back();
-        }
-
-        toast(trans('message.cart.update.success'), 'success');
-
-        return back();
-    }
-
-    public function orderCancel($id)
-    {
-        try {
-            $this->orderRepo->updateOrderCancel($id);
-        } catch (Exception $e) {
-            Log::error($e);
-            $toast(trans('message.cart.update.error'), 'error');
-
-            return back();
-        }
-
-        toast(trans('message.cart.update.success'), 'success');
-
-        return back();
-    }
-
-    public function orderPending($id)
-    {
-        try {
-            $this->orderRepo->updateOrderPending($id);
-        } catch (Exception $e) {
-            Log::error($e);
-            toast(trans('message.cart.update.error'), 'error');
-
-            return back();
-        }
-
-        toast(trans('message.cart.update.success'), 'success');
-
-        return back();
     }
 }

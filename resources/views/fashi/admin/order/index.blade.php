@@ -24,6 +24,7 @@
                 <th>{{ trans('text.quantity') }}</th>
                 <th>{{ trans('text.total_price') }}</th>
                 <th>{{ trans('text.order_date') }}</th>
+                <th>{{ trans('text.status') }}</th>
                 <th>{{ trans('text.options') }}</th>
             </tr>
         </thead>
@@ -53,6 +54,25 @@
                         ${{ number_format($totalPrice) ?? ''}}
                     </td>
                     <td>{{ $order->created_at ?? $order->updated_at }}</td>
+                    <td>
+                        @if ($order->status == config('status.order.pending'))
+                            <span class="badge badge-warning">
+                                {{ trans('text.pending') }}
+                            </span>
+                        @elseif ($order->status == config('status.order.shipping'))
+                            <span class="badge badge-info">
+                                {{ trans('text.shipping') }}
+                            </span>
+                        @elseif ($order->status == config('status.order.success'))
+                            <span class="badge badge-success">
+                                {{ trans('text.success') }}
+                            </span>
+                        @else
+                            <span class="badge badge-danger">
+                                {{ trans('text.canceled') }}
+                            </span>
+                        @endif
+                    </td>
                     <td>
                         <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModalDelete-{{ $order->id }}">{{ trans('text.show') }}</button>
 
@@ -89,34 +109,29 @@
                                     </div>
 
                                     <div class="modal-footer">
-                                        <form method="POST" action="{{ route('admin.orders.pending', $order->id) }}">
-                                            @csrf
-                                            <button type="submit" @if ($order->status === config('status.order.pending') || $order->status === config('status.order.success')) hidden="" @endif class="btn btn-info">{{ trans('text.pending') }}</button>
-                                        </form>
-
-                                        <form method="POST" action="{{ route('admin.orders.success', $order->id) }}">
-                                            @csrf
-                                            <button type="submit" @if ($order->status === config('status.order.success')) hidden="" @endif class="btn btn-success">{{ trans('text.success') }}</button>
-                                        </form>
-
-                                        <form method="POST" action="{{ route('admin.orders.cancel', $order->id) }}">
-                                            @csrf
-                                            <button type="submit" @if ($order->status === config('status.order.canceled') || $order->status === config('status.order.success')) hidden="" @endif class="btn btn-danger">{{ trans('text.cancel') }}</button>
-                                        </form>
-
+                                        @if ($order->status == config('status.order.pending'))
+                                            <form method="POST" action="{{ route('admin.orders.update', $order->id) }}">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" name="shipping" class="btn btn-info">{{ trans('text.shipping') }}</button>
+                                            </form>
+                                            <form method="POST" action="{{ route('admin.orders.update', $order->id) }}">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" name="cancel" class="btn btn-danger">{{ trans('text.cancel') }}</button>
+                                            </form>
+                                        @elseif ($order->status == config('status.order.shipping'))
+                                            <form method="POST" action="{{ route('admin.orders.update', $order->id) }}">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" name="success" class="btn btn-success">{{ trans('text.success') }}</button>
+                                            </form>
+                                        @endif
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('text.close') }}</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        @if ($order->status === config('status.order.success'))
-                            <button type="button" disabled="" class="btn btn-success">{{ trans('text.success') }}</button>
-                        @elseif ($order->status === config('status.order.canceled'))
-                            <button type="button" disabled="" class="btn btn-danger">{{ trans('text.cancel') }}</button>
-                        @else
-                            <button type="button" disabled="" class="btn btn-info">{{ trans('text.pending') }}</button>
-                        @endif
                     </td>
                 </tr>
             @endforeach

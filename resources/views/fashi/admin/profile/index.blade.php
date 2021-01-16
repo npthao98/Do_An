@@ -7,7 +7,7 @@
         <div class="col-sm-6">
             <h1>{{ trans('text.user') }}</h1>
         </div>
-    </div>
+    </div>cch
 
     <table id="example" class="table table-striped table-bordered table-width">
         <thead>
