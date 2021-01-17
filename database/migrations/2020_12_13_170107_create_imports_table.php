@@ -17,6 +17,8 @@ class CreateImportsTable extends Migration
             $table->id();
             $table->dateTime('date');
             $table->foreignId('employee_id')->constrained('employees');
+            $table->foreignId('supplier_id');
+            $table->integer('total_price');
             $table->timestamps();
             $table->softDeletes();
         });

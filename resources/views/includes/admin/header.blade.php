@@ -77,7 +77,7 @@
                     </a>
                 </li>
                 <li class="nav-item brand-link">
-                    <a href="{{ route('admin.user.index') }}" class="nav-link">
+                    <a href="{{ route('admin.users.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-user-tie"></i>
                         <p>{{ trans('text.user') }}</p>
                     </a>
