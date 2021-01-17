@@ -31,6 +31,13 @@ return [
         ],
     ],
 
+    'supplier'=> [
+        'create'=> [
+            'success' => 'Supplier has been added successfully!',
+            'error' => 'Create supplier failed!',
+        ],
+    ],
+
     'cart'=> [
         'update'=> [
             'success' => 'Order has been updated successfully!',
@@ -65,12 +72,32 @@ return [
             'success' => 'updated successfully!',
             'error' => 'Update failed!',
         ],
+        'lock' => [
+            'success' => 'Account is locked success',
+        ],
+        'unlock' => [
+            'success' => 'Account is unlocked success',
+        ],
+        'change_PW' => [
+            'success' => 'change password is success',
+        ],
     ],
 
     'notification'=> [
         'delete'=> [
             'success' => 'Notification has been deleted successfully!',
             'error' => 'Delete notification failed!',
+        ],
+    ],
+
+    'create' => [
+        'product' => 'Import must to have product',
+    ],
+
+    'import'=> [
+        'create'=> [
+            'success' => 'Import has been added successfully!',
+            'error' => 'Create Import failed!',
         ],
     ],
 ];

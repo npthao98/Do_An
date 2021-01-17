@@ -14,6 +14,8 @@ class Import extends Model
     protected $fillable = [
         'date',
         'employee_id',
+        'supplier_id',
+        'total_price',
     ];
 
     public $timestamps = true;
@@ -26,5 +28,10 @@ class Import extends Model
     public function itemImports()
     {
         return $this->hasMany(ItemImport::class);
+    }
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
     }
 }

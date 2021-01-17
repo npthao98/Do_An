@@ -31,6 +31,13 @@ return [
         ],
     ],
 
+    'supplier'=> [
+        'create'=> [
+            'success' => 'Nhà cung cấp được tạo thành công!',
+            'error' => 'Tạo nhà cung cấp thất bại!',
+        ],
+    ],
+
     'cart' => [
         'update'=> [
             'success' => 'Chỉnh sửa đơn hàng thành công!',
@@ -65,12 +72,32 @@ return [
             'success' => 'Cập nhập thành công!',
             'error' => 'Cập nhập thất bại!',
         ],
+        'lock' => [
+            'success' => 'Account is locked success',
+        ],
+        'unlock' => [
+            'success' => 'Account is unlocked success',
+        ],
+        'change_PW' => [
+            'success' => 'change password is success',
+        ],
     ],
 
     'notification'=> [
         'delete'=> [
             'success' => 'Thông báo được xóa thành công',
             'error' => 'Xóa thông báo bị lỗi',
+        ],
+    ],
+
+    'create' => [
+        'product' => 'Import must to have product',
+    ],
+
+    'import'=> [
+        'create'=> [
+            'success' => 'Import has been added successfully!',
+            'error' => 'Create Import failed!',
         ],
     ],
 ];

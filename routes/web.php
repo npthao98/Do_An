@@ -20,9 +20,10 @@ Route::group(['middleware' => 'locale'], function() {
         Route::resource('categories', 'CategoryController');
         Route::resource('products', 'ProductController');
         Route::resource('imports', 'ImportController');
+        Route::post('suppliers', 'ImportController@storeSupplier')->name('suppliers.store');
         Route::get('orders', 'ProductController@showOrder')->name('orders');
         Route::resource('orders', 'OrderController')->only('update');
-        Route::get('users', 'UserController@index')->name('user.index');
+        Route::resource('users', 'UserController');
         Route::get('/', 'DashboardController@index')->name('dashboard');
         Route::get('/notifications', 'DashboardController@listNotification')->name('list_notification');
         Route::delete('/notifications/{notification}', 'DashboardController@deleteNotification')->name('delete_notification');
