@@ -2,24 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0bb9c56f-4819-4d5d-b98d-6d14ad84899a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/views/fashi/admin/import/create.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/fashi/admin/import/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/payment.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/en/payment.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/vi/payment.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/fashi/user/payment-accuracy.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/fashi/user/payment-copy.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/fashi/user/payment-tknh.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/fashi/user/payment-vnpayqr.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/fashi/user/payment.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ImportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ImportController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Import.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Import.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Supplier.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Supplier.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_13_170107_create_imports_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_12_13_170107_create_imports_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_01_05_012032_create_suppliers_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_12_13_170106_create_suppliers_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/ImportSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/ImportSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/message.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/message.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/OrderRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/OrderRequest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/lang/en/text.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/text.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/vi/message.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/vi/message.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/lang/vi/text.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/vi/text.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/fashi/admin/profile/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/fashi/admin/profile/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/includes/admin/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/includes/admin/header.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/fashi/user/check-out.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/fashi/user/check-out.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/fashi/user/list-orders.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/fashi/user/list-orders.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/master.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -161,6 +161,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/fashi/user" />
       <recent name="$PROJECT_DIR$/public/images" />
     </key>
   </component>
@@ -208,7 +209,7 @@
       <workItem from="1610415964973" duration="385000" />
       <workItem from="1610635496358" duration="9118000" />
       <workItem from="1610776485027" duration="21285000" />
-      <workItem from="1610874973547" duration="3105000" />
+      <workItem from="1610874973547" duration="19865000" />
     </task>
     <servers />
   </component>
@@ -225,9 +226,9 @@
     </state>
     <state x="458" y="212" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1440.900@0.0.1440.900" timestamp="1610818451304" />
     <state x="458" y="217" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.23.1440.822@0.23.1440.822" timestamp="1609042173762" />
-    <state x="608" y="60" width="750" height="490" key="find.popup" timestamp="1610268291203">
+    <state x="608" y="60" width="750" height="490" key="find.popup" timestamp="1610900871379">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="608" y="60" width="750" height="490" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1610268291203" />
+    <state x="608" y="60" width="750" height="490" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1610900871379" />
   </component>
 </project>

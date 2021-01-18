@@ -51,12 +51,13 @@
                                             <div class="order-total">
                                                 <ul class="order-table">
                                                     <li>{{ trans('text.order') }} ({{ $key }})<span>{{ trans('text.total') }}</span></li>
-                                                    @php $totalPrice = 0; @endphp
                                                     @foreach ($order->items as $item)
                                                         <li class="fw-normal">{{ $item->productInfor->product->name }} x {{ $item->quantity }} ({{ $item->productInfor->color }}) <span>${{ number_format($subTotal = $item->price_sale * $item->quantity) }}</span></li>
-                                                        @php $totalPrice += $subTotal; @endphp
                                                     @endforeach
-                                                    <li class="total-price">{{ trans('text.total') }}<span>${{ number_format($totalPrice) }}</span></li>
+                                                    <li class="fw-normal">@lang('payment.shipment.type_shipment')({{ $order->type_shipment }})
+                                                        <span>${{ number_format($order->fee_shipment) }}</span></li>
+                                                    <li class="total-price">{{ trans('text.total') }}<span>${{ number_format($order->total_price) }}</span></li>
+                                                    <li class="fw-normal">@lang('payment.payment.type_payment')<span>{{ $order->type_payment }}</span></li>
                                                     <p class="mt-4">{{ $order->receiver . ' - ' . $order->phone . ' - ' . trans('text.address') . ': ' . $order->address}}</p>
                                                 </ul>
                                                 <form method="POST" action="{{ route('orders.cancel', $order->id) }}">
@@ -74,12 +75,13 @@
                                             <div class="order-total">
                                                 <ul class="order-table">
                                                     <li>{{ trans('text.order') }} ({{ $key + 1 }})<span>{{ trans('text.total') }}</span></li>
-                                                    @php $totalPrice = 0; @endphp
                                                     @foreach ($order->items as $item)
                                                         <li class="fw-normal">{{ $item->productInfor->product->name }} x {{ $item->quantity }} ({{ $item->productInfor->color }}) <span>${{ number_format($subTotal = $item->price_sale * $item->quantity) }}</span></li>
-                                                        @php $totalPrice += $subTotal; @endphp
                                                     @endforeach
-                                                    <li class="total-price">{{ trans('text.total') }}<span>${{ number_format($totalPrice) }}</span></li>
+                                                    <li class="fw-normal">@lang('payment.shipment.type_shipment')({{ $order->type_shipment }})
+                                                        <span>${{ number_format($order->fee_shipment) }}</span></li>
+                                                    <li class="total-price">{{ trans('text.total') }}<span>${{ number_format($order->total_price) }}</span></li>
+                                                    <li class="fw-normal">@lang('payment.payment.type_payment')<span>{{ $order->type_payment }}</span></li>
                                                     <p class="mt-4">{{ $order->receiver . ' - ' . $order->phone . ' - ' . trans('text.address') . ': ' . $order->address}}</p>
                                                 </ul>
                                             </div>
@@ -90,12 +92,13 @@
                                             <div class="order-total">
                                                 <ul class="order-table">
                                                     <li>{{ trans('text.order') }} ({{ $key + 1 }})<span>{{ trans('text.total') }}</span></li>
-                                                    @php $totalPrice = 0; @endphp
                                                     @foreach ($order->items as $item)
                                                         <li class="fw-normal">{{ $item->productInfor->product->name }} x {{ $item->quantity }} ({{ $item->productInfor->color }}) <span>${{ number_format($subTotal = $item->price_sale * $item->quantity) }}</span></li>
-                                                        @php $totalPrice += $subTotal; @endphp
                                                     @endforeach
-                                                    <li class="total-price">{{ trans('text.total') }}<span>${{ number_format($totalPrice) }}</span></li>
+                                                    <li class="fw-normal">@lang('payment.shipment.type_shipment')({{ $order->type_shipment }})
+                                                        <span>${{ number_format($order->fee_shipment) }}</span></li>
+                                                    <li class="total-price">{{ trans('text.total') }}<span>${{ number_format($order->total_price) }}</span></li>
+                                                    <li class="fw-normal">@lang('payment.payment.type_payment')<span>{{ $order->type_payment }}</span></li>
                                                     <p class="mt-4">{{ $order->receiver . ' - ' . $order->phone . ' - ' . trans('text.address') . ': ' . $order->address}}</p>
                                                 </ul>
                                             </div>
@@ -106,12 +109,13 @@
                                             <div class="order-total">
                                                 <ul class="order-table">
                                                     <li>{{ trans('text.order') }} ({{ $key + 1 }})<span>{{ trans('text.total') }}</span></li>
-                                                    @php $totalPrice = 0; @endphp
                                                     @foreach ($order->items as $item)
                                                         <li class="fw-normal">{{ $item->productInfor->product->name }} x {{ $item->quantity }} ({{ $item->productInfor->color }}) <span>${{ number_format($subTotal = $item->price_sale * $item->quantity) }}</span></li>
-                                                        @php $totalPrice += $subTotal; @endphp
                                                     @endforeach
-                                                    <li class="total-price">{{ trans('text.total') }}<span>${{ number_format($totalPrice) }}</span></li>
+                                                    <li class="fw-normal">@lang('payment.shipment.type_shipment')({{ $order->type_shipment }})
+                                                        <span>${{ number_format($order->fee_shipment) }}</span></li>
+                                                    <li class="total-price">{{ trans('text.total') }}<span>${{ number_format($order->total_price) }}</span></li>
+                                                    <li class="fw-normal">@lang('payment.payment.type_payment')<span>{{ $order->type_payment }}</span></li>
                                                     <p class="mt-4">{{ $order->receiver . ' - ' . $order->phone . ' - ' . trans('text.address') . ': ' . $order->address}}</p>
                                                 </ul>
                                             </div>
