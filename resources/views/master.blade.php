@@ -25,8 +25,7 @@
     <link rel="stylesheet" href="{{ asset('bower_components/bower_fashi_shop/css/slicknav.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('bower_components/bower_fashi_shop/css/style.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css">
-
-
+    @yield('css')
 </head>
 
 <body>

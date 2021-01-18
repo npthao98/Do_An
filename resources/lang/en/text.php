@@ -149,4 +149,5 @@ return [
     'reset_password' => 'Reset Password',
     'active' => 'Active',
     'unactive' => 'UnActive',
+    'payment' => 'Payment',
 ];

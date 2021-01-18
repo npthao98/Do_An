@@ -19,8 +19,8 @@ class UserController extends Controller
             $orders = $user->orders;
         }
 
-        $ordersSuccess = $orders->where('status', config('order.success'));
-        $ordersPending = $orders->where('status', config('order.pending'));
+        $ordersSuccess = $orders->where('status', config('order.success'))->get();
+        $ordersPending = $orders->where('status', config('order.pending'))->get();
 
         return view('fashi.user.profile', compact(['user', 'ordersSuccess', 'ordersPending']));
     }

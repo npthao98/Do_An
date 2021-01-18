@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\ProductInfor;
 use App\Repositories\Order\OrderRepositoryInterface;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -54,7 +55,15 @@ class OrderController extends Controller
         return view('fashi.user.check-out', compact('cart', 'user'));
     }
 
-    public function store(OrderRequest $request)
+    public function payment(OrderRequest $request)
+    {
+        $cart = session('cart');
+        $data = $request->all();
+
+        return view('fashi.user.payment', compact('data', 'cart'));
+    }
+
+    public function store(Request $request)
     {
         if (auth()->check()) {
             $user = auth()->user();
@@ -70,9 +79,15 @@ class OrderController extends Controller
         $data['customer_id'] = $user->customer->id;
         $data['status'] = config('status.order.pending');
         $data['time'] = Carbon::now()->format('Y-m-d H-i-s');
-        $data['fee_shipment'] = config('order.fee_shipment');
-        $data['type_payment'] = 'COD';
-        $data['total_price'] = 0;
+        $data['fee_shipment'] = $request['feeShipment'];
+        $data['type_payment'] = $request['typePayment'];
+        $data['type_shipment'] = $request['typeShipment'];
+        $data['total_price'] = $request['totalPrice'];
+        if ($request['typePayment'] == config('payment.payment.type.cod')) {
+            $data['status_payment'] = config('payment.payment.status.unpaid');
+        } else {
+            $data['status_payment'] = config('payment.payment.status.paid');
+        }
 
         try {
             if (isset($cart)) {
@@ -86,9 +101,7 @@ class OrderController extends Controller
 
                 if ($kt) {
                     $order  = Order::create($data);
-                    $totalPrice = 0;
                     foreach ($cart as $cartItem) {
-                        $totalPrice += $cartItem['price'] * $cartItem['quantity'];
                         $product = ProductInfor::find($cartItem['product_infor_id'])->product;
                         Item::create([
                             'order_id' => $order->id,
@@ -98,9 +111,6 @@ class OrderController extends Controller
                             'price_sale' => $product->price_sale,
                         ]);
                     }
-                    $order->update([
-                        'total_price' => $totalPrice,
-                    ]);
 
                     $this->orderRepo->recalculateProductAfterOrder($order->id);
 

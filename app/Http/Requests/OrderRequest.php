@@ -27,6 +27,8 @@ class OrderRequest extends FormRequest
             'receiver' => 'required',
             'phone' => ['required', 'regex:/(0)[0-9]{9}/'],
             'address' => 'required',
+            'typeShipment' => 'required',
+            'typePayment' => 'required',
         ];
     }
 }

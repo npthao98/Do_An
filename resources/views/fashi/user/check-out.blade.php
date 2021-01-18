@@ -1,26 +1,22 @@
 @extends('master')
 
 @section('content')
-    <!-- Breadcrumb Section Begin -->
     <div class="breacrumb-section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text product-more">
-                        <a href="#"><i class="fa fa-home"></i>{{ trans('header.home') }}</a>
-                        <a href="#">{{ trans('header.shop') }}</a>
+                        <a href="{{ route('index') }}"><i class="fa fa-home"></i>{{ trans('header.home') }}</a>
+                        <a href="{{ route('product.index') }}">{{ trans('header.shop') }}</a>
                         <span>{{ trans('text.check_out') }}</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Breadcrumb Section Begin -->
-
-    <!-- Shopping Cart Section Begin -->
     <section class="checkout-section spad">
         <div class="container">
-            <form method="POST" class="checkout-form" action="{{ route('create_order') }}" enctype="multipart/form-data">
+            <form method="POST" class="checkout-form" action="{{ route('payment') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-lg-6">
@@ -45,11 +41,65 @@
                                     </span>
                                 @enderror
                             </div>
-
                             <div class="col-lg-12">
                                 <label for="address">{{ trans('text.address') }}<span>*</span></label>
                                 <input type="text" class="mb-3 @error ('address') is-invalid @enderror" id="address" name="address" value="@if(isset($user)) {{ $user->apartment_number . ' - ' . $user->street . ' - ' . $user->district . ' - ' . $user->city}} @endif {{ old('address') }}">
                                 @error ('address')
+                                    <span>
+                                        <strong class="error-color">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="col-lg-12">
+                                <label for="type-shipment">{{ trans('payment.shipment.type_shipment') }}<span>*</span></label>
+                                <select id="type-shipment" name="typeShipment" class="mb-3">
+                                    <option value="{{ config('payment.shipment.type.fast') }}"
+                                        @if (config('payment.shipment.type.fast') == old('typeShipment'))
+                                            selected
+                                        @endif
+                                    >
+                                        @lang('payment.shipment.type.fast')
+                                    </option>
+                                    <option value="{{ config('payment.shipment.type.normal') }}"
+                                        @if (config('payment.shipment.type.normal') == old('typeShipment'))
+                                            selected
+                                        @endif
+                                    >
+                                        @lang('payment.shipment.type.normal')
+                                    </option>
+                                </select>
+                                @error ('typeShipment')
+                                    <span>
+                                        <strong class="error-color">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="col-lg-12">
+                                <label for="type-payment">{{ trans('payment.payment.type_payment') }}<span>*</span></label>
+                                <select id="type-payment" name="typePayment" class="mb-3">
+                                    <option value="{{ config('payment.payment.type.cod') }}"
+                                        @if (config('payment.payment.type.cod') == old('typePayment'))
+                                            selected
+                                        @endif
+                                    >
+                                        @lang('payment.payment.type.cod')
+                                    </option>
+                                    <option value="{{ config('payment.payment.type.atm') }}"
+                                        @if (config('payment.payment.type.atm') == old('typePayment'))
+                                            selected
+                                        @endif
+                                    >
+                                        @lang('payment.payment.type.atm')
+                                    </option>
+                                    <option value="{{ config('payment.payment.type.vnpay') }}"
+                                        @if (config('payment.payment.type.vnpay') == old('typePayment'))
+                                            selected
+                                        @endif
+                                    >
+                                        @lang('payment.payment.type.vnpay')
+                                    </option>
+                                </select>
+                                @error ('typePayment')
                                     <span>
                                         <strong class="error-color">{{ $message }}</strong>
                                     </span>
@@ -82,5 +132,4 @@
             </form>
         </div>
     </section>
-    <!-- Shopping Cart Section End -->
 @endsection
