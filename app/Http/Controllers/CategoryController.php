@@ -1,20 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use App\Repositories\Category\CategoryRepositoryInterface;
 
 class CategoryController extends Controller
 {
-    /**
-    * @var PostRepositoryInterface|\App\Repositories\Repository
-    */
     protected $categoryRepo;
 
     public function __construct(CategoryRepositoryInterface $categoryRepo)
@@ -22,11 +17,6 @@ class CategoryController extends Controller
         $this->categoryRepo = $categoryRepo;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $categories = $this->categoryRepo->getAll();
@@ -40,12 +30,6 @@ class CategoryController extends Controller
         return view('fashi.admin.category.index', compact('categories'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(CategoryRequest $request)
     {
         try {
@@ -59,13 +43,6 @@ class CategoryController extends Controller
         return redirect()->route('admin.categories.index')->with('message', trans('message.category.create.success'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update($id, CategoryRequest $request)
     {
         try {
@@ -79,12 +56,6 @@ class CategoryController extends Controller
         return redirect()->route('admin.categories.index')->with('message', trans('message.category.update.success'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         try {

@@ -150,4 +150,5 @@ return [
     'active' => 'Active',
     'unactive' => 'UnActive',
     'payment' => 'Payment',
+    'revenue' => 'Revenue',
 ];

@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Models\ProductInfor;
 use App\Models\Rate;
+use App\Repositories\Image\ImageRepositoryInterface;
 use Illuminate\Http\Request;
-use App\Http\Requests\OrderRequest;
-use App\Repositories\BaseRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\ProductDetail\ProductDetailRepositoryInterface;
 use App\Repositories\Order\OrderRepositoryInterface;
 use App\Repositories\OrderDetail\OrderDetailRepositoryInterface;
 use App\Repositories\Comment\CommentRepositoryInterface;
-use App\Notifications\OrderNotification;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Category;
+use App\Models\Image;
 
 class ProductController extends Controller
 {
@@ -24,6 +25,7 @@ class ProductController extends Controller
     protected $categoryRepo;
     protected $orderDetailRepo;
     protected $commentRepo;
+    protected $imageRepo;
 
     public function __construct
     (
@@ -31,6 +33,7 @@ class ProductController extends Controller
         ProductRepositoryInterface $productRepo,
         CategoryRepositoryInterface $categoryRepo,
         OrderDetailRepositoryInterface $orderDetailRepo,
+        ImageRepositoryInterface $imageRepo,
         CommentRepositoryInterface $commentRepo
     ) {
         $this->orderRepo = $orderRepo;
@@ -38,13 +41,9 @@ class ProductController extends Controller
         $this->categoryRepo = $categoryRepo;
         $this->orderDetailRepo = $orderDetailRepo;
         $this->commentRepo = $commentRepo;
+        $this->imageRepo = $imageRepo;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $products = $this->productRepo->getAll();
@@ -123,207 +122,6 @@ class ProductController extends Controller
         ));
     }
 
-    public function showCart()
-    {
-        $cart = session('cart');
-
-        return view('fashi.user.shopping-cart', compact('cart'));
-    }
-
-    public function addToCart(Request $request, $id)
-    {
-        $productInfor = ProductInfor::where([
-            'product_id' => $id,
-            'color' => $request->color,
-            'size' => $request->size,
-        ])->first();
-        $product = $productInfor->product;
-
-        if ($productInfor) {
-            if ($request->quantity > $productInfor->quantity) {
-                $result = [
-                    'status' => false,
-                    'message' => trans('text.quantity_product_not_enough'),
-                    'icon' => 'error',
-                ];
-
-                return response()->json($result);
-            } elseif (!is_numeric($request->quantity)) {
-                $result = [
-                    'message' => trans('text.quantity_must_be_numeric'),
-                    'icon' => 'error',
-                ];
-
-                return response()->json($result);
-            } elseif ($request->quantity <= 0) {
-                $result = [
-                    'status' => false,
-                    'message' => trans('text.negative'),
-                    'icon' => 'error',
-                ];
-
-                return response()->json($result);
-            }
-
-            $productInforId = $productInfor->id;
-        } else {
-            $result = [
-                'message' => trans('text.no_product_details'),
-                'icon' => 'error',
-            ];
-
-            return response()->json($result);
-        }
-
-        $cart = session()->get('cart');
-
-        try {
-            if (!$cart) {
-                $cart = [
-                    $productInforId => [
-                        "product_infor_id" => $productInforId,
-                        "product_id" => $request->product_id,
-                        "quantity" => $request->quantity,
-                        "color" => $request->color,
-                        "size" => $request->size,
-                        "name" => $product->name,
-                        "price" => $product->price_sale,
-                        "image" => $product->link_to_image_base,
-                    ]
-                ];
-
-                session()->put('cart', $cart);
-            } else {
-                if (isset($cart[$productInforId])) {
-                    $cart[$productInforId]['quantity'] += $request->quantity;
-                    session()->put('cart', $cart);
-                } else {
-                    $cart[$productInforId] = [
-                        "product_infor_id" => $productInforId,
-                        "product_id" => $request->product_id,
-                        "quantity" => $request->quantity,
-                        "color" => $request->color,
-                        "size" => $request->size,
-                        "name" => $product->name,
-                        "price" => $product->price_sale,
-                        "image" => $product->link_to_image_base,
-                    ];
-                    session()->put('cart', $cart);
-                }
-            }
-
-            $totalQuantity = 0;
-            foreach ($cart as $cartItem) {
-                $totalQuantity += $cartItem['quantity'];
-            }
-            session()->put('totalQuantity', $totalQuantity);
-        } catch (Exception $e) {
-            $result = [
-                'status' => false,
-                'quantity' => 0,
-                'message' => trans('text.add_to_cart_error'),
-                'icon' => 'error',
-            ];
-
-            return response()->json($result);
-        }
-
-        $result = [
-            'status' => true,
-            'quantity' => $totalQuantity,
-            'message' => trans('text.add_to_cart_success'),
-            'icon' => 'success',
-        ];
-
-        return response()->json($result);
-    }
-
-    public function updateCart(Request $request)
-    {
-        $cart = session('cart');
-
-        $quantity = $request->quantity;
-
-        try {
-            $totalPrice = 0;
-            foreach ($cart as $key => $cartItem) {
-                if ($quantity[$key] >= 1) {
-                    $cart[$key]['quantity'] = $quantity[$key];
-                    $subTotal = $cart[$key]['quantity'] * $cart[$key]['price'];
-                    $totalPrice += $subTotal;
-                } else {
-                    toast(trans('message.cart.update.error'),'error');
-
-                    return back();
-                }
-            }
-
-            session()->put('cart', $cart);
-        } catch (Exception $e) {
-            toast(trans('message.cart.update.error'),'error');
-
-            return back();
-        }
-        $totalQuantity = 0;
-        foreach ($cart as $cartItem) {
-            $totalQuantity += $cartItem['quantity'];
-        }
-        session()->put('totalQuantity', $totalQuantity);
-
-        toast(trans('message.cart.update.success'),'success');
-
-        return back();
-    }
-
-    public function removeCartItem(Request $request, $id)
-    {
-        $cart = session()->get('cart');
-        $productInforId = ProductInfor::find($id)->id;
-
-        try {
-            session()->forget('cart.' . $productInforId);
-        } catch (Exception $e) {
-            $result = [
-                'status' => false,
-                'message' => trans('text.delete_error'),
-                'icon' => 'error',
-            ];
-
-            return response()->json($result);
-        }
-
-        $result = [
-            'status' => true,
-            'message' => trans('text.delete_success'),
-            'icon' => 'success',
-        ];
-
-        return response()->json($result);
-    }
-
-    public function removeAllCart(Request $request)
-    {
-        try {
-            session()->forget('cart');
-        } catch (Exception $e) {
-            $result = [
-                'status' => false,
-                'message' => trans('text.delete_error'),
-                'icon' => 'error',
-            ];
-
-            return response()->json($result);
-        }
-
-        $result = [
-            'status' => true,
-            'message' => trans('text.delete_success'),
-            'icon' => 'success',
-        ];
-
-        return response()->json($result);
-    }
-
     public function search(Request $request)
     {
         $nameProduct = $request->name;
@@ -337,19 +135,112 @@ class ProductController extends Controller
         return view('fashi.user.shop', compact(['products', 'categories']));
     }
 
-    public function orderCancel($id)
+    public function indexAdmin()
     {
-        try {
-            $this->orderRepo->updateOrderCancel($id);
-            $order = $this->orderRepo->getOneCancelOrder($id);
-        } catch (Exception $e) {
-            toast(trans('message.cart.update.error'), 'error');
+        $products = $this->productRepo->getAll()->SortByDesc('id');
 
-            return back();
+        return view('fashi.admin.product.index', compact('products'));
+    }
+
+    public function create()
+    {
+        $categories = Category::all();
+
+        return view('fashi.admin.product.create', compact('categories'));
+    }
+
+    public function store(ProductRequest $request)
+    {
+        $colors = $request->colors;
+        $sizes = $request->sizes;
+        $data = $request->all();
+        $data['link_to_image_base'] = uniqid() . '-' . $request['image']->getClientOriginalName();
+        $request['image']->move('images', $data['link_to_image_base']);
+        $data['rate'] = 0;
+        $data['price_import'] = 0;
+
+        try {
+            $product  = Product::create($data);
+
+            for ($i = 0; $i < count($colors); $i++){
+                ProductInfor::create([
+                    'product_id' => $product->id,
+                    'size' => $sizes[$i],
+                    'color' => $colors[$i],
+                    'quantity' => 0,
+                ]);
+            }
+
+            foreach ($request->images as $image) {
+                $filename = uniqid() . '-' . $image->getClientOriginalName();
+                $image->move('images', $filename);
+                Image::create([
+                    'product_id' => $product->id,
+                    'link_to_image' => $filename,
+                ]);
+            }
+        } catch (Exception $e) {
+            Log::error($e);
+
+            return back()->with('message', trans('message.product.create.error'));
         }
 
-        toast(trans('message.cart.update.success'), 'success');
+        return redirect()->route('admin.products.index')->with('message', trans('message.product.create.success'));
+    }
 
-        return back();
+    public function edit($id)
+    {
+        $product = $this->productRepo->find($id);
+        $categories = $this->categoryRepo->getAll();
+
+        return view('fashi.admin.product.edit', compact(['product', 'categories']));
+    }
+
+    public function update(ProductRequest $request, $id)
+    {
+        $product = $this->productRepo->find($id);
+
+        try {
+            $this->productRepo->update($id, $request->all());
+            $productImage = $this->imageRepo->findImageByProduct($product->id)->delete();
+
+            foreach ($request->images as $image) {
+                $filename = uniqid() . '-' . $image->getClientOriginalName();
+                $image->move(config('image.move_url'), $filename);
+
+                $this->imageRepo->create([
+                    'product_id' => $product->id,
+                    'link_to_image' => config('image.url') . $filename,
+                ]);
+            }
+        } catch (Exception $e) {
+            Log::error($e);
+
+            return back()->with('message', trans('message.product.update.error'));
+        }
+
+        return redirect()->route('admin.products.index')->with('message', trans('message.product.update.success'));
+    }
+
+    public function destroy($id)
+    {
+        $product = Product::find($id);
+        try {
+            $this->productRepo->delete($id);
+
+            foreach ($product->images as $image) {
+                $this->imageRepo->delete($image->id);
+            }
+
+            foreach ($product->productInfors as $productInfor) {
+                $productInfor->delete();
+            }
+        } catch (Exception $e) {
+            Log::error($e);
+
+            return back()->with('message', trans('message.product.delete.error'));
+        }
+
+        return redirect()->route('admin.products.index')->with('message', trans('message.product.delete.success'));
     }
 }

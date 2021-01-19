@@ -16,4 +16,6 @@ interface OrderRepositoryInterface
     public function countCancelOrderByMonth($month);
 
     public function getOneCancelOrder($id);
+
+    public function getStatisticalByMonth($month);
 }

@@ -147,4 +147,49 @@ class OrderController extends Controller
 
         return redirect(route('user.orders'));
     }
+
+    public function orderCancel($id)
+    {
+        try {
+            $this->orderRepo->updateOrderCancel($id);
+        } catch (Exception $e) {
+            toast(trans('message.cart.update.error'), 'error');
+
+            return back();
+        }
+
+        toast(trans('message.cart.update.success'), 'success');
+
+        return back();
+    }
+
+    public function indexAdmin()
+    {
+        $orders = $this->orderRepo->getAll();
+
+        return view('fashi.admin.order.index', compact('orders'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            if (isset($request['success'])) {
+                $this->orderRepo->updateOrderSuccess($id);
+            } elseif (isset($request['cancel'])) {
+                $this->orderRepo->updateOrderCancel($id);
+            } elseif (isset($request['shipping'])) {
+                $this->orderRepo->updateOrderShipping($id);
+            }
+        } catch (Exception $e) {
+            Log::error($e);
+            toast(trans('message.cart.update.error'), 'error');
+
+            return back();
+        }
+
+        toast(trans('message.cart.update.success'), 'success');
+
+        return back();
+
+    }
 }
