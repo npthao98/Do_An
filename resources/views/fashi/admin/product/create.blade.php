@@ -33,7 +33,7 @@
                         @endforeach
                     </select>
                 </div>
-                @error('category')
+                @error('category_id')
                     <span>
                         <strong class="error-color">{{ $message }}</strong>
                     </span>

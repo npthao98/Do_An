@@ -8,7 +8,7 @@ use App\Repositories\Comment\CommentRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Rate;
 
-class CommentController extends Controller
+class RateController extends Controller
 {
     protected $commentRepo;
 
@@ -17,7 +17,7 @@ class CommentController extends Controller
         $this->commentRepo = $commentRepo;
     }
 
-    public function createComment(Request $request, $id)
+    public function createRate(Request $request, $id)
     {
         $image = asset('images/avatar.jpg');
 
@@ -64,7 +64,7 @@ class CommentController extends Controller
         return response()->json($result);
     }
 
-    public function editComment(Request $request, $id)
+    public function editRate(Request $request, $id)
     {
         $data = $request->only([
             'product_id',

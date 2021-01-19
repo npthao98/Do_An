@@ -52,7 +52,8 @@
                                                 <ul class="order-table">
                                                     <li>{{ trans('text.order') }} ({{ $key }})<span>{{ trans('text.total') }}</span></li>
                                                     @foreach ($order->items as $item)
-                                                        <li class="fw-normal">{{ $item->productInfor->product->name }} x {{ $item->quantity }} ({{ $item->productInfor->color }}) <span>${{ number_format($subTotal = $item->price_sale * $item->quantity) }}</span></li>
+                                                        <li class="fw-normal">{{ $item->productInfor->product->name }} x {{ $item->quantity }} ({{ $item->productInfor->color . '-' . $item->productInfor->size}})
+                                                            <span>${{ number_format($subTotal = $item->price_sale * $item->quantity) }}</span></li>
                                                     @endforeach
                                                     <li class="fw-normal">@lang('payment.shipment.type_shipment')({{ $order->type_shipment }})
                                                         <span>${{ number_format($order->fee_shipment) }}</span></li>
@@ -63,7 +64,7 @@
                                                 <form method="POST" action="{{ route('orders.cancel', $order->id) }}">
                                                     @csrf
                                                     <div class="order-btn">
-                                                        <button type="submit" class="site-btn place-btn">{{ trans('text.cancel') }}</button>
+                                                        <button type="submit" onclick="return confirmCancel()" class="site-btn place-btn">{{ trans('text.cancel') }}</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -76,7 +77,8 @@
                                                 <ul class="order-table">
                                                     <li>{{ trans('text.order') }} ({{ $key + 1 }})<span>{{ trans('text.total') }}</span></li>
                                                     @foreach ($order->items as $item)
-                                                        <li class="fw-normal">{{ $item->productInfor->product->name }} x {{ $item->quantity }} ({{ $item->productInfor->color }}) <span>${{ number_format($subTotal = $item->price_sale * $item->quantity) }}</span></li>
+                                                        <li class="fw-normal">{{ $item->productInfor->product->name }} x {{ $item->quantity }} ({{ $item->productInfor->color . '-' . $item->productInfor->size}})
+                                                            <span>${{ number_format($subTotal = $item->price_sale * $item->quantity) }}</span></li>
                                                     @endforeach
                                                     <li class="fw-normal">@lang('payment.shipment.type_shipment')({{ $order->type_shipment }})
                                                         <span>${{ number_format($order->fee_shipment) }}</span></li>
@@ -93,7 +95,8 @@
                                                 <ul class="order-table">
                                                     <li>{{ trans('text.order') }} ({{ $key + 1 }})<span>{{ trans('text.total') }}</span></li>
                                                     @foreach ($order->items as $item)
-                                                        <li class="fw-normal">{{ $item->productInfor->product->name }} x {{ $item->quantity }} ({{ $item->productInfor->color }}) <span>${{ number_format($subTotal = $item->price_sale * $item->quantity) }}</span></li>
+                                                        <li class="fw-normal">{{ $item->productInfor->product->name }} x {{ $item->quantity }} ({{ $item->productInfor->color . '-' . $item->productInfor->size}})
+                                                            <span>${{ number_format($subTotal = $item->price_sale * $item->quantity) }}</span></li>
                                                     @endforeach
                                                     <li class="fw-normal">@lang('payment.shipment.type_shipment')({{ $order->type_shipment }})
                                                         <span>${{ number_format($order->fee_shipment) }}</span></li>
@@ -110,7 +113,8 @@
                                                 <ul class="order-table">
                                                     <li>{{ trans('text.order') }} ({{ $key + 1 }})<span>{{ trans('text.total') }}</span></li>
                                                     @foreach ($order->items as $item)
-                                                        <li class="fw-normal">{{ $item->productInfor->product->name }} x {{ $item->quantity }} ({{ $item->productInfor->color }}) <span>${{ number_format($subTotal = $item->price_sale * $item->quantity) }}</span></li>
+                                                        <li class="fw-normal">{{ $item->productInfor->product->name }} x {{ $item->quantity }} ({{ $item->productInfor->color . '-' . $item->productInfor->size}})
+                                                            <span>${{ number_format($subTotal = $item->price_sale * $item->quantity) }}</span></li>
                                                     @endforeach
                                                     <li class="fw-normal">@lang('payment.shipment.type_shipment')({{ $order->type_shipment }})
                                                         <span>${{ number_format($order->fee_shipment) }}</span></li>
@@ -129,5 +133,11 @@
             </div>
         </div>
     </section>
-    <!-- Shopping Cart Section End -->
+@endsection
+@section('javascript')
+    <script>
+        function confirmCancel() {
+            return confirm('Do you want to cancel this order?');
+        }
+    </script>
 @endsection

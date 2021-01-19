@@ -16,7 +16,10 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     public function updateOrderSuccess($id)
     {
         $order = $this->model->find($id);
-        $order->update(['status' => config('status.order.success')]);
+        $order->update([
+            'status' => config('status.order.success'),
+            'status_payment' => config('payment.payment.status.paid'),
+        ]);
         foreach ($order->items as $item) {
             $productId = $item->productInfor->product->id;
             Rate::create([
@@ -103,5 +106,20 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
         $result = $this->model->onlyTrashed()->where('id', $id)->get();;
 
         return $result;
+    }
+
+    public function getStatisticalByMonth($month)
+    {
+        $orders = $this->model->whereMonth('updated_at', $month)
+            ->where('status', config('status.order.success'))
+            ->with('items')->get();
+        $total = 0;
+        foreach ($orders as $order) {
+            foreach ($order->items as $item) {
+                $total += ($item->price_sale - $item->price_import) * $item->quantity;
+            }
+        }
+
+        return $total;
     }
 }

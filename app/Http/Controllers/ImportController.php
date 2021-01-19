@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\ImportRequest;
 use App\Models\Import;
 use App\Models\ItemImport;
@@ -84,3 +83,4 @@ class ImportController extends Controller
         return back()->with('message', trans('message.supplier.create.success'));
     }
 }
+

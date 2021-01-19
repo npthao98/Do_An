@@ -12,54 +12,48 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/test', function (){
-    return view('fashi.user.payment-tknh');
-});
 Route::group(['middleware' => 'locale'], function() {
     Route::get('/', 'HomeController@index')->name('index');
     Auth::routes();
 
-    Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin', 'locale']], function() {
-        Route::resource('categories', 'CategoryController');
-        Route::resource('products', 'ProductController');
-        Route::resource('imports', 'ImportController');
+    Route::group(['as' => 'admin.', 'prefix' => 'admin', 'middleware' => ['admin', 'locale']], function() {
+        Route::resource('imports', 'ImportController')->only(['index', 'create', 'store']);
         Route::post('suppliers', 'ImportController@storeSupplier')->name('suppliers.store');
-        Route::get('orders', 'ProductController@showOrder')->name('orders');
+        Route::resource('categories', 'CategoryController')->except(['show', 'edit', 'create']);
+        Route::resource('products', 'ProductController')->except('index');
+        Route::get('products', 'ProductController@indexAdmin')->name('products.index');
+        Route::get('orders', 'OrderController@indexAdmin')->name('orders');
         Route::resource('orders', 'OrderController')->only('update');
-        Route::resource('users', 'UserController');
-        Route::get('/', 'DashboardController@index')->name('dashboard');
-        Route::get('/notifications', 'DashboardController@listNotification')->name('list_notification');
-        Route::delete('/notifications/{notification}', 'DashboardController@deleteNotification')->name('delete_notification');
-        Route::delete('/notifications', 'DashboardController@deleteAllNotification')->name('delete_all_notification');
+        Route::resource('users', 'UserController')->only(['index', 'update']);
+        Route::get('/', 'HomeController@indexAdmin')->name('dashboard');
     });
 
     Route::get('/categories/{category}', 'ProductController@showProductByCategory')->name('product.category.index');
     Route::get('/categories', 'ProductController@index')->name('product.index');
     Route::get('/products/{product}', 'ProductController@productDetail')->name('product_detail');
     Route::get('/new-product', 'ProductController@newProduct')->name('new_product');
-    Route::get('/carts', 'ProductController@showCart')->name('show_cart');
-    Route::post('carts/{product}','ProductController@addToCart')->name('add_to_cart');
-    Route::post('/carts', 'ProductController@updateCart')->name('update_cart');
-    Route::delete('/carts/{product_detail}', 'ProductController@removeCartItem')->name('remove_cart_item');
-    Route::delete('/carts/', 'ProductController@removeAllCart')->name('remove_all_cart');
+    Route::get('/carts', 'CartController@showCart')->name('show_cart');
+    Route::post('carts/{product}','CartController@addToCart')->name('add_to_cart');
+    Route::post('/carts', 'CartController@updateCart')->name('update_cart');
+    Route::delete('/carts/{product_detail}', 'CartController@removeCartItem')->name('remove_cart_item');
     Route::get('/checkouts', 'OrderController@create')->name('check_out');
     Route::post('/payment', 'OrderController@payment')->name('payment')->middleware('auth');
     Route::post('/checkouts', 'OrderController@store')->name('create_order')->middleware('auth');
 
     Route::prefix('users')->middleware('auth')->group(function () {
-        Route::get('/', 'UserController@index')->name('user');
-        Route::put('update', 'UserController@update')->name('user.update');
-        Route::get('change-password', 'UserController@viewChangePassword')->name('user.view.change.password');
-        Route::put('change-password', 'UserController@changePassword')->name('user.change.password');
+        Route::get('/', 'CustomerController@index')->name('user');
+        Route::put('update', 'CustomerController@update')->name('user.update');
+        Route::get('change-password', 'CustomerController@viewChangePassword')->name('user.view.change.password');
+        Route::put('change-password', 'CustomerController@changePassword')->name('user.change.password');
         Route::get('/orders', 'OrderController@index')->name('user.orders');
     });
 
-    Route::post('/comments/{product}', 'CommentController@createComment')->name('create.comment');
-    Route::put('/comments/edit/{comment}', 'CommentController@editComment')->name('edit.comment');
+    Route::post('/rates/{product}', 'RateController@createRate')->name('create.rate');
+    Route::put('/rates/edit/{rate}', 'RateController@editRate')->name('edit.rate');
     Route::post('/products/search', 'ProductController@search')->name('search');
     Route::get('change-language/{language}', 'HomeController@changeLanguage')->name('user.change-language');
-    Route::post('orders/cancel/{order}', 'ProductController@orderCancel')->name('orders.cancel');
+    Route::post('orders/cancel/{order}', 'OrderController@orderCancel')->name('orders.cancel');
 });
 
-Route::get('/districts/{city}', 'CityController@getDistrictByCity');
+Route::get('/districts/{city}', 'HomeController@getDistrictByCity');
 

@@ -3,75 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Person;
 use Illuminate\Http\Request;
-use App\User;
-use App\Order;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
     public function index()
     {
-        if (auth()->check()) {
-            $user = auth()->user();
-            $orders = $user->orders;
-        }
+        $users = Person::withTrashed()->get();
 
-        $ordersSuccess = $orders->where('status', config('order.success'))->get();
-        $ordersPending = $orders->where('status', config('order.pending'))->get();
-
-        return view('fashi.user.profile', compact(['user', 'ordersSuccess', 'ordersPending']));
+        return view('fashi.admin.profile.index', compact('users'));
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        if (auth()->check()) {
-            $user = auth()->user();
+        $user = Person::withTrashed()->where('id', $id)->first();
+        if (isset($request['lock'])){
+            toast(trans('message.user.lock.success'), 'success');
+            $user->delete();
+        } elseif (isset($request['unlock'])) {
+            $user->restore();
+            toast(trans('message.user.unlock.success'), 'success');
+        } elseif (isset($request['changePW'])) {
+            $user->update([
+                'password' => bcrypt('password'),
+            ]);
+            toast(trans('message.user.change_PW.success'), 'success');
         }
-
-        try {
-            $user->update($request->all());
-        } catch (Exception $e) {
-            alert()->error(trans('text.error'), trans('text.update_user_error'));
-
-            return back();
-        }
-
-        alert()->success(trans('text.success'), trans('text.update_user_success'));
-
-        return back();
-    }
-
-    public function viewChangePassword()
-    {
-        return view('fashi.user.change-password');
-    }
-
-    public function changePassword(Request $request)
-    {
-        $newPassword = $request->new_password;
-        $oldPassword = $request->old_password;
-        $confirmPassword = $request->confirm_password;
-        $user = auth()->user();
-        $hashedPassword = auth()->user()->getAuthPassword();
-
-        if (Hash::check($oldPassword, $hashedPassword)) {
-            if (($newPassword == $confirmPassword) && $newPassword != '' && $confirmPassword != '' && Str::length($newPassword) >= config('user.length_password')) {
-                $user->update(['password' => Hash::make($newPassword)]);
-            } else {
-                alert()->error(trans('text.error'), trans('message.password.update.error.not_match'));
-
-                return back();
-            }
-        } else {
-            alert()->error(trans('text.error'), trans('message.password.update.error.incorrect'));
-
-            return back();
-        }
-
-        alert()->success(trans('text.success'), trans('message.password.update.success'));
 
         return back();
     }

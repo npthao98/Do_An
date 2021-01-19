@@ -150,4 +150,5 @@ return [
     'active' => 'Active',
     'unactive' => 'UnActive',
     'payment' => 'Thanh toán',
+    'revenue' => 'Doanh thu',
 ];
